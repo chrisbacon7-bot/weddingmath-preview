@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wedding Budget Calculator · WeddingMath</title>
+  <meta name="description" content="Wedding budget calculator that splits a total by category for your city and guest count. Knot average $34,200. Zola average $36,000. Priorities move money and leave the total the same.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="wm-root" content="../">
+  <link rel="canonical" href="https://weddingmath.co/budget">
+  <meta property="og:title" content="Wedding Budget Calculator">
+  <meta property="og:description" content="Wedding budget calculator that splits a total by category for your city and guest count. Knot average $34,200. Zola average $36,000. Priorities move money and leave the total the same.">
+  <meta property="og:url" content="https://weddingmath.co/budget">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="WeddingMath">
+  <meta property="og:image" content="../og/budget.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Wedding Budget Calculator">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Wedding Budget Calculator">
+  <meta name="twitter:description" content="Wedding budget calculator that splits a total by category for your city and guest count. Knot average $34,200. Zola average $36,000. Priorities move money and leave the total the same.">
+  <meta name="twitter:image" content="../og/budget.png">
+  <meta name="theme-color" content="#f3eee6">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../fonts/fraunces-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../css/styles.css">
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://weddingmath.co/"},{"@type":"ListItem","position":2,"name":"Tools","item":"https://weddingmath.co/tools"},{"@type":"ListItem","position":3,"name":"Wedding budget calculator","item":"https://weddingmath.co/budget"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"What is a wedding budget calculator?","acceptedAnswer":{"@type":"Answer","text":"It divides a wedding total into categories for a place and a guest count. The national Knot average is $34,200 and the Zola average is $36,000. Your lines add up to the total on the page, which is the local figure or a number you type."}},{"@type":"Question","name":"Do priorities change the wedding budget?","acceptedAnswer":{"@type":"Answer","text":"No. Priorities move money between categories. The total stays the same. They are your choices, not a survey result."}},{"@type":"Question","name":"Why do The Knot and Zola show different wedding budgets?","acceptedAnswer":{"@type":"Answer","text":"They survey different couples. The Knot's 2026 average is $34,200 with a median of $24,000. Zola's 2026 average is $36,000. Both stay on the page."}},{"@type":"Question","name":"Are the honeymoon and the rings inside this budget?","acceptedAnswer":{"@type":"Answer","text":"The Knot's honeymoon average is $5,500 and the rehearsal-dinner average is $2,800. Those are usually extra. The sources page lists them."}}]},{"@type":["WebApplication","SoftwareApplication"],"name":"Wedding Budget Calculator","applicationCategory":"FinanceApplication","operatingSystem":"Web","browserRequirements":"Requires JavaScript. Requires HTML5.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isAccessibleForFree":true,"url":"https://weddingmath.co/budget","description":"Wedding budget calculator that splits a total by category for your city and guest count. Knot average $34,200. Zola average $36,000. Priorities move money and leave the total the same.","provider":{"@type":"Organization","name":"WeddingMath","url":"https://weddingmath.co/"}}]}</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">WeddingMath</span></a>
+    <nav aria-label="Primary"><a href="../tools/index.html" aria-current="page">Tools</a><a href="../wedding-cost/index.html">Cost</a><a href="../guides/index.html">Guides</a><a href="../honeymoon/index.html">Honeymoon</a></nav>
+  </header>
+  <main id="main" class="wrap-wide">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../tools/index.html">Tools</a></li><li><span aria-current="page">Wedding budget calculator</span></li></ol></nav><h1>Wedding Budget Calculator</h1>
+<p class="lede">Where the money goes. Your place, your guest count, and a total. The lines add up to that total. Priorities move money around. They leave the bill the same.</p>
+<form id="budget-form" class="stack">
+  <div class="loc card" data-location="main">
+    <label for="where">Where's the wedding?</label>
+    <input id="where" name="where" type="text" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="where-list" placeholder="ZIP code or city">
+    <ul id="where-list" class="suggestions" role="listbox" hidden></ul>
+    <button type="button" class="text-btn" data-national>Not sure yet</button>
+    <p class="loc-status" data-status role="status"></p>
+  </div>
+  <div class="card form-grid two">
+    <div>
+      <label for="guests">Guests</label>
+      <input id="guests" type="number" inputmode="numeric" min="10" max="400" value="117">
+    </div>
+    <div>
+      <label for="budget">Total to split</label>
+      <input id="budget" type="number" inputmode="decimal" min="0" placeholder="Blank uses the local estimate">
+      <p class="hint">Leave this blank to split the local planning figure.</p>
+    </div>
+  </div>
+  <div class="card">
+    <p class="label" id="priority-label">What matters most? Pick up to three.</p>
+    <div class="choices" id="priorities" role="group" aria-labelledby="priority-label"></div>
+    <p class="hint" id="priority-note">We'll put more of the total toward what you picked. The total stays the same. This is your choice, not a survey.</p>
+  </div>
+  <details class="tune card">
+    <summary>Fine-tune</summary>
+    <div class="stack">
+      <div>
+        <label for="season">Time of year</label>
+        <select id="season">
+          <option value="">No season adjustment</option>
+          <option value="winter">January–March</option>
+          <option value="spring">April–June</option>
+          <option value="summer">July–September</option>
+          <option value="fall">October–December</option>
+        </select>
+        <p class="hint">Uses The Knot's national season averages as a rough multiplier. It is not a local price.</p>
+      </div>
+      <label><input id="offpeak" type="checkbox" style="width:auto;min-height:auto"> Show a 20–30% off-peak discount range</label>
+      <p class="hint">Zola says many vendors discount weekday or winter dates by about that much. The main total does not change unless you edit it.</p>
+      <div class="loc" data-location="compare">
+        <label for="where-2">Compare with another place</label>
+        <input id="where-2" type="text" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="where-list-2" placeholder="Another ZIP or city">
+        <ul id="where-list-2" class="suggestions" role="listbox" hidden></ul>
+        <button type="button" class="text-btn" data-national>Compare with the US average</button>
+        <p class="loc-status" data-status role="status"></p>
+      </div>
+    </div>
+  </details>
+  <button class="btn" type="submit">Update the split</button>
+</form>
+<div id="out" class="stack" style="margin-top:16px" aria-live="polite"></div>
+<div id="compare-out" class="stack" style="margin-top:12px"></div>
+<p class="hint">Rehearsal dinner, rings, and the honeymoon are usually extra. The Knot's averages for those are on the <a href="../sources/index.html">sources page</a>.</p>
+<details class="what">
+  <summary>What's plus-plus?</summary>
+  <p>Venues sometimes price a menu as "$120 plus-plus." That means plus a service charge and plus tax. The number on the menu is not the number you pay. The checker on the <a href="../budget/per-guest/index.html">per-guest page</a> adds those on.</p>
+</details>
+<section class="explainer" aria-label="About this page"><h2>How the wedding budget calculator splits a total</h2><p>The wedding budget calculator takes a place, a guest count, and a total. Leave the total blank and it splits the local planning figure. Category lines follow The Knot's vendor averages, scaled so they add up to that total. Not every couple hires every vendor, so the raw vendor averages add up to more than the Knot average.</p><p>Pick up to three priorities to put more of the same total toward the place, the food, the photos, the flowers, the music, or what you wear. Zola's category averages stay off this split. When Zola publishes a local total, it stays beside the Knot figure.</p><h2>Common questions</h2><div class="faq"><h3>What is a wedding budget calculator?</h3><p>It divides a wedding total into categories for a place and a guest count. The national Knot average is $34,200 and the Zola average is $36,000. Your lines add up to the total on the page, which is the local figure or a number you type.</p><h3>Do priorities change the wedding budget?</h3><p>No. Priorities move money between categories. The total stays the same. They are your choices, not a survey result.</p><h3>Why do The Knot and Zola show different wedding budgets?</h3><p>They survey different couples. The Knot's 2026 average is $34,200 with a median of $24,000. Zola's 2026 average is $36,000. Both stay on the page.</p><h3>Are the honeymoon and the rings inside this budget?</h3><p>The Knot's honeymoon average is $5,500 and the rehearsal-dinner average is $2,800. Those are usually extra. The sources page lists them.</p></div><p>Every figure is cited on the <a href="../sources/index.html">sources page</a>.</p></section><nav class="related" aria-label="Related"><h2>Keep going</h2><div class="links"><a href="../index.html"><span><strong>Wedding cost calculator</strong><br><small>ZIP or city, guests, and an instant local total.</small></span><span>Open</span></a><a href="../budget/reverse/index.html"><span><strong>How much can we afford</strong><br><small>Turn savings into a guest count.</small></span><span>Open</span></a><a href="../budget/per-guest/index.html"><span><strong>Wedding cost per guest calculator</strong><br><small>What one guest adds, and what cutting the list saves.</small></span><span>Open</span></a><a href="../budget/tracker/index.html"><span><strong>Wedding budget tracker</strong><br><small>Budget, quoted, and paid, in this browser.</small></span><span>Open</span></a><a href="../wedding-cost/index.html"><span><strong>Wedding cost by state</strong><br><small>Published averages for every state.</small></span><span>Open</span></a><a href="../guides/index.html"><span><strong>Wedding planning guides</strong><br><small>Cost, hidden fees, and the honeymoon.</small></span><span>Open</span></a></div></nav>
+  </main>
+  <footer class="site-footer">
+    
+    <nav aria-label="Footer"><a href="../index.html">Wedding cost calculator</a><a href="../tools/index.html">Wedding budget tools</a><a href="../budget/index.html">Wedding budget calculator</a><a href="../budget/reverse/index.html">How much can we afford</a><a href="../budget/per-guest/index.html">Cost per guest</a><a href="../budget/tracker/index.html">Wedding budget tracker</a><a href="../wedding-cost/index.html">Wedding cost by state</a><a href="../guides/index.html">Guides</a><a href="../honeymoon/index.html">Honeymoon budget</a><a href="../sources/index.html">Sources</a><a href="../disclosures/index.html">Disclosures</a><a href="../about/index.html">About</a><a href="https://vacationmath.co/?utm_source=weddingmath.co&utm_medium=referral&utm_campaign=footer">VacationMath</a></nav>
+    <p>Estimates are not quotes. Your numbers stay in this browser unless you copy a link or download a file.</p>
+  </footer>
+  <div class="sticky" data-sticky hidden>
+    <div><p class="kicker">Planning estimate</p><p class="money-sm" data-sticky-money>—</p></div>
+    <a class="btn" href="#result">See my total</a>
+  </div>
+  <script type="module" src="../js/budget.js"></script>
+</body>
+</html>

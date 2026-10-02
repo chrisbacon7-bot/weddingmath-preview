@@ -1,0 +1,80 @@
+# WeddingMath
+
+> Local wedding math from published studies. The Knot and Zola stay side by side. Training use is declined in robots.txt (Content-Signal: ai-train=no). Search and citation of these pages is fine.
+
+National Knot average $34,200. National Zola average $36,000. Knot median $24,000. Knot per guest $292. Honeymoon $5,500 (Knot) and $5,300 (Zola).
+
+## Tools
+- [Wedding cost calculator](https://weddingmath.co/): ZIP or city, guests, optional budget
+- [Wedding budget tools](https://weddingmath.co/tools)
+- [Wedding budget calculator](https://weddingmath.co/budget): category split
+- [How much can we afford for a wedding](https://weddingmath.co/budget/reverse)
+- [Wedding cost per guest calculator](https://weddingmath.co/budget/per-guest)
+- [Wedding budget tracker](https://weddingmath.co/budget/tracker)
+- [Honeymoon budget](https://weddingmath.co/honeymoon): hands off to VacationMath
+- [How much does a wedding cost](https://weddingmath.co/wedding-cost): state index
+- [Wedding planning guides](https://weddingmath.co/guides)
+- [Wedding cost sources](https://weddingmath.co/sources): every figure, source, and date
+
+## Guides
+- [Average wedding cost in 2026](https://weddingmath.co/guides/average-wedding-cost)
+- [Wedding budget breakdown](https://weddingmath.co/guides/wedding-budget-breakdown)
+- [Wedding cost per guest](https://weddingmath.co/guides/wedding-cost-per-guest)
+- [Hidden wedding costs](https://weddingmath.co/guides/hidden-wedding-costs)
+- [Honeymoon budget](https://weddingmath.co/guides/honeymoon-budget)
+
+## State wedding costs
+- [Alabama](https://weddingmath.co/wedding-cost/alabama): Knot $27,000; Zola $25,000–$37,600
+- [Alaska](https://weddingmath.co/wedding-cost/alaska): Knot $19,000; Zola $29,600–$44,300
+- [Arizona](https://weddingmath.co/wedding-cost/arizona): Knot $27,000; Zola $28,800–$43,300
+- [Arkansas](https://weddingmath.co/wedding-cost/arkansas): Knot $19,000; Zola $21,600–$32,400
+- [California](https://weddingmath.co/wedding-cost/california): Knot $39,000; Zola $34,500–$51,700
+- [Colorado](https://weddingmath.co/wedding-cost/colorado): Knot $31,000; Zola $27,000–$40,400
+- [Connecticut](https://weddingmath.co/wedding-cost/connecticut): Knot $42,000; Zola $31,500–$47,300
+- [Delaware](https://weddingmath.co/wedding-cost/delaware): Knot $39,000; Zola $21,900–$32,900
+- [Florida](https://weddingmath.co/wedding-cost/florida): Knot $33,000; Zola $25,200–$37,800
+- [Georgia](https://weddingmath.co/wedding-cost/georgia): Knot $29,000; Zola $25,500–$38,300
+- [Hawaii](https://weddingmath.co/wedding-cost/hawaii): Knot $33,000; Zola $31,800–$47,700
+- [Idaho](https://weddingmath.co/wedding-cost/idaho): Knot $18,000; Zola $20,700–$31,000
+- [Illinois](https://weddingmath.co/wedding-cost/illinois): Knot $38,000; Zola $32,000–$48,000
+- [Indiana](https://weddingmath.co/wedding-cost/indiana): Knot $24,000; Zola $21,500–$32,300
+- [Iowa](https://weddingmath.co/wedding-cost/iowa): Knot $21,000; Zola $23,800–$35,700
+- [Kansas](https://weddingmath.co/wedding-cost/kansas): Knot $20,000; Zola $18,100–$27,100
+- [Kentucky](https://weddingmath.co/wedding-cost/kentucky): Knot $23,000; Zola $24,000–$36,000
+- [Louisiana](https://weddingmath.co/wedding-cost/louisiana): Knot $34,000; Zola $23,800–$35,700
+- [Maine](https://weddingmath.co/wedding-cost/maine): Knot $37,000; Zola $30,600–$45,900
+- [Maryland](https://weddingmath.co/wedding-cost/maryland): Knot $38,000; Zola $29,700–$44,500
+- [Massachusetts](https://weddingmath.co/wedding-cost/massachusetts): Knot $45,000; Zola $34,100–$51,100
+- [Michigan](https://weddingmath.co/wedding-cost/michigan): Knot $29,000; Zola $25,500–$38,300
+- [Minnesota](https://weddingmath.co/wedding-cost/minnesota): Knot $28,000; Zola $24,100–$36,100
+- [Mississippi](https://weddingmath.co/wedding-cost/mississippi): Knot $21,000; Zola $20,700–$31,100
+- [Missouri](https://weddingmath.co/wedding-cost/missouri): Knot $26,000; Zola $23,100–$34,700
+- [Montana](https://weddingmath.co/wedding-cost/montana): Knot $21,000; Zola $29,900–$44,800
+- [Nebraska](https://weddingmath.co/wedding-cost/nebraska): Knot $22,000; Zola $22,500–$33,800
+- [Nevada](https://weddingmath.co/wedding-cost/nevada): Knot $21,000; Zola $36,600–$54,800
+- [New Hampshire](https://weddingmath.co/wedding-cost/new-hampshire): Knot $37,000; Zola $33,300–$49,900
+- [New Jersey](https://weddingmath.co/wedding-cost/new-jersey): Knot $57,000; Zola $32,800–$49,200
+- [New Mexico](https://weddingmath.co/wedding-cost/new-mexico): Knot $22,000; Zola $20,800–$31,300
+- [New York](https://weddingmath.co/wedding-cost/new-york): Knot $49,000; Zola $43,400–$65,100
+- [North Carolina](https://weddingmath.co/wedding-cost/north-carolina): Knot $29,000; Zola $25,700–$38,500
+- [North Dakota](https://weddingmath.co/wedding-cost/north-dakota): Knot $22,000; Zola range not published
+- [Ohio](https://weddingmath.co/wedding-cost/ohio): Knot $28,000; Zola $22,700–$34,000
+- [Oklahoma](https://weddingmath.co/wedding-cost/oklahoma): Knot $19,000; Zola $18,900–$28,300
+- [Oregon](https://weddingmath.co/wedding-cost/oregon): Knot $23,000; Zola $24,800–$37,300
+- [Pennsylvania](https://weddingmath.co/wedding-cost/pennsylvania): Knot $36,000; Zola $25,800–$38,700
+- [Rhode Island](https://weddingmath.co/wedding-cost/rhode-island): Knot $51,000; Zola $28,600–$42,900
+- [South Carolina](https://weddingmath.co/wedding-cost/south-carolina): Knot $35,000; Zola $25,900–$38,800
+- [South Dakota](https://weddingmath.co/wedding-cost/south-dakota): Knot $21,000; Zola $20,100–$30,100
+- [Tennessee](https://weddingmath.co/wedding-cost/tennessee): Knot $24,000; Zola $24,300–$36,500
+- [Texas](https://weddingmath.co/wedding-cost/texas): Knot $31,000; Zola $25,400–$38,100
+- [Utah](https://weddingmath.co/wedding-cost/utah): Knot $18,000; Zola $19,700–$29,600
+- [Vermont](https://weddingmath.co/wedding-cost/vermont): Knot $47,000; Zola $29,300–$43,900
+- [Virginia](https://weddingmath.co/wedding-cost/virginia): Knot $34,000; Zola $29,000–$43,400
+- [Washington](https://weddingmath.co/wedding-cost/washington): Knot $26,000; Zola $26,100–$39,100
+- [West Virginia](https://weddingmath.co/wedding-cost/west-virginia): Knot $19,000; Zola $25,400–$38,100
+- [Wisconsin](https://weddingmath.co/wedding-cost/wisconsin): Knot $29,000; Zola $23,500–$35,300
+- [Wyoming](https://weddingmath.co/wedding-cost/wyoming): Knot $17,000; Zola $41,000–$61,500
+- [Washington, DC](https://weddingmath.co/wedding-cost/district-of-columbia): city figures, Knot $42,000, Zola 150-guest $62,864. No state row.
+
+## Rules
+City figures are tier A. State figures are tier B. Metros without a wedding survey are tier C estimates: state wedding data times the metro BEA price level divided by the state price level, labeled estimated. Guest-count bands are a reference, not the calculator's step multiplier.
