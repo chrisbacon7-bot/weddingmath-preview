@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>List your venue · WeddingMath</title>
+  <meta name="description" content="Suggest a wedding venue. We only list prices from the venue's own website.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="wm-root" content="../">
+  <link rel="canonical" href="https://weddingmath.co/list-your-venue">
+  <meta property="og:title" content="List your venue">
+  <meta property="og:description" content="Suggest a wedding venue. We only list prices from the venue's own website.">
+  <meta property="og:url" content="https://weddingmath.co/list-your-venue">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="WeddingMath">
+  <meta property="og:image" content="../og/list-your-venue.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="List your venue">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="List your venue">
+  <meta name="twitter:description" content="Suggest a wedding venue. We only list prices from the venue's own website.">
+  <meta name="twitter:image" content="../og/list-your-venue.png">
+  <meta name="theme-color" content="#f3eee6">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../fonts/fraunces-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../css/styles.css">
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebPage","name":"List your venue","url":"https://weddingmath.co/list-your-venue","description":"Suggest a wedding venue. We only list prices from the venue's own website.","isPartOf":{"@type":"WebSite","name":"WeddingMath","url":"https://weddingmath.co/","description":"See what a wedding costs where you're getting married. Local figures from published studies, with no account and no vendor emails."}}]}</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">WeddingMath</span></a>
+    <nav aria-label="Primary"><a href="../venues/index.html">Venues</a><a href="../budget/index.html">Budget</a><a href="../wedding-cost/index.html">Cost by State</a><a href="../honeymoon/index.html">Honeymoon</a></nav>
+  </header>
+  <main id="main" class="wrap">
+    <p class="kicker">Suggest a venue</p>
+<h1>List your venue</h1>
+<p class="lede">Know a place with a public price list? Send the name and the page where the price lives. We only list figures from the venue's own site.</p>
+<form class="card stack" id="suggest-form">
+  <div>
+    <label for="venue-name">Venue name</label>
+    <input id="venue-name" name="venue" required autocomplete="organization">
+  </div>
+  <div>
+    <label for="venue-city">City</label>
+    <input id="venue-city" name="city" required autocomplete="address-level2">
+  </div>
+  <div>
+    <label for="venue-url">Pricing page</label>
+    <input id="venue-url" name="url" type="url" placeholder="https://" required>
+  </div>
+  <div>
+    <label for="venue-note">What should we check?</label>
+    <textarea id="venue-note" name="note" placeholder="Saturday rental, guest cap, what's included"></textarea>
+  </div>
+  <button class="btn" type="submit">Copy suggestion</button>
+  <p class="hint" id="suggest-status" role="status"></p>
+</form>
+<p class="hint">TODO: a Cloudflare Worker should accept this form. Until that exists, the button copies the note so you can paste it into an email. Nothing is sent from this page.</p>
+
+  </main>
+  <footer class="site-footer">
+    
+    <nav aria-label="Footer"><a href="../index.html">Wedding cost calculator</a><a href="../venues/index.html">Find venues</a><a href="../shortlist/index.html">Venue shortlist</a><a href="../tools/index.html">Wedding budget tools</a><a href="../budget/index.html">Wedding budget calculator</a><a href="../budget/reverse/index.html">How much can we afford</a><a href="../budget/per-guest/index.html">Cost per guest</a><a href="../budget/tracker/index.html">Wedding budget tracker</a><a href="../wedding-cost/index.html">Wedding cost by state</a><a href="../guides/index.html">Guides</a><a href="../honeymoon/index.html">Honeymoon budget</a><a href="../sources/index.html">Sources</a><a href="../disclosures/index.html">Disclosures</a><a href="../about/index.html">About</a><a href="../list-your-venue/index.html">List your venue</a><a href="https://vacationmath.co/?utm_source=weddingmath.co&utm_medium=referral&utm_campaign=footer">VacationMath</a></nav>
+    <p>Estimates are not quotes. Your numbers stay in this browser unless you copy a link or download a file.</p>
+  </footer>
+  
+  <script type="module" src="../js/list-venue.js"></script>
+</body>
+</html>

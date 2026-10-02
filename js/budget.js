@@ -105,7 +105,14 @@ function render(data) {
   const userTotal = state.budget ? Number(state.budget) : null;
   const split = categorySplit(plan, data.costs, { total: userTotal, priorities: state.priorities });
   const fit = userTotal ? compareBudget(plan, userTotal) : null;
+  const venueNote = params.get("venueName");
+  const venueTotal = Number(params.get("venueTotal"));
   const result = el("section", { class: "result", id: "result", tabindex: "-1" }, [
+    venueNote ? el("div", { class: "tone tone-fits" }, [
+      el("p", { text: venueTotal
+        ? `${venueNote}: the venue page shows ${formatMoney(venueTotal, { exact: true })}. That is the venue, not the whole wedding. The split below is still the full wedding.`
+        : `${venueNote} did not publish a price. The split below is the full wedding, not a venue quote.` }),
+    ]) : null,
     el("p", { class: "kicker", text: userTotal ? "Your total, split" : "A typical split here" }),
     el("p", { class: "money", "data-total": "1", text: formatMoney(split.total, { exact: true }) }),
     el("p", { class: "subhead", text: `${plan.guests} guests · ${state.place.shortLabel}` }),
@@ -138,6 +145,13 @@ function render(data) {
   out.append(result);
 
   const list = el("div", { class: "stack", id: "categories" });
+  list.append(el("section", { class: "card split-visual" }, [
+    el("div", { html: donutSvg(split.lines, split.total) }),
+    el("div", {}, [
+      el("h2", { text: "Where it goes" }),
+      el("p", { class: "hint", text: "Each slice is a share of the same total. The lines below are the dollars." }),
+    ]),
+  ]));
   for (const line of split.lines) {
     const share = split.total ? Math.round((line.amount / split.total) * 100) : 0;
     const card = el("article", { class: "cat" }, [
@@ -192,4 +206,19 @@ function render(data) {
     lines: split.lines.map((line) => ({ id: line.id, label: line.label, amount: line.amount })),
   });
   track("calc_complete", { tool: "budget", tier: state.place.tier });
+}
+
+function donutSvg(lines, total) {
+  const colors = ["#1f4d3a", "#c4a574", "#c9847a", "#3d6b8c", "#6b8f71", "#8d6a4a", "#d08b74", "#4e463f", "#9aaf9a", "#b08968"];
+  const r = 42;
+  const c = 2 * Math.PI * r;
+  let acc = 0;
+  const parts = lines.map((line, index) => {
+    const frac = total ? line.amount / total : 0;
+    const dash = Math.max(0, frac * c - 0.8);
+    const rot = acc * 360 - 90;
+    acc += frac;
+    return `<circle cx="60" cy="60" r="${r}" fill="none" stroke="${colors[index % colors.length]}" stroke-width="14" stroke-linecap="butt" stroke-dasharray="${dash} ${c - dash}" transform="rotate(${rot} 60 60)"><title>${line.label}</title></circle>`;
+  }).join("");
+  return `<svg class="donut" viewBox="0 0 120 120" role="img" aria-label="Budget split chart">${parts}<circle cx="60" cy="60" r="28" fill="#fffcf8"></circle></svg>`;
 }

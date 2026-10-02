@@ -1,0 +1,1538 @@
+{
+  "metros": [
+    {
+      "id": "36740",
+      "slug": "orlando",
+      "state": "FL",
+      "stateSlug": "florida",
+      "name": "Orlando",
+      "label": "Orlando–Kissimmee–Sanford"
+    },
+    {
+      "id": "33100",
+      "slug": "miami",
+      "state": "FL",
+      "stateSlug": "florida",
+      "name": "Miami",
+      "label": "Miami–Fort Lauderdale–West Palm Beach"
+    },
+    {
+      "id": "19100",
+      "slug": "dallas",
+      "state": "TX",
+      "stateSlug": "texas",
+      "name": "Dallas",
+      "label": "Dallas–Fort Worth–Arlington"
+    },
+    {
+      "id": "16980",
+      "slug": "chicago",
+      "state": "IL",
+      "stateSlug": "illinois",
+      "name": "Chicago",
+      "label": "Chicago–Naperville–Elgin"
+    },
+    {
+      "id": "26420",
+      "slug": "houston",
+      "state": "TX",
+      "stateSlug": "texas",
+      "name": "Houston",
+      "label": "Houston–Pasadena–The Woodlands"
+    },
+    {
+      "id": "38060",
+      "slug": "phoenix",
+      "state": "AZ",
+      "stateSlug": "arizona",
+      "name": "Phoenix",
+      "label": "Phoenix–Mesa–Chandler"
+    }
+  ],
+  "venues": [
+    {
+      "id": "leu-gardens",
+      "name": "Harry P. Leu Gardens",
+      "metro": "36740",
+      "city": "Orlando",
+      "address": "1920 North Forest Avenue, Orlando, FL 32803",
+      "website": "https://www.leugardens.org/Events/Weddings",
+      "vibes": [
+        "garden",
+        "historic"
+      ],
+      "capacity": 180,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "preferred",
+      "alcohol": "licensed-caterer",
+      "accommodations": false,
+      "accessible": true,
+      "rainPlan": true,
+      "included": [
+        "One outdoor ceremony site for two hours, chairs, two dressing rooms, and a one-hour rehearsal",
+        "A standard ceremony and reception adds four hours in the Camellia Room, tables, banquet chairs, and in-house screens and sound",
+        "Complimentary parking and a backup rain location"
+      ],
+      "notIncluded": [
+        "Catering and alcohol, which must come from a Gardens-approved caterer",
+        "Linens, decor, a planner, the damage deposit, and event insurance",
+        "Weddings from November 1 through mid-January, while Dazzling Nights is up"
+      ],
+      "questions": [
+        "Does Friday or Sunday use the same fee as Saturday?",
+        "What are the damage deposit and the insurance fee at our guest count?",
+        "Which approved caterer, and is there a food minimum?",
+        "Can we add load-in time, and what does that hour cost?"
+      ],
+      "price": {
+        "confidence": "published",
+        "kind": "rental",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://www.leugardens.org/Events/Weddings",
+        "saturday": 4500,
+        "offday": 2750,
+        "note": "Standard wedding plus reception, up to 180 people, from the Gardens' own fee list. Friday, Saturday, and Sunday are $4,500. Monday–Thursday is $2,750. A ceremony alone is $2,000 on Friday–Sunday and $1,500 Monday–Thursday. Micro weddings (up to 50) are less. The fee does not include the damage deposit, event insurance, or catering. Tax is not listed on the fee table, so it is not added here."
+      }
+    },
+    {
+      "id": "casa-feliz",
+      "name": "Casa Feliz",
+      "metro": "36740",
+      "city": "Winter Park",
+      "address": "656 N Park Ave, Winter Park, FL 32789",
+      "website": "http://www.casafelizvenue.com/casafelizwedding",
+      "vibes": [
+        "historic",
+        "garden"
+      ],
+      "capacity": 120,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "exclusive",
+      "alcohol": "licensed-caterer",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": true,
+      "included": [
+        "8.5 hours on site, including the gardens",
+        "3 hours to set up, 4.5 hours for the event, and 1 hour to break down",
+        "Two hospitality suites"
+      ],
+      "notIncluded": [
+        "Food and drink. Arthur's Catering is the exclusive caterer, and menu prices are not on the rental page",
+        "The 6.5% tax the venue says to add",
+        "Extra hours, which are by request"
+      ],
+      "questions": [
+        "Are we booking October–April or the summer rate?",
+        "What is Arthur's food minimum for our guest count?",
+        "Is the courtyard tent included if it rains?",
+        "The house holds 80 indoors and 120 outdoors. Which count are we planning?"
+      ],
+      "price": {
+        "confidence": "published",
+        "kind": "rental",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "http://www.casafelizvenue.com/casafelizwedding",
+        "saturday": 4950,
+        "offday": 3900,
+        "taxPct": 6.5,
+        "note": "October–April rental from Casa Feliz's own rate list. Saturday is $4,950, Friday or Sunday is $3,900, and Monday–Thursday is $2,800, plus the 6.5% tax they tell you to add. Summer Saturday is $3,100, Friday or Sunday $2,600, and Monday–Thursday $2,300, also plus tax. This number is the site rental and tax, not the catering."
+      }
+    },
+    {
+      "id": "paradise-cove",
+      "name": "Paradise Cove",
+      "metro": "36740",
+      "city": "Orlando",
+      "address": "13245 Lake Bryan Drive, Orlando, FL 32821",
+      "website": "https://paradisecoveorlando.com/intimate-ceremonies/",
+      "vibes": [
+        "waterfront",
+        "all-inclusive"
+      ],
+      "capacity": 50,
+      "indoorOutdoor": "outdoor",
+      "ceremonyOnsite": true,
+      "catering": "in-house",
+      "alcohol": "in-house",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": false,
+      "included": [
+        "Bubbles & Brunch, the package used for the number below: exclusive use, coordinator, officiant, boat entrance or exit, some florals, DJ, 4 hours of photography, buffet lunch, beer, wine, and champagne, cake, and tables",
+        "Smaller weekday ceremonies start at $2,495 for up to 20 guests, without a meal"
+      ],
+      "notIncluded": [
+        "Saturday and Sunday rates. The page says to ask a coordinator",
+        "Liquor, plated service, and extra florals",
+        "Guest counts above the published package. The intro says to call once you pass 50"
+      ],
+      "questions": [
+        "What is the Saturday price for this same package?",
+        "Is there a rain plan on the lake?",
+        "What does plus-plus mean on the $35 extra-guest line of The Perfect Day?",
+        "Can guests stay nearby, or do we book hotels ourselves?"
+      ],
+      "price": {
+        "confidence": "published",
+        "kind": "package",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://paradisecoveorlando.com/intimate-ceremonies/",
+        "saturday": null,
+        "offday": 13995,
+        "includedGuests": 25,
+        "extraGuest": 75,
+        "includesFood": true,
+        "dayNote": "Saturday and Sunday are not priced on the page.",
+        "note": "Bubbles & Brunch from Paradise Cove's own package page: $13,995 Monday–Thursday for 25 guests, then $75 a guest. It includes the lunch and a beer, wine, and champagne bar. A Moment in Paradise is $2,495 for up to 20 guests on Monday–Friday before 2pm, and food cannot be added to it. Saturday is not published."
+      }
+    },
+    {
+      "id": "maitland-art-center",
+      "name": "Maitland Art Center",
+      "metro": "36740",
+      "city": "Maitland",
+      "address": "231 W. Packwood Ave., Maitland, FL 32751",
+      "website": "https://artandhistory.org/host-an-event/weddings/",
+      "vibes": [
+        "art",
+        "historic",
+        "garden"
+      ],
+      "capacity": 125,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "outside",
+      "alcohol": "byo",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": true,
+      "included": [
+        "The PDF lists ceremony sites (chapel, courtyard, gardens) and reception rooms, including the Germaine Marvel Building",
+        "A $500 refundable security deposit is listed apart from the rental",
+        "Maitland residents get 5% off"
+      ],
+      "notIncluded": [
+        "Sales tax. The PDF says prices do not include it",
+        "Tables and chairs in the historic outdoor rooms",
+        "Catering. Food prices are not in the wedding PDF"
+      ],
+      "questions": [
+        "Which package is the $3,575 Saturday, and which is the $650 morning elopement?",
+        "Is Germaine Marvel available in June–September? The PDF says that room is not",
+        "Do we have to bring tables for the courtyard?",
+        "Is a coordinator required?"
+      ],
+      "price": {
+        "confidence": "published",
+        "kind": "range",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://artandhistory.org/wp-content/uploads/Weddings-at-the-AH-1.pdf",
+        "low": 650,
+        "high": 3575,
+        "note": "From the Art & History Museums wedding PDF on artandhistory.org. Saturday figures on that sheet run from $650 for a morning elopement (up to 15 guests, 9–11am) to $3,575. The PDF is set in columns, so this page shows the published Saturday span instead of pinning one column to the wrong package. Peak season is listed as October–May and off-season as June–September. Tax is extra."
+      }
+    },
+    {
+      "id": "disney-world",
+      "name": "Walt Disney World Fairy Tale Weddings",
+      "metro": "36740",
+      "city": "Lake Buena Vista",
+      "address": "Walt Disney World Resort, FL",
+      "website": "https://www.disneyweddings.com/florida/pricing",
+      "vibes": [
+        "resort",
+        "all-inclusive"
+      ],
+      "capacity": 250,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "in-house",
+      "alcohol": "in-house",
+      "accommodations": true,
+      "accessible": true,
+      "rainPlan": true,
+      "included": [
+        "A Disney wedding planning team and a day-of coordinator, included in the event price",
+        "Most ceremony sites include a musician, a water station, and a sound system",
+        "Ceremony fees can count toward the event minimum. Tax and service charges do not"
+      ],
+      "notIncluded": [
+        "Tax, service charges, and gratuity",
+        "A separate Saturday price. The day of the week changes the minimum, and the page does not split it out",
+        "Specialty reception rooms, which can add fees"
+      ],
+      "questions": [
+        "Which location's minimum applies to our date, the $15,000 floor or a higher band?",
+        "What counts toward the minimum, and what is billed on top?",
+        "What is the service charge percent?",
+        "The Wedding Pavilion page says up to 250 guests. What is the cap at the site we want?"
+      ],
+      "price": {
+        "confidence": "published",
+        "kind": "minimum",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://www.disneyweddings.com/florida/pricing",
+        "floor": 15000,
+        "note": "Disney's own pricing page: event minimums start at $15,000. Some locations start higher, including $18,000–$20,000 at several World Showcase courtyards and $18,000–$35,000 at Disney's Wedding Pavilion (ceremony fee $8,000, up to 250 guests). Magic Kingdom ceremony fees go to $20,000. The formula is ceremony venue + day + time of day. This number is the published floor, not a guest-by-guest total."
+      }
+    },
+    {
+      "id": "cypress-grove",
+      "name": "Cypress Grove Estate House",
+      "metro": "36740",
+      "city": "Orlando",
+      "address": "Orlando, FL",
+      "website": "https://rw-brands.com/cypress-grove-packages/",
+      "vibes": [
+        "estate",
+        "garden",
+        "waterfront"
+      ],
+      "capacity": null,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "in-house",
+      "alcohol": "in-house",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": false,
+      "included": [
+        "The venue describes Standard and Deluxe rental packages and a budget calculator",
+        "Friday and Sunday have a lower minimum spend than Saturday. The rental rate itself is the same Friday–Sunday",
+        "Discounted rental rates are described for summer and for Monday–Thursday"
+      ],
+      "notIncluded": [
+        "A public dollar amount. The packages page does not list the rental fee",
+        "The calculator says its estimate leaves out minimum spend, service charge, delivery, and sales tax"
+      ],
+      "questions": [
+        "What is the Saturday rental, in dollars, for Standard and for Deluxe?",
+        "What is the food-and-beverage minimum on Saturday versus Friday?",
+        "What is the service charge percent?",
+        "How many seated guests fit, and what is the rain plan?"
+      ],
+      "price": {
+        "confidence": "unpublished",
+        "kind": "unpublished",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://rw-brands.com/cypress-grove-packages/",
+        "note": "Checked the venue's packages page on October 2, 2026. It describes Friday versus Saturday minimums and points to a calculator, and it does not publish a rental dollar amount. Pricing not published, ask the venue."
+      }
+    },
+    {
+      "id": "howey-mansion",
+      "name": "The Howey Mansion",
+      "metro": "36740",
+      "city": "Howey-in-the-Hills",
+      "address": "Howey-in-the-Hills, FL",
+      "website": "https://thehoweymansion.com/",
+      "vibes": [
+        "historic",
+        "estate"
+      ],
+      "capacity": null,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "outside",
+      "alcohol": "byo",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": false,
+      "included": [
+        "The homepage presents the mansion as a Florida wedding venue"
+      ],
+      "notIncluded": [
+        "No rental, per-guest, or package price was on the homepage checked October 2, 2026"
+      ],
+      "questions": [
+        "What is the Saturday site fee, and what does a Friday cost?",
+        "Is catering exclusive, and what is the minimum?",
+        "How many guests can sit inside if it rains?",
+        "Is there a service charge on top of the rental?"
+      ],
+      "price": {
+        "confidence": "unpublished",
+        "kind": "unpublished",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://thehoweymansion.com/",
+        "note": "The Howey Mansion's website was open on October 2, 2026. No wedding price was published on the homepage. Pricing not published, ask the venue."
+      }
+    },
+    {
+      "id": "dubsdread",
+      "name": "Events by Dubsdread",
+      "metro": "36740",
+      "city": "Orlando",
+      "address": "549 West Par Street, Orlando, FL 32804",
+      "website": "https://eventsbydubsdread.com/",
+      "vibes": [
+        "historic",
+        "ballroom"
+      ],
+      "capacity": null,
+      "indoorOutdoor": "indoor",
+      "ceremonyOnsite": true,
+      "catering": "in-house",
+      "alcohol": "in-house",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": true,
+      "included": [
+        "The site offers wedding venues and events catering at the Dubsdread address above"
+      ],
+      "notIncluded": [
+        "No package price or per-guest menu price was on the pages checked October 2, 2026"
+      ],
+      "questions": [
+        "What is the Saturday rental, and is the historic ballroom a separate fee?",
+        "What is the per-person catering price before service charge?",
+        "What is the service charge and tax?",
+        "How many guests fit seated?"
+      ],
+      "price": {
+        "confidence": "unpublished",
+        "kind": "unpublished",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://eventsbydubsdread.com/",
+        "note": "Events by Dubsdread's site was open on October 2, 2026, at 549 West Par Street. It did not publish a wedding price. Pricing not published, ask the venue."
+      }
+    },
+    {
+      "id": "bella-collina",
+      "name": "Bella Collina",
+      "metro": "36740",
+      "city": "Montverde",
+      "address": "15920 County Rd 455, Montverde, FL 34756",
+      "website": "https://www.bellacollina.com/",
+      "vibes": [
+        "estate",
+        "waterfront",
+        "resort"
+      ],
+      "capacity": null,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "in-house",
+      "alcohol": "in-house",
+      "accommodations": true,
+      "accessible": false,
+      "rainPlan": false,
+      "included": [
+        "A lakefront club in Montverde. The homepage does not itemize a wedding package"
+      ],
+      "notIncluded": [
+        "No wedding rental or per-guest price was on the homepage checked October 2, 2026"
+      ],
+      "questions": [
+        "What is the Saturday wedding minimum, and what does it include?",
+        "Is the club limited to members and sponsored events?",
+        "What is the food-and-beverage minimum?",
+        "Is there a guest-room block?"
+      ],
+      "price": {
+        "confidence": "unpublished",
+        "kind": "unpublished",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://www.bellacollina.com/",
+        "note": "Bella Collina's site was open on October 2, 2026. The homepage gives the Montverde address and does not publish a wedding price. Pricing not published, ask the venue."
+      }
+    },
+    {
+      "id": "reunion-resort",
+      "name": "Reunion Resort",
+      "metro": "36740",
+      "city": "Kissimmee",
+      "address": "7593 Gathering Drive, Kissimmee, FL 34747",
+      "website": "https://www.reunionresort.com/",
+      "vibes": [
+        "resort"
+      ],
+      "capacity": null,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "in-house",
+      "alcohol": "in-house",
+      "accommodations": true,
+      "accessible": false,
+      "rainPlan": false,
+      "included": [
+        "Resort grounds and guest rooms in Kissimmee"
+      ],
+      "notIncluded": [
+        "No wedding package price was on the resort homepage checked October 2, 2026"
+      ],
+      "questions": [
+        "Which lawn or ballroom, and what is the Saturday minimum?",
+        "Does a guest-room block change the venue fee?",
+        "What is the service charge?",
+        "Is there an indoor backup?"
+      ],
+      "price": {
+        "confidence": "unpublished",
+        "kind": "unpublished",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://www.reunionresort.com/",
+        "note": "Reunion Resort's site was open on October 2, 2026, at 7593 Gathering Drive, Kissimmee. No wedding price was published on that page. Pricing not published, ask the venue."
+      }
+    },
+    {
+      "id": "mennello-museum",
+      "name": "Mennello Museum of American Art",
+      "metro": "36740",
+      "city": "Orlando",
+      "address": "Orlando, FL",
+      "website": "https://www.mennellomuseum.com/",
+      "vibes": [
+        "art",
+        "museum",
+        "garden"
+      ],
+      "capacity": null,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": false,
+      "catering": "outside",
+      "alcohol": "licensed-caterer",
+      "accommodations": false,
+      "accessible": true,
+      "rainPlan": true,
+      "included": [
+        "The museum's homepage was open. It does not publish a wedding rental schedule"
+      ],
+      "notIncluded": [
+        "No site fee was on the homepage checked October 2, 2026"
+      ],
+      "questions": [
+        "Do you host weddings, and what is the Saturday fee?",
+        "Are ceremonies allowed on the grounds or only receptions inside?",
+        "What is the seated capacity?",
+        "Which caterers are allowed, and is there a minimum?"
+      ],
+      "price": {
+        "confidence": "unpublished",
+        "kind": "unpublished",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://www.mennellomuseum.com/",
+        "note": "The Mennello Museum homepage was open on October 2, 2026 and did not publish wedding pricing. Pricing not published, ask the venue. Confirm they are booking weddings before you tour."
+      }
+    },
+    {
+      "id": "alfond-inn",
+      "name": "The Alfond Inn",
+      "metro": "36740",
+      "city": "Winter Park",
+      "address": "300 East New England Avenue, Winter Park, FL 32789",
+      "website": "https://www.thealfondinn.com/",
+      "vibes": [
+        "historic",
+        "ballroom"
+      ],
+      "capacity": null,
+      "indoorOutdoor": "indoor",
+      "ceremonyOnsite": true,
+      "catering": "in-house",
+      "alcohol": "in-house",
+      "accommodations": true,
+      "accessible": true,
+      "rainPlan": true,
+      "included": [
+        "A Winter Park hotel. Room rates on the homepage are not a wedding package"
+      ],
+      "notIncluded": [
+        "No wedding rental or food minimum was published on the homepage checked October 2, 2026"
+      ],
+      "questions": [
+        "What is the Saturday wedding minimum, separate from the room rate?",
+        "How many guests fit in the event rooms?",
+        "Does a room block lower the food minimum?",
+        "What is the service charge?"
+      ],
+      "price": {
+        "confidence": "unpublished",
+        "kind": "unpublished",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://www.thealfondinn.com/",
+        "note": "The Alfond Inn homepage was open on October 2, 2026. A dollar figure on that page is a room rate, not a wedding package, so it is not used. Wedding pricing not published, ask the venue."
+      }
+    },
+    {
+      "id": "sterling-event-venue",
+      "name": "Sterling Event Venue",
+      "metro": "36740",
+      "city": "Central Florida",
+      "address": "Central Florida",
+      "website": "https://www.sterlingeventvenue.com/",
+      "vibes": [
+        "estate"
+      ],
+      "capacity": null,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "in-house",
+      "alcohol": "in-house",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": false,
+      "included": [
+        "The site describes itself as a Tuscan wedding venue in Central Florida"
+      ],
+      "notIncluded": [
+        "No package price was on the homepage checked October 2, 2026"
+      ],
+      "questions": [
+        "Which property, and what is the Saturday rental?",
+        "What does the package include at 100 guests?",
+        "Is there a Friday discount?",
+        "What is the rain plan?"
+      ],
+      "price": {
+        "confidence": "unpublished",
+        "kind": "unpublished",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://www.sterlingeventvenue.com/",
+        "note": "Sterling Event Venue's homepage was open on October 2, 2026. It calls itself a Tuscan wedding venue in Central Florida and does not publish a price. Pricing not published, ask the venue. The street address was not on that page."
+      }
+    },
+    {
+      "id": "celebration-golf",
+      "name": "Celebration Golf Club",
+      "metro": "36740",
+      "city": "Celebration",
+      "address": "Celebration, FL",
+      "website": "https://celebrationgolf.com/",
+      "vibes": [
+        "resort",
+        "garden"
+      ],
+      "capacity": null,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "in-house",
+      "alcohol": "in-house",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": false,
+      "included": [
+        "A golf club in Celebration that mentions weddings and rentals on its site"
+      ],
+      "notIncluded": [
+        "No wedding price was on the homepage checked October 2, 2026"
+      ],
+      "questions": [
+        "What is the Saturday site fee versus a Friday?",
+        "What is the per-person catering price?",
+        "How many guests fit on the lawn and in the dining room?",
+        "Is there a weather backup that does not move the party off site?"
+      ],
+      "price": {
+        "confidence": "unpublished",
+        "kind": "unpublished",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://celebrationgolf.com/",
+        "note": "Celebration Golf Club's site was open on October 2, 2026. It mentions weddings and rentals and does not publish a price. Pricing not published, ask the venue."
+      }
+    },
+    {
+      "id": "debary-hall",
+      "name": "DeBary Hall",
+      "metro": "36740",
+      "city": "DeBary",
+      "address": "DeBary, FL",
+      "website": "https://debaryhall.com/",
+      "vibes": [
+        "historic",
+        "garden"
+      ],
+      "capacity": null,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "outside",
+      "alcohol": "byo",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": false,
+      "nearby": true,
+      "included": [
+        "A historic site in DeBary whose page mentions weddings and rentals"
+      ],
+      "notIncluded": [
+        "No rental price was on the homepage checked October 2, 2026"
+      ],
+      "questions": [
+        "What is the Saturday rental for a ceremony, and for a reception?",
+        "DeBary is in Volusia County, outside the Orlando metro. Is that the drive we want?",
+        "How many guests fit, and what happens in the rain?",
+        "Can we bring our own caterer?"
+      ],
+      "price": {
+        "confidence": "unpublished",
+        "kind": "unpublished",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://debaryhall.com/",
+        "note": "DeBary Hall's site was open on October 2, 2026. It mentions weddings and rentals and does not publish a price. DeBary is in Volusia County, next to the Orlando metro, not inside it. Pricing not published, ask the venue."
+      }
+    },
+    {
+      "id": "fairchild",
+      "name": "Fairchild Tropical Botanic Garden",
+      "metro": "33100",
+      "city": "Coral Gables",
+      "address": "Coral Gables, FL",
+      "website": "https://fairchildgarden.org/wp-content/uploads/2026/02/Fairchild-Wedding-Booklet-2026.pdf",
+      "vibes": [
+        "garden"
+      ],
+      "capacity": 300,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "preferred",
+      "alcohol": "licensed-caterer",
+      "accommodations": false,
+      "accessible": true,
+      "rainPlan": true,
+      "included": [
+        "Garden House package: ceremony location, cocktail hour, and Garden House or lawn for six hours, based on 1–100 guests",
+        "Choice of white resin or mahogany chairs on the ceremony-only package",
+        "A day-of coordinator is required"
+      ],
+      "notIncluded": [
+        "The '++' on the rate. The booklet does not spell out the service charge percent, so it is not added here",
+        "Florida sales tax, which the booklet says applies",
+        "Exclusivity. Other events can run at the same time unless you buy that upgrade",
+        "Guests past the package base, at $30 each"
+      ],
+      "questions": [
+        "What do the plus-plus marks add, in percent?",
+        "Do we need the evening exclusivity upgrade?",
+        "Which ceremony lawn still has room on our date?",
+        "What is the rain reserve, and the $1,500 marquee option?"
+      ],
+      "price": {
+        "confidence": "published",
+        "kind": "rental",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://fairchildgarden.org/wp-content/uploads/2026/02/Fairchild-Wedding-Booklet-2026.pdf",
+        "saturday": 10250,
+        "offday": 8700,
+        "includedGuests": 100,
+        "extraGuest": 30,
+        "note": "Garden House package from Fairchild's 2026 wedding booklet. Saturday evenings start at $10,250++. Friday or Sunday evenings start at $8,700++. Monday–Thursday starts at $6,660++. The base covers 1–100 guests, then $30 a guest. Ceremony-only starts at $2,500++ for 1–25 guests, then $30 a guest. Arts Center Saturday evenings start at $13,000++ (base 150 guests). Lakeside Marquee Saturday evenings start at $20,500++ (base 250). The ++ and sales tax are not given as percents, so they are not added. Garden House capacity on the booklet is 300."
+      }
+    },
+    {
+      "id": "dallas-arboretum",
+      "name": "Dallas Arboretum",
+      "metro": "19100",
+      "city": "Dallas",
+      "address": "Dallas, TX",
+      "website": "https://dallasarboretum.imgix.net/wp-content/uploads/2025/02/04131345/2024-2026-Wedding-Guide-1.pdf",
+      "vibes": [
+        "garden"
+      ],
+      "capacity": 300,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "preferred",
+      "alcohol": "licensed-caterer",
+      "accommodations": false,
+      "accessible": true,
+      "rainPlan": false,
+      "included": [
+        "Rosine Hall evening ceremony and reception in peak season, used for the number below",
+        "The guide says each ceremony garden is included with the reception rental",
+        "Tables, chairs, a wedding sales manager, an event facilitator, security, and a self-guided rehearsal are listed as included with a rental"
+      ],
+      "notIncluded": [
+        "Valet, outdoor lighting, stage, dance floor, and draping, listed as add-ons",
+        "Catering. Food is not in the rental",
+        "A $1,000 refundable security deposit"
+      ],
+      "questions": [
+        "Is Rosine Hall the $13,500 peak room, or does that rate belong to the room beside it on the PDF?",
+        "Does the 30% Sunday–Friday discount apply on top of the off-peak month rate?",
+        "Which caterers are approved, and what is a typical per-person price?",
+        "What is the rain plan for an outdoor ceremony?"
+      ],
+      "price": {
+        "confidence": "published",
+        "kind": "rental",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://dallasarboretum.imgix.net/wp-content/uploads/2025/02/04131345/2024-2026-Wedding-Guide-1.pdf",
+        "saturday": 13500,
+        "offday": 9450,
+        "note": "From the Dallas Arboretum 2024–2026 wedding guide. The evening reception block for up to 300 seated guests (350 with a DJ) is peak $13,500 and off-peak months $11,500, plus a $1,000 deposit. The guide's column order places 'Rosine Hall & Jonsson Color Garden or Crape Myrtle Allee' immediately after that price, and lists Jonsson Color Garden on its own at peak $18,500 for up to 500. Sunday–Friday is a published 30% venue-rental discount, so the off-day figure here is 30% off $13,500. It does not also cut the seasonal off-peak rate. Peak months are March–May and September–December."
+      }
+    },
+    {
+      "id": "chicago-botanic",
+      "name": "Chicago Botanic Garden",
+      "metro": "16980",
+      "city": "Glencoe",
+      "address": "1000 Lake Cook Road, Glencoe, IL",
+      "website": "https://www.chicagobotanic.org/sites/default/files/pdf/events/wedding-venue-pricing.pdf",
+      "vibes": [
+        "garden"
+      ],
+      "capacity": null,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "preferred",
+      "alcohol": "licensed-caterer",
+      "accommodations": false,
+      "accessible": true,
+      "rainPlan": false,
+      "included": [
+        "McGinley Pavilion, the room used for the number below",
+        "The same PDF prices Rose Terrace and the English Walled Garden, the Rose Garden, and the Esplanade"
+      ],
+      "notIncluded": [
+        "Anything the one-page PDF does not list: food, tax, service charge, and guest caps",
+        "The PDF prints ZIP 30022, which is not a Glencoe ZIP, so that ZIP is not shown here"
+      ],
+      "questions": [
+        "What is the seated capacity of McGinley Pavilion?",
+        "Does the rental include tables, or only the space?",
+        "Is there a food minimum, and who may cater?",
+        "What is the rain site if we book a terrace?"
+      ],
+      "price": {
+        "confidence": "published",
+        "kind": "rental",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://www.chicagobotanic.org/sites/default/files/pdf/events/wedding-venue-pricing.pdf",
+        "saturday": 8500,
+        "offday": 4500,
+        "note": "From the Garden's wedding-venue pricing PDF. McGinley Pavilion is $8,500 on Saturday and $4,500 Friday or Sunday. Rose Terrace and the English Walled Garden are $4,000 Saturday and $2,000 Friday or Sunday. The Rose Garden is $12,000. The Esplanade is $30,000. The PDF does not say what those fees include."
+      }
+    },
+    {
+      "id": "houston-botanic",
+      "name": "Houston Botanic Garden",
+      "metro": "26420",
+      "city": "Houston",
+      "address": "Houston, TX",
+      "website": "https://hbg.org/wp-content/uploads/2026/01/2026-Private-Rentals-Guide.pdf",
+      "vibes": [
+        "garden"
+      ],
+      "capacity": 200,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "preferred",
+      "alcohol": "licensed-caterer",
+      "accommodations": false,
+      "accessible": true,
+      "rainPlan": true,
+      "included": [
+        "Woodland Glade 4-hour rental, the ceremony lawn used for the number below. The guide says it seats up to 200",
+        "The Garden says a ceremony there can include a private entrance, parking, and a rehearsal hour on some packages",
+        "The FAQ says the garden is ADA compliant and has on-site parking"
+      ],
+      "notIncluded": [
+        "Food and furniture, which must come from approved vendors",
+        "A security guard when alcohol is served: $50 an hour, four-hour minimum, one guard per 100 guests",
+        "The Global Collection Garden Tent, priced separately"
+      ],
+      "questions": [
+        "Is the $4,200 the evening rate or the daytime rate for Woodland Glade?",
+        "What is the tent rental if we want dinner next to the ceremony?",
+        "Which caterers are approved?",
+        "What is the damage deposit for this lawn?"
+      ],
+      "price": {
+        "confidence": "published",
+        "kind": "rental",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://hbg.org/wp-content/uploads/2026/01/2026-Private-Rentals-Guide.pdf",
+        "saturday": 4200,
+        "offday": 3250,
+        "note": "From the Garden's 2026 private rentals guide. Woodland Glade, a 4-hour rental seating up to 200, is Saturday $4,200, Friday or Sunday $3,250, and Monday–Thursday $1,800. The climate-controlled Global Collection Garden Tent is Saturday $5,700 and Monday–Friday or Sunday $4,500, with admission tickets for up to 200. The FAQ says weekday Woodland Glade ceremonies start at $1,800 and the large tent starts at $4,500. Food is not in the rental. The price table is dense, so treat $4,200 as the Saturday lawn rental and confirm the hour block when you inquire."
+      }
+    },
+    {
+      "id": "desert-botanical",
+      "name": "Desert Botanical Garden",
+      "metro": "38060",
+      "city": "Phoenix",
+      "address": "Phoenix, AZ",
+      "website": "https://dbg.org/explore/wedding/",
+      "vibes": [
+        "garden"
+      ],
+      "capacity": 250,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "preferred",
+      "alcohol": "licensed-caterer",
+      "accommodations": false,
+      "accessible": true,
+      "rainPlan": true,
+      "included": [
+        "Dorrance Hall, Boppart Courtyard, and Kitchell Patio as one rental, up to 5 hours",
+        "The page lists other rooms at their own fees",
+        "A 50% deposit at contract, balance two weeks prior. A ten-day hold is complimentary"
+      ],
+      "notIncluded": [
+        "Extra hours at Dorrance, listed at $840 an hour",
+        "Food, which is not in the rental figure",
+        "A separate Saturday price. The page does not publish one"
+      ],
+      "questions": [
+        "Does $4,200 apply on Saturday night, or only certain days?",
+        "What does the rental include: chairs, tables, security?",
+        "Who may cater, and is there a minimum?",
+        "Webster Center is $3,800 and evening-only. Is that a better fit?"
+      ],
+      "price": {
+        "confidence": "published",
+        "kind": "rental",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://dbg.org/explore/wedding/",
+        "saturday": 4200,
+        "offday": 4200,
+        "note": "From the Garden's wedding page. Dorrance Center (Dorrance Hall, Boppart Courtyard, and Kitchell Patio) is $4,200 for up to 5 hours between 8 a.m. and 11 p.m. Extra hours are $840. Boppart Courtyard seats 200. Dorrance Hall seats 250. Webster Center is $3,800 for an evening of up to 5 hours. Center for Desert Living is $2,600. Amphitheater and Binns Pavilion is $3,400. The page does not publish a Saturday versus weekday split, so both columns use $4,200. Food is not included."
+      }
+    },
+    {
+      "id": "vizcaya",
+      "name": "Vizcaya Museum and Gardens",
+      "metro": "33100",
+      "city": "Miami",
+      "address": "3251 South Miami Ave., Miami, FL 33129",
+      "website": "https://vizcaya.org/visit-2/wedding-events/",
+      "vibes": [
+        "historic",
+        "waterfront",
+        "garden"
+      ],
+      "capacity": 300,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "preferred",
+      "alcohol": "licensed-caterer",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": true,
+      "included": [
+        "Evening rental of the inner courtyard, terraces, and gardens, 6:30 p.m. to 11 p.m., for 100 guests",
+        "Parking for 125 cars is included in the evening rental",
+        "A daytime garden ceremony is a separate, smaller fee"
+      ],
+      "notIncluded": [
+        "Food and decor. Caterers and planners must come from the approved list",
+        "A tent on the East Terrace. The wedding page requires one above 90 guests; the FAQ says above 100. Neither tent fee is in this number",
+        "Extra guests, extra hours, early load-in, and the 7% sales tax, which the page says applies"
+      ],
+      "questions": [
+        "Do we need the $8,500 tent or the $12,000 tent at our guest count?",
+        "The main house seats 100. Are we planning the courtyard or the East Terrace?",
+        "What is a typical approved-caterer minimum?",
+        "Police for events over 200 guests are $150 an hour with a four-hour minimum. Do we need them?"
+      ],
+      "price": {
+        "confidence": "published",
+        "kind": "rental",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://vizcaya.org/visit-2/wedding-events/",
+        "saturday": 23000,
+        "offday": 23000,
+        "includedGuests": 100,
+        "extraGuest": 25,
+        "taxPct": 7,
+        "note": "Vizcaya's own wedding page: evening base rental is $23,000 for 100 guests, 6:30–11 p.m., any day. Each guest over 100 is $25. A 7% sales tax applies to the fees, and this number includes that tax. It does not include a tent ($8,500 or $12,000), extra hours ($2,400), or catering. Capacity is 300. The daytime garden ceremony is $2,000 for up to 25 guests."
+      }
+    },
+    {
+      "id": "deering-estate",
+      "name": "Deering Estate",
+      "metro": "33100",
+      "city": "Palmetto Bay",
+      "address": "16701 SW 72nd Avenue, Palmetto Bay, FL 33157",
+      "website": "https://deeringestate.org/venue-rentals/miami-wedding-venues/",
+      "vibes": [
+        "historic",
+        "waterfront",
+        "garden"
+      ],
+      "capacity": null,
+      "indoorOutdoor": "outdoor",
+      "ceremonyOnsite": true,
+      "catering": "outside",
+      "alcohol": "licensed-caterer",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": false,
+      "included": [
+        "Historic Grounds from 5:00 p.m. to 11:30 p.m.: Grand Lawn, Courtyard, Royal Palm Grove, Fig Garden, and Mango Grove",
+        "The base rental covers up to 150 guests",
+        "A ceremony-only outdoor rental is listed separately at $3,500"
+      ],
+      "notIncluded": [
+        "Historic houses. The 2025 rules say they stay closed for this rental",
+        "Staffing. Up to 150 guests the published staff fee is $1,287.68, and it is not in the card number",
+        "A $5-per-person catering permit, and food itself"
+      ],
+      "questions": [
+        "Are we in the 25% discount window (June–August, or Monday–Thursday)?",
+        "What is the staff fee at our exact guest count?",
+        "Is there a rain plan if the houses stay closed?",
+        "What is the largest guest count they will actually book?"
+      ],
+      "price": {
+        "confidence": "published",
+        "kind": "rental",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://deeringestate.org/wp-content/uploads/2025/09/Facility-Rental-Rules-and-Regulations-v-September-2025.pdf",
+        "saturday": 9750,
+        "offday": null,
+        "includedGuests": 150,
+        "extraGuest": 18,
+        "taxPct": 7,
+        "note": "September 2025 facility rules PDF: Historic Grounds base rental is $9,750, plus $18 a guest over 150, plus 7% Florida sales tax. This number is that rental and tax. It does not include the published staff fee ($1,287.68 up to 150 guests) or the $5-per-person catering permit. Monday–Thursday year-round, and any day in June–August, is 25% off the base rental. That discount is not applied here, because Saturday outside summer is the full base."
+      }
+    },
+    {
+      "id": "spanish-monastery",
+      "name": "The Ancient Spanish Monastery",
+      "metro": "33100",
+      "city": "North Miami Beach",
+      "address": "16711 West Dixie Highway, North Miami Beach, FL 33160",
+      "website": "https://www.spanishmonastery.com/",
+      "vibes": [
+        "historic",
+        "garden"
+      ],
+      "capacity": 250,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "preferred",
+      "alcohol": "licensed-caterer",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": true,
+      "included": [
+        "The quoted package is a Saturday wedding and reception in the Loggia, up to 250 people, for four hours",
+        "An officiant and the monastery's pianist or organist",
+        "A security guard at the gate, a ceremony coordinator, and the changing room"
+      ],
+      "notIncluded": [
+        "Catering, rentals, and decor. The PDF says the monastery provides the venue only",
+        "The bridal suite upgrade, listed at $250",
+        "Summer discounts and the smaller rooms, which cost less than the Loggia"
+      ],
+      "questions": [
+        "Which of the two wedding PDFs on the site is the current one? A second file's ceremony-only line did not extract cleanly.",
+        "The Chapter House package is $9,000 on Saturday. Is that enough room?",
+        "What does an approved caterer cost on top of the $12,000?",
+        "June–September takes $400 off this package. Does our date qualify?"
+      ],
+      "price": {
+        "confidence": "published",
+        "kind": "rental",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://www.spanishmonastery.com/_files/ugd/d5333c_f4b37b53c71b4ae4ac129f7ec606ab47.pdf",
+        "saturday": 12000,
+        "offday": 11000,
+        "note": "From the monastery's wedding PDF, the Saturday wedding-with-reception package in the Loggia is $12,000 for up to 250 people. Friday or Sunday in the Loggia is $11,000. Monday–Thursday in the Loggia is $9,000. Other rooms are less, down to $6,000 on a weekday in the Chapter House. The PDF does not add sales tax, so tax is not added here. Food is not included. A second PDF on the same site shows different ceremony-only figures; confirm which sheet the venue is using."
+      }
+    },
+    {
+      "id": "miami-beach-botanical",
+      "name": "Miami Beach Botanical Garden",
+      "metro": "33100",
+      "city": "Miami Beach",
+      "address": "2000 Convention Center Drive, Miami Beach, FL 33139",
+      "website": "https://www.mbgarden.org/rentthegarden",
+      "vibes": [
+        "garden"
+      ],
+      "capacity": null,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "outside",
+      "alcohol": "unknown",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": true,
+      "included": [
+        "The rental page describes the garden, including the Banyan Lawn beside the indoor ballroom",
+        "A personal photo shoot is priced separately and is not a wedding rental"
+      ],
+      "notIncluded": [
+        "A wedding rental dollar amount. The event pages do not publish one"
+      ],
+      "questions": [
+        "What is the Saturday fee for the Banyan Lawn and the ballroom?",
+        "How many guests can sit, indoors and out?",
+        "Is catering exclusive?",
+        "The $150 photo-shoot rate is not a wedding. What is the event minimum?"
+      ],
+      "price": {
+        "confidence": "unpublished",
+        "kind": "unpublished",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://www.mbgarden.org/rentthegarden",
+        "note": "The Garden's rental and private-event pages were open on October 2, 2026. They describe weddings and do not publish a wedding fee. A $150-an-hour personal photo shoot is a different product and is not used here. Pricing not published, ask the venue."
+      }
+    },
+    {
+      "id": "garfield-conservatory",
+      "name": "Garfield Park Conservatory",
+      "metro": "16980",
+      "city": "Chicago",
+      "address": "300 N. Central Park Avenue, Chicago, IL 60624",
+      "website": "https://garfieldconservatory.org/visit/room-rentals-information/",
+      "vibes": [
+        "garden"
+      ],
+      "capacity": null,
+      "indoorOutdoor": "indoor",
+      "ceremonyOnsite": true,
+      "catering": "exclusive",
+      "alcohol": "licensed-caterer",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": true,
+      "included": [
+        "The entire conservatory's public spaces for 8.5 hours, 3:30 p.m. to midnight",
+        "Chicago Park District security for the evening, which the page says is already in the fee",
+        "The Community Room as a bridal room when the whole site is rented"
+      ],
+      "notIncluded": [
+        "Catering. The policies page says food prices come from the exclusive caterers",
+        "The higher corporate rate, which is not the wedding line used here"
+      ],
+      "questions": [
+        "What is the seated capacity for a reception?",
+        "Which caterer, and what is the food minimum?",
+        "Friday is priced with Saturday. Is Sunday the lower rate?",
+        "Are tables and chairs included outside the Jensen and Community rooms?"
+      ],
+      "price": {
+        "confidence": "published",
+        "kind": "rental",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://garfieldconservatory.org/visit/room-rentals-information/",
+        "saturday": 6750,
+        "offday": 6000,
+        "note": "The Conservatory's rental page lists the entire building, the option it names for weddings, at the individual or non-profit rate: $6,750 on Friday and Saturday, and $6,000 on Sunday, Monday, Tuesday, and Thursday. Corporate rates are higher and are not used here. Food is extra. A guest cap is not printed on that page."
+      }
+    },
+    {
+      "id": "chicago-history-museum",
+      "name": "Chicago History Museum",
+      "metro": "16980",
+      "city": "Chicago",
+      "address": "1601 N. Clark Street, Chicago, IL 60614",
+      "website": "https://www.chicagohistory.org/weddings",
+      "vibes": [
+        "historic",
+        "museum"
+      ],
+      "capacity": 350,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "preferred",
+      "alcohol": "licensed-caterer",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": true,
+      "included": [
+        "Evening rental of the Minow Lobby, Robinson Gallery, Morse Genius Chicago Room, plaza, and private wedding suite, 6 p.m. to midnight",
+        "Building security, coat check, janitorial service, and a special-events staffer",
+        "The page prints room counts of 260, 300, and 350 guests"
+      ],
+      "notIncluded": [
+        "Food and beverage",
+        "Opening the Chicago: Crossroads of America exhibition during cocktail hour, listed at an extra $500",
+        "New Year's Eve, listed at $15,000"
+      ],
+      "questions": [
+        "Which Saturday cell applies to our month: the $8,000 winter line or the $12,000 summer line?",
+        "The rate card repeats figures in columns. Which column is our year?",
+        "Sunday evening is $7,500. Does a holiday-weekend Sunday use the Saturday fee?",
+        "Who is on the approved caterer list, and what is the minimum?"
+      ],
+      "price": {
+        "confidence": "published",
+        "kind": "range",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://www.chicagohistory.org/weddings",
+        "low": 8000,
+        "high": 12000,
+        "note": "The museum's wedding page shows a 2028 rate card. Saturday evening repeats as $11,000, $11,000, and $12,000 for June–September, with lower Saturday seasons down to $8,000 in January–March. Because the columns are not labeled room-by-room in the text, this card shows that published Saturday span instead of one cell. Friday evening is $8,000. Sunday evening is $7,500. Food is not included."
+      }
+    },
+    {
+      "id": "field-museum",
+      "name": "Field Museum",
+      "metro": "16980",
+      "city": "Chicago",
+      "address": "1400 S. DuSable Lake Shore Drive, Chicago, IL 60605",
+      "website": "https://www.fieldmuseum.org/page/weddings",
+      "vibes": [
+        "museum"
+      ],
+      "capacity": null,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "preferred",
+      "alcohol": "licensed-caterer",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": true,
+      "included": [
+        "Wedding spaces include Stanley Field Hall, the East Atrium, and the Rice Native Plant Gardens",
+        "The weddings page says groups can run from about 10 guests to more than 1,000"
+      ],
+      "notIncluded": [
+        "A wedding rental dollar amount. The page asks you to request a proposal",
+        "Photography packages, which start at $900 daytime and $1,200 evening, are not the venue rental and are not used as one"
+      ],
+      "questions": [
+        "What is the Saturday rental for Stanley Field Hall at our guest count?",
+        "What is included: security, tables, a wedding suite?",
+        "Is catering exclusive, and what is the minimum?",
+        "What is the rain plan if the ceremony is in the gardens?"
+      ],
+      "price": {
+        "confidence": "unpublished",
+        "kind": "unpublished",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://www.fieldmuseum.org/page/weddings",
+        "note": "The Field Museum's weddings page was open on October 2, 2026. It describes the spaces and photo packages, and it does not publish a wedding rental fee. Pricing not published, ask the venue."
+      }
+    },
+    {
+      "id": "cafe-brauer",
+      "name": "Café Brauer at Lincoln Park Zoo",
+      "metro": "16980",
+      "city": "Chicago",
+      "address": "2001 N. Clark Street, Chicago, IL 60614",
+      "website": "https://www.lpzoo.org/private-events/",
+      "vibes": [
+        "historic",
+        "waterfront"
+      ],
+      "capacity": null,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "unknown",
+      "alcohol": "unknown",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": true,
+      "included": [
+        "The zoo's private-events page offers Café Brauer, overlooking Nature Boardwalk",
+        "Other zoo spaces are listed on the same page, from small rooms to the whole zoo"
+      ],
+      "notIncluded": [
+        "A dollar rental. The page gives a phone number and does not print a fee"
+      ],
+      "questions": [
+        "What is the Saturday fee for the Great Hall?",
+        "How many guests can sit for dinner?",
+        "Is catering exclusive to the zoo?",
+        "What is the rain plan, and is the Great Hall indoors?"
+      ],
+      "price": {
+        "confidence": "unpublished",
+        "kind": "unpublished",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://www.lpzoo.org/private-events/",
+        "note": "Lincoln Park Zoo's private-events page was open on October 2, 2026. Café Brauer is listed, and no rental dollar amount is published. Pricing not published, ask the venue."
+      }
+    },
+    {
+      "id": "fort-worth-botanic",
+      "name": "Fort Worth Botanic Garden",
+      "metro": "19100",
+      "city": "Fort Worth",
+      "address": "3220 Botanic Garden Blvd., Fort Worth, TX 76107",
+      "website": "https://fwbg.org/private-events/",
+      "vibes": [
+        "garden"
+      ],
+      "capacity": 300,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "exclusive",
+      "alcohol": "licensed-caterer",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": false,
+      "included": [
+        "The Grove page lists a 9-hour or 14-hour rental, a photo pass, a weekday rehearsal, support staff, and guest admission",
+        "Capacity on the Grove page is up to 300 guests, including the wedding party"
+      ],
+      "notIncluded": [
+        "The site rental itself. Each space page says to call or email for current pricing",
+        "Ceremony chairs at $5 each, extra hours, a bridal suite, and a tent"
+      ],
+      "questions": [
+        "What is the Saturday rental for the Grove, in dollars?",
+        "Fuller Garden is ceremony-only and has no rain backup. Is that the plan?",
+        "Alcohol requires an FWPD officer and Rock Springs Café. What is that hourly rate?",
+        "A 10% administrative fee is added at booking. Is that on top of the quote?"
+      ],
+      "price": {
+        "confidence": "unpublished",
+        "kind": "unpublished",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://fwbg.org/rental-space/the-grove/",
+        "note": "The Grove, Horseshoe Garden, and Fuller Garden pages were open on October 2, 2026. Each one says to call for current pricing. Chair, hour, and bridal-suite add-ons are published, and the base rental is not. Pricing not published, ask the venue."
+      }
+    },
+    {
+      "id": "perot-museum",
+      "name": "Perot Museum of Nature and Science",
+      "metro": "19100",
+      "city": "Dallas",
+      "address": "2201 N. Field Street, Dallas, TX 75201",
+      "website": "https://www.perotmuseum.org/events/host-an-event/",
+      "vibes": [
+        "museum"
+      ],
+      "capacity": 1500,
+      "indoorOutdoor": "indoor",
+      "ceremonyOnsite": true,
+      "catering": "preferred",
+      "alcohol": "licensed-caterer",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": true,
+      "included": [
+        "The events page says the museum hosts ceremonies and receptions for groups from 25 to 1,500",
+        "The catering page says a rental includes event staff, exclusive use of the reserved area, housekeeping, and museum tables and chairs"
+      ],
+      "notIncluded": [
+        "A dollar rental. The host-an-event page does not print one"
+      ],
+      "questions": [
+        "What is the Saturday rental for the floor we want?",
+        "Wolfgang Puck is named as a caterer. Is there a food minimum?",
+        "Members get 10% off a booking. Does that apply to a wedding?",
+        "Which level fits a seated dinner at our guest count?"
+      ],
+      "price": {
+        "confidence": "unpublished",
+        "kind": "unpublished",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://www.perotmuseum.org/events/host-an-event/",
+        "note": "The Perot Museum's host-an-event page was open on October 2, 2026. It describes weddings and does not publish a rental fee. Pricing not published, ask the venue."
+      }
+    },
+    {
+      "id": "hmns",
+      "name": "Houston Museum of Natural Science",
+      "metro": "26420",
+      "city": "Houston",
+      "address": "5555 Hermann Park Drive, Houston, TX 77030",
+      "website": "https://www.hmns.org/visit/host-an-event/rent-the-museum/",
+      "vibes": [
+        "museum"
+      ],
+      "capacity": 450,
+      "indoorOutdoor": "indoor",
+      "ceremonyOnsite": true,
+      "catering": "preferred",
+      "alcohol": "licensed-caterer",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": true,
+      "included": [
+        "The quoted room is the Grand Hall for four hours",
+        "The PDF says the fee includes on-site security, a building supervisor, janitorial service, and maintenance",
+        "Evening weddings also include an onsite wedding manager and house staff, per the museum FAQ"
+      ],
+      "notIncluded": [
+        "Food, drinks, tables, chairs, and linens. The FAQ says those come from one of four caterers",
+        "Other halls. Wiess Energy Hall and the exhibit floors are priced separately",
+        "December, when the Grand Hall rate on the same PDF is $5,500"
+      ],
+      "questions": [
+        "Is the Grand Hall the right room, or do we need a hall with a ceremony capacity note?",
+        "Our date is in December. Is the $5,500 rate the one that applies?",
+        "Members get 10% off the facility rental. Do we qualify?",
+        "What is the caterer minimum for 100 guests?"
+      ],
+      "price": {
+        "confidence": "published",
+        "kind": "rental",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://www.hmns.org/wp-content/uploads/2025/02/HMNS-Event-Pricing-2025_February-update.pdf",
+        "saturday": 4500,
+        "offday": 4500,
+        "note": "February 2025 pricing PDF, general evening events for January–November: Grand Hall is $4,500 for four hours. The same row lists dinner capacity 450 and cocktail capacity 900. The PDF does not split Saturday from other days, so both columns use $4,500. December Grand Hall is $5,500. Food, tables, and chairs are not included. Other rooms on the sheet are not mixed into this number."
+      }
+    },
+    {
+      "id": "houston-zoo",
+      "name": "Houston Zoo",
+      "metro": "26420",
+      "city": "Houston",
+      "address": "6200 Hermann Park Drive, Houston, TX 77030",
+      "website": "https://www.houstonzoo.org/host-an-event/wedding-receptions/",
+      "vibes": [
+        "garden"
+      ],
+      "capacity": 700,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": false,
+      "catering": "in-house",
+      "alcohol": "in-house",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": true,
+      "included": [
+        "A wedding reception venue for four hours between 5:30 p.m. and 11:00 p.m.",
+        "Security, seating, and an event specialist",
+        "On-site catering. Outside catering is not allowed, except a certified wedding cake"
+      ],
+      "notIncluded": [
+        "The rental dollar amount. The page says to submit an inquiry",
+        "A ceremony. The page is about receptions",
+        "Receptions in November and December, and on listed blackout dates"
+      ],
+      "questions": [
+        "What is the Saturday rental for the McGovern hall versus the Reflection Pool?",
+        "How much seating is included at our guest count?",
+        "What is the food minimum with Taste Catering?",
+        "Can we hold the ceremony somewhere else the same day?"
+      ],
+      "price": {
+        "confidence": "unpublished",
+        "kind": "unpublished",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://www.houstonzoo.org/host-an-event/wedding-receptions/",
+        "note": "The Houston Zoo wedding-reception page was open on October 2, 2026. It describes what a rental includes and does not publish a fee. The page says individual venues seat up to 700. Pricing not published, ask the venue."
+      }
+    },
+    {
+      "id": "heard-museum",
+      "name": "Heard Museum",
+      "metro": "38060",
+      "city": "Phoenix",
+      "address": "2301 N. Central Ave., Phoenix, AZ 85004",
+      "website": "https://heard.org/plan/",
+      "vibes": [
+        "museum",
+        "art"
+      ],
+      "capacity": 300,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "outside",
+      "alcohol": "unknown",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": true,
+      "included": [
+        "One evening space for up to 300 guests: the contracted room, gallery access, and security and facilities staff",
+        "Evening hours are 6–11 p.m. Friday and Saturday, and 6–10 p.m. Sunday–Thursday"
+      ],
+      "notIncluded": [
+        "Tables, chairs, linen, and equipment",
+        "A second space, listed at $1,500, and each extra 100 guests, listed at $500",
+        "Exclusive use of the whole museum, which the brochure says to ask about"
+      ],
+      "questions": [
+        "Which single space is $7,000 on our date, the auditorium or a courtyard?",
+        "Exclusive evening use is not on the fee list. What does that cost?",
+        "Who may cater, and is there a minimum?",
+        "Amplified music is restricted outdoors. Does that change the plan?"
+      ],
+      "price": {
+        "confidence": "published",
+        "kind": "rental",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://heard.org/wp-content/uploads/2026/02/Heard-Museum-2026-Private-Events-Brochure-2.26.pdf",
+        "saturday": 7000,
+        "offday": 7000,
+        "note": "Heard Museum 2026 private-events brochure: evening rental is $7,000 for any one listed space, up to 300 guests. Friday and Saturday run until 11 p.m.; Sunday–Thursday until 10 p.m. The dollar amount does not change by day, so both columns use $7,000. Each extra space is $1,500. Each extra 100 guests is $500. Food and furniture are not included. Exclusive use of the building is not priced in the brochure."
+      }
+    },
+    {
+      "id": "phoenix-zoo",
+      "name": "Phoenix Zoo",
+      "metro": "38060",
+      "city": "Phoenix",
+      "address": "455 North Galvin Parkway, Phoenix, AZ 85008",
+      "website": "https://www.phoenixzoo.org/visit/venues-private-events/host-an-event/",
+      "vibes": [
+        "garden"
+      ],
+      "capacity": null,
+      "indoorOutdoor": "both",
+      "ceremonyOnsite": true,
+      "catering": "preferred",
+      "alcohol": "licensed-caterer",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": false,
+      "included": [
+        "The zoo says it has more than a dozen indoor and outdoor venues and hosts weddings",
+        "Free parking, event staff, a catering list, and bar service are described"
+      ],
+      "notIncluded": [
+        "A venue rental dollar amount",
+        "A 6% transaction fee the page adds to event invoices, which cannot be applied until there is a base fee"
+      ],
+      "questions": [
+        "What is the Saturday rental for a wedding, in dollars?",
+        "How many guests can the largest wedding space hold?",
+        "Nonprofits get 25% off venue rental. Does anything else discount a wedding?",
+        "What is included: chairs, a ceremony site, a rain room?"
+      ],
+      "price": {
+        "confidence": "unpublished",
+        "kind": "unpublished",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://www.phoenixzoo.org/visit/venues-private-events/host-an-event/",
+        "note": "The Phoenix Zoo host-an-event page was open on October 2, 2026. It says the zoo hosts weddings and mentions a 6% transaction fee, and it does not publish a rental amount. Pricing not published, ask the venue."
+      }
+    },
+    {
+      "id": "phoenix-art-museum",
+      "name": "Phoenix Art Museum",
+      "metro": "38060",
+      "city": "Phoenix",
+      "address": "1625 North Central Ave., Phoenix, AZ 85004",
+      "website": "https://phxart.org/events/host-an-event/",
+      "vibes": [
+        "art",
+        "museum"
+      ],
+      "capacity": null,
+      "indoorOutdoor": "indoor",
+      "ceremonyOnsite": true,
+      "catering": "preferred",
+      "alcohol": "in-house",
+      "accommodations": false,
+      "accessible": false,
+      "rainPlan": true,
+      "included": [
+        "The events page lists weddings and says packages are customized",
+        "In-house drinks from ARTenders, and a list of preferred caterers"
+      ],
+      "notIncluded": [
+        "A public rental fee. The page says to contact the events team for pricing"
+      ],
+      "questions": [
+        "What is the Saturday rental at our guest count?",
+        "Which galleries can stay open during dinner?",
+        "Is ARTenders the only bar, and what is the drink minimum?",
+        "What does a package include besides the room?"
+      ],
+      "price": {
+        "confidence": "unpublished",
+        "kind": "unpublished",
+        "verifiedOn": "2026-10-02",
+        "sourceUrl": "https://phxart.org/events/host-an-event/",
+        "note": "Phoenix Art Museum's host-an-event page was open on October 2, 2026. It offers weddings and does not publish a fee. Pricing not published, ask the venue."
+      }
+    }
+  ]
+}

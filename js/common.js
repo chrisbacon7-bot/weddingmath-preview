@@ -125,7 +125,54 @@ export function vacationUrl(pathname, params = {}) {
   return url.toString();
 }
 
+export function readShortlist() {
+  const ids = storageGet("shortlist", []);
+  return Array.isArray(ids) ? ids.filter((id) => typeof id === "string") : [];
+}
+
+export function writeShortlist(ids) {
+  storageSet("shortlist", ids.slice(0, 12));
+}
+
+export function toggleShortlist(id) {
+  const ids = readShortlist();
+  const next = ids.includes(id) ? ids.filter((item) => item !== id) : [...ids, id];
+  writeShortlist(next);
+  return next;
+}
+
+export function bindSteppers(scope = document) {
+  scope.querySelectorAll("[data-stepper]").forEach((box) => {
+    if (box.dataset.bound === "1") return;
+    box.dataset.bound = "1";
+    const input = box.querySelector('input[type="number"]');
+    const range = box.querySelector('input[type="range"]');
+    if (!input) return;
+    const syncRange = () => {
+      if (range) range.value = input.value;
+    };
+    input.addEventListener("input", syncRange);
+    if (range) {
+      range.addEventListener("input", () => {
+        input.value = range.value;
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+      });
+    }
+    box.querySelectorAll("[data-step]").forEach((button) => {
+      button.addEventListener("click", () => {
+        const min = Number(input.min || 0);
+        const max = Number(input.max || 9999);
+        const next = (Number(input.value) || 0) + Number(button.dataset.step);
+        input.value = String(Math.min(max, Math.max(min, next)));
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+      });
+    });
+    syncRange();
+  });
+}
+
 export function bindGlobals() {
+  bindSteppers();
   document.addEventListener("click", async (event) => {
     const share = event.target.closest("[data-share]");
     if (share) {

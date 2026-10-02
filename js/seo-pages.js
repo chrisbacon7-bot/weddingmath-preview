@@ -8,6 +8,7 @@ import { escapeHtml } from "./html.js";
 import { describe } from "./describe.js";
 import { planFor } from "./estimate.js";
 import { formatMoney, formatPlan } from "./format.js";
+import { venueLinksForState } from "./venue-pages.js";
 
 const money = (n) => formatMoney(n, { exact: true });
 
@@ -31,7 +32,7 @@ export function renderBelow(page) {
   const faqs = page.faqs || [];
   const paragraphs = page.explainer || [];
   if (!page.explainerTitle && !paragraphs.length && !faqs.length && !(page.related || []).length) return "";
-  const faqItems = faqs.map((item) => `<h3>${escapeHtml(item.q)}</h3><p>${escapeHtml(item.a)}</p>`).join("");
+  const faqItems = faqs.map((item) => `<details class="faq-item"><summary>${escapeHtml(item.q)}</summary><p>${escapeHtml(item.a)}</p></details>`).join("");
   const sources = faqs.length ? `<p>Every figure is cited on the <a href="/sources">sources page</a>.</p>` : "";
   let block = "";
   if (page.explainerTitle || paragraphs.length || faqs.length) {
@@ -39,7 +40,7 @@ export function renderBelow(page) {
       ? `<h2>${escapeHtml(page.explainerTitle || "About this page")}</h2>${paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("")}`
       : "";
     const questions = faqs.length ? `<h2>Common questions</h2><div class="faq">${faqItems}</div>` : "";
-    block = `<section class="explainer" aria-label="About this page">${intro}${questions}${sources}</section>`;
+    block = `<details class="explainer-fold"><summary>About this page and common questions</summary><section class="explainer" aria-label="About this page">${intro}${questions}${sources}</section></details>`;
   }
   return `${block}${renderRelated(page.related)}`;
 }
@@ -581,13 +582,18 @@ function renderState(abbr, costs, geo) {
     ],
     body: `<article>
 <h1>How Much Does a Wedding Cost in ${escapeHtml(label)}?</h1>
+<section class="summary-card card">
+  <p class="kicker">At a glance</p>
+  <div class="pair">
+    <article><p class="study">The Knot</p><p class="figure">${knotText}</p><p class="hint">Average spend in ${escapeHtml(official)}. 2026 Real Weddings Study, article updated ${escapeHtml(prettyDate(costs.sources["knot-study"].date))}.</p></article>
+    <article><p class="study">Zola</p><p class="figure">${row.zolaLow == null ? "Not published" : `${money(row.zolaLow)}–${money(row.zolaHigh)}`}</p><p class="hint">${row.zolaLow == null ? `No ${escapeHtml(official)} range on the Wedding Cost Index page.` : `Published budget range. Updated ${escapeHtml(prettyDate(costs.sources["zola-index"].date))}. Shown beside The Knot.`}</p></article>
+  </div>
+  ${costBars(row.knot, row.zolaLow, row.zolaHigh, costs.national.knotAverage.value)}
+  <p><a class="btn" href="/?loc=state:${abbr}">Price a ${escapeHtml(label)} wedding</a></p>
+</section>
 <p class="lede">The Knot's 2026 average for a ${escapeHtml(official)} wedding is ${knotText}. That is ${escapeHtml(compare)}.</p>
-<div class="pair">
-  <article><p class="study">The Knot</p><p class="figure">${knotText}</p><p class="hint">Average spend in ${escapeHtml(official)}. 2026 Real Weddings Study, article updated ${escapeHtml(prettyDate(costs.sources["knot-study"].date))}.</p></article>
-  <article><p class="study">Zola</p><p class="figure">${row.zolaLow == null ? "Not published" : `${money(row.zolaLow)}–${money(row.zolaHigh)}`}</p><p class="hint">${row.zolaLow == null ? `No ${escapeHtml(official)} range on the Wedding Cost Index page.` : `Published budget range. Updated ${escapeHtml(prettyDate(costs.sources["zola-index"].date))}. Shown beside The Knot.`}</p></article>
-</div>
 ${zolaHtml}
-<p><a class="btn" href="/?loc=state:${abbr}">Price a ${escapeHtml(label)} wedding</a></p>
+${venueLinksForState(abbr)}
 <h2>Guest count</h2>
 <p>The Knot's national average guest count is ${guests}. The ${per} figure is ${knotText} divided by ${guests}. It is that division, not a separate published ${escapeHtml(official)} rate.</p>
 <div class="table-wrap"><table>
@@ -637,12 +643,16 @@ function renderDc({ label, slug, path, place, costs, geo, guests }) {
     ],
     body: `<article>
 <h1>How Much Does a Wedding Cost in ${escapeHtml(label)}?</h1>
+<section class="summary-card card">
+  <p class="kicker">At a glance</p>
+  <div class="pair">
+    <article><p class="study">The Knot</p><p class="figure">${knotText}</p><p class="hint">Washington, DC city average. Article updated ${escapeHtml(prettyDate(costs.sources["knot-study"].date))}.</p></article>
+    <article><p class="study">Zola</p><p class="figure">${zolaText}</p><p class="hint">150-guest Washington, DC figure. Updated ${escapeHtml(prettyDate(costs.sources["zola-index"].date))}.</p></article>
+  </div>
+  ${costBars(metro.knot, null, null, costs.national.knotAverage.value, metro.zola150)}
+  <p><a class="btn" href="/?loc=metro:47900">Price a Washington, DC wedding</a></p>
+</section>
 <p class="lede">The Knot and Zola do not publish a District of Columbia state average. They do publish Washington, DC city figures: ${knotText} in The Knot's 2026 study, and ${zolaText} for a 150-guest wedding in Zola's index.</p>
-<div class="pair">
-  <article><p class="study">The Knot</p><p class="figure">${knotText}</p><p class="hint">Washington, DC city average. Article updated ${escapeHtml(prettyDate(costs.sources["knot-study"].date))}.</p></article>
-  <article><p class="study">Zola</p><p class="figure">${zolaText}</p><p class="hint">150-guest Washington, DC figure. Updated ${escapeHtml(prettyDate(costs.sources["zola-index"].date))}.</p></article>
-</div>
-<p><a class="btn" href="/?loc=metro:47900">Price a Washington, DC wedding</a></p>
 <h2>Guest count</h2>
 <div class="table-wrap"><table>
 <caption>Knot-based planning figure for a Washington, DC wedding.</caption>
@@ -704,6 +714,21 @@ function metroTable(abbr, costs, geo, guests) {
 <thead><tr><th>Metro</th><th>Price level</th><th>Level</th><th>At ${guests} guests</th></tr></thead>
 <tbody>${rows.join("")}</tbody>
 </table></div>`;
+}
+
+function costBars(knot, zolaLow, zolaHigh, national, zolaPoint) {
+  const rows = [{ label: "The Knot", value: knot }];
+  if (zolaPoint) rows.push({ label: "Zola", value: zolaPoint });
+  else if (zolaLow != null) {
+    rows.push({ label: "Zola low", value: zolaLow });
+    rows.push({ label: "Zola high", value: zolaHigh });
+  }
+  rows.push({ label: "US Knot avg", value: national });
+  const max = Math.max(...rows.map((row) => row.value));
+  return `<div class="bar-list">${rows.map((row) => {
+    const width = Math.max(8, Math.round((row.value / max) * 100));
+    return `<div class="bar-row"><span>${escapeHtml(row.label)}</span><span class="bar-track"><span style="--w:${width}%"></span></span><strong>${money(row.value)}</strong></div>`;
+  }).join("")}</div>`;
 }
 
 function zolaPosition(row, national) {
