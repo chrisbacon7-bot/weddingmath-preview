@@ -2,12 +2,40 @@
  * Pre-rendered venue finder, metro hubs, and venue pages.
  */
 
+import { readFileSync } from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { escapeHtml } from "./html.js";
 import { formatMoney } from "./format.js";
+import { describe } from "./describe.js";
 import { quoteVenue } from "./venue-quote.js";
+import { allIn } from "./price-engine.js";
+import { allInHeadline, allInHtml } from "./price-present.js";
 import {
   metroById, metroPath, venueMetros, venuePath, venues, venuesForMetro, venuesForState,
 } from "./venue-catalog.js";
+
+const dataDir = path.join(path.dirname(fileURLToPath(import.meta.url)), "../data");
+const costs = JSON.parse(readFileSync(path.join(dataDir, "costs.json"), "utf8"));
+const geo = JSON.parse(readFileSync(path.join(dataDir, "geo.json"), "utf8"));
+const taxTable = JSON.parse(readFileSync(path.join(dataDir, "tax.json"), "utf8"));
+const feeTable = JSON.parse(readFileSync(path.join(dataDir, "venue-fees.json"), "utf8"));
+
+function placeFor(venue) {
+  return describe(`metro:${venue.metro}`, { geo, costs });
+}
+
+function allInFor(venue, guests = 100, day = "sat") {
+  return allIn(venue, {
+    guests,
+    day,
+    season: "peak",
+    costs,
+    place: placeFor(venue),
+    taxTable,
+    fees: feeTable,
+  });
+}
 
 const money = (n) => formatMoney(n, { exact: true });
 
@@ -181,6 +209,7 @@ ${beforeResults}
 function venuePage(venue) {
   const metro = metroById(venue.metro);
   const quote = displayQuote(venue, 100);
+  const priced = allInFor(venue, 100, quote.day === "off" ? "off" : "sat");
   const saturday = quoteVenue(venue, 100, "sat");
   const off = quoteVenue(venue, 100, "off");
   const path = venuePath(venue);
@@ -220,8 +249,8 @@ function venuePage(venue) {
   <section class="summary-card card" id="quote">
     <div class="summary-top">
       <div>
-        <p class="kicker" data-quote-label>${escapeHtml(quote.label)}</p>
-        <p class="money" data-quote-total>${escapeHtml(headline(quote))}</p>
+        <p class="kicker" data-quote-label>${escapeHtml(priced.allInReady ? "All-in estimate" : quote.label)}</p>
+        <p class="money" data-quote-total>${escapeHtml(priced.allInReady ? allInHeadline(priced) : headline(quote))}</p>
         <p class="subhead" data-quote-detail>At 100 guests, ${quote.day === "off" ? "a weekday" : "Saturday"}. ${escapeHtml(quote.note)}</p>
       </div>
       <div class="summary-actions no-print">
@@ -253,7 +282,16 @@ function venuePage(venue) {
       ${dayBar("Saturday", saturday, barMax(saturday, off))}
       ${dayBar("Off day", off, barMax(saturday, off))}
     </div>
+    <div>
+      <p class="label">Season</p>
+      <div class="choices">
+        <button type="button" id="season-peak" data-season="peak" aria-pressed="true">Peak</button>
+        <button type="button" id="season-off" data-season="off" aria-pressed="false">Off-peak</button>
+      </div>
+      <p class="hint">Peak and off-peak change the total only when this venue's price list has both.</p>
+    </div>
     <p class="hint">Verified ${escapeHtml(venue.price.verifiedOn)} · ${escapeHtml(venue.price.confidence)} · <a href="${escapeHtml(venue.price.sourceUrl)}">Source</a></p>
+    ${allInHtml(priced)}
   </section>
   <div class="split-2">
     <section class="card">
@@ -284,6 +322,8 @@ function displayQuote(venue, guests) {
 
 function venueCard(venue) {
   const quote = displayQuote(venue, 100);
+  const priced = allInFor(venue, 100, "sat");
+  const allInLabel = priced.allInReady ? `${allInHeadline(priced)} all-in` : "";
   const metro = metroById(venue.metro);
   return `<article class="venue-card card" data-venue-card data-id="${escapeHtml(venue.id)}" data-capacity="${venue.capacity || ""}" data-vibes="${escapeHtml(venue.vibes.join(" "))}" data-indoor="${venue.indoorOutdoor}" data-ceremony="${venue.ceremonyOnsite ? "1" : ""}" data-rooms="${venue.accommodations ? "1" : ""}" data-rain="${venue.rainPlan ? "1" : ""}" data-access="${venue.accessible ? "1" : ""}" data-offday="${venue.price.offday != null ? "1" : ""}">
   <a class="venue-card-link" href="${venuePath(venue)}">
@@ -292,8 +332,8 @@ function venueCard(venue) {
       <span class="kicker">${escapeHtml(venue.city)}${venue.nearby ? " · Nearby" : ""}</span>
       <h2>${escapeHtml(venue.name)}</h2>
       <span class="chip-row">${venue.vibes.slice(0, 2).map((vibe) => `<span class="chip">${escapeHtml(labelVibe(vibe))}</span>`).join("")}</span>
-      <span class="venue-price" data-price>${escapeHtml(headline(quote))}</span>
-      <span class="hint">${escapeHtml(quote.label)} · ${venue.capacity ? `Up to ${venue.capacity}` : "Capacity not published"} · ${escapeHtml(includedShort(venue))}</span>
+      <span class="venue-price" data-price>${escapeHtml(allInLabel || headline(quote))}</span>
+      <span class="hint" data-price-note>${escapeHtml(priced.allInReady ? "All-in estimate at 100 guests" : quote.label)} · ${venue.capacity ? `Up to ${venue.capacity}` : "Capacity not published"} · ${escapeHtml(includedShort(venue))}</span>
     </span>
   </a>
   <button type="button" class="heart" data-heart="${escapeHtml(venue.id)}" aria-pressed="false" aria-label="Save ${escapeHtml(venue.name)}">♡</button>

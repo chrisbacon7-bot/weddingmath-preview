@@ -7,13 +7,15 @@ import { formatAbout, formatMoney, formatPlan, formatRange } from "./format.js";
 const prefix = SITE.storagePrefix;
 
 export async function loadData() {
-  const [costs, geo, aliases, extra, venueIndex, vendorCatalog] = await Promise.all([
+  const [costs, geo, aliases, extra, venueIndex, vendorCatalog, taxTable, fees] = await Promise.all([
     fetch(dataUrl("costs.json")).then(readJson),
     fetch(dataUrl("geo.json")).then(readJson),
     fetch(dataUrl("aliases.json")).then(readJson),
     fetch(dataUrl("extra-aliases.json")).then(readJson).catch(() => []),
     fetch(dataUrl("venue-index.json")).then(readJson).catch(() => ({ metros: [] })),
     fetch(dataUrl("vendors.json")).then(readJson).catch(() => ({ metros: [], vendors: [] })),
+    fetch(dataUrl("tax.json")).then(readJson).catch(() => ({ jurisdictions: {}, assignments: [] })),
+    fetch(dataUrl("venue-fees.json")).then(readJson).catch(() => ({ venues: {} })),
   ]);
   return {
     costs,
@@ -22,6 +24,8 @@ export async function loadData() {
     venueIndex,
     vendorMetros: vendorCatalog.metros || [],
     vendors: vendorCatalog.vendors || [],
+    taxTable,
+    fees,
     ctx: { costs, geo },
   };
 }

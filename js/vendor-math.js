@@ -5,6 +5,7 @@
  */
 
 import { categorySplit, hiddenCostBreakdown, planFor } from "./estimate.js";
+import { exampleForField } from "./published-examples.js";
 import { quoteVerdict } from "./saving.js";
 
 export const VENDOR_CATEGORIES = [
@@ -937,6 +938,14 @@ export function vendorAppPath(place, category, metros) {
   return `/vendors${query ? `?${query}` : ""}${hash}`;
 }
 
+function withExamples(fields) {
+  return fields.map((field) => {
+    const example = exampleForField(field.name);
+    if (!example) return field;
+    return { ...field, hint: field.hint ? `${field.hint} ${example}` : example };
+  });
+}
+
 export function formFields(slug) {
   const meal = { name: "meal", label: "Meal style", kind: "choice", options: [["plated", "Plated"], ["buffet", "Buffet"], ["family", "Family style"], ["stations", "Stations"], ["truck", "Food truck"]], hint: "Changes the label only. No published price separates these." };
   const bar = { name: "bar", label: "Bar package", kind: "choice", options: [["open", "Open bar"], ["beer", "Beer and wine"], ["cash", "Cash bar"], ["dry", "Dry"]], hint: "Changes the label only until you type a bar price." };
@@ -1003,5 +1012,5 @@ export function formFields(slug) {
     stationery: [{ name: "postage", label: "Postage", kind: "money", placeholder: "e.g. 80", hint: "Added only if you type it." }],
     favors: [{ name: "each", label: "Your price per favor", kind: "money", placeholder: "e.g. 4", hint: "Times the guest count. Replaces the study line." }],
   };
-  return fields[slug] || [];
+  return withExamples(fields[slug] || []);
 }

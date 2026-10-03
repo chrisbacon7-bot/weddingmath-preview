@@ -729,6 +729,19 @@ input[aria-invalid="true"] { border-color: var(--over-ink); }
   .mobile-scroll-btn { display: inline-flex; }
 }
 
+.fee-breakdown { margin-top: 18px; }
+.fee-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+.fee-table th, .fee-table td { text-align: left; vertical-align: top; padding: 10px 8px; border-top: 1px solid var(--line); }
+.fee-table th[scope="row"] { font-weight: 650; }
+.chip-estimated { border-style: dashed; }
+.chip-published, .chip-public_fee_schedule { border-style: solid; }
+@media (max-width: 719px) {
+  .fee-table thead { display: none; }
+  .fee-table, .fee-table tbody, .fee-table tr, .fee-table td, .fee-table th { display: block; width: 100%; }
+  .fee-table tr { border-top: 1px solid var(--line); padding: 10px 0 6px; }
+  .fee-table td, .fee-table th { border-top: 0; padding: 2px 0; }
+}
+
 @media print {
   body { background: white; padding: 0; }
   .print-summary { display: block; font-size: 12pt; margin-bottom: 12px; }

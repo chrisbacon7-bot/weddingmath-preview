@@ -1,6 +1,9 @@
 import { categorySplit, planFor, venueBenchmarks, compareBudget } from "./estimate.js";
 import { formatMoney, formatPlan } from "./format.js";
 import { cityLine, nearestSeeded, venueAppPath } from "./place-nav.js";
+import { describe } from "./describe.js";
+import { allIn } from "./price-engine.js";
+import { allInHeadline } from "./price-present.js";
 import { quoteVenue, fitsCapacity } from "./venue-quote.js";
 import {
   bindGlobals, clear, el, loadData,   mountLocation, readParams, readShortlist,
@@ -224,6 +227,17 @@ function render() {
     card.querySelector("[data-fit]")?.remove();
     card.querySelector("[data-unpriced]")?.remove();
     card.querySelector("[data-food-note]")?.remove();
+    const allInResult = data && data.taxTable
+      ? allIn(venue, {
+        guests,
+        day: "sat",
+        season: "peak",
+        costs: data.costs,
+        place: place && place.metroId === venue.metro ? place : describe(`metro:${venue.metro}`, data.ctx),
+        taxTable: data.taxTable,
+        fees: data.fees,
+      })
+      : null;
     if (priceEl) {
       const published = quote.status === "priced" || quote.status === "range";
       const money = quote.status === "priced"
@@ -231,7 +245,13 @@ function render() {
         : quote.status === "range"
           ? `${formatMoney(quote.low, { exact: true })}–${formatMoney(quote.high, { exact: true })}`
           : "";
-      if (published) {
+      if (allInResult && allInResult.allInReady) {
+        priceEl.classList.remove("price-muted");
+        const figure = `${allInHeadline(allInResult)} all-in`;
+        priceEl.textContent = fits || !venue.capacity ? figure : `${figure} · over ${venue.capacity} guests`;
+        const note = card.querySelector("[data-price-note]");
+        if (note) note.textContent = `All-in estimate at ${guests} guests · ${venue.capacity ? `Up to ${venue.capacity}` : "Capacity not published"}`;
+      } else if (published) {
         priceEl.classList.remove("price-muted");
         priceEl.textContent = fits || !venue.capacity ? money : `${money} · over ${venue.capacity} guests`;
       } else {
@@ -240,7 +260,7 @@ function render() {
         const muted = el("span", { class: "hint price-muted", "data-unpriced": "1", text: "Pricing not published" });
         priceEl.after(muted);
       }
-      if (quote.includesFood === false && published) {
+      if (quote.includesFood === false && published && !(allInResult && allInResult.allInReady)) {
         const food = foodEstimate(guests);
         if (food) priceEl.after(el("span", { class: "hint", "data-food-note": "1", text: food }));
       }
