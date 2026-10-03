@@ -16,13 +16,17 @@ export function metroBySlug(stateSlug, slug) {
   return venueMetros.find((metro) => metro.stateSlug === stateSlug && metro.slug === slug) || null;
 }
 
+export function isBooking(venue) {
+  return !venue.closed;
+}
+
 export function venuesForMetro(id) {
-  return venues.filter((venue) => venue.metro === id);
+  return venues.filter((venue) => venue.metro === id && isBooking(venue));
 }
 
 export function venuesForState(abbr) {
   const ids = new Set(venueMetros.filter((metro) => metro.state === abbr).map((metro) => metro.id));
-  return venues.filter((venue) => ids.has(venue.metro));
+  return venues.filter((venue) => ids.has(venue.metro) && isBooking(venue));
 }
 
 export function venueById(id) {

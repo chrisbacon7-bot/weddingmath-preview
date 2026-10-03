@@ -46,6 +46,13 @@ render();
 function render() {
   const guests = Number(guestsInput.value) || 100;
   const quote = quoteVenue(venue, guests, day);
+  if (venue.closed) {
+    labelEl.textContent = "Not booking weddings";
+    totalEl.textContent = "Closed to new weddings";
+    detailEl.textContent = quote.note || "";
+    budgetLink.href = siteHref(`/budget?loc=metro:${venue.metro}&g=${guests}`);
+    return;
+  }
   const over = venue.capacity && !fitsCapacity(venue, guests);
   const warn = over ? `Over capacity: the venue lists ${venue.capacity} guests, and this count is ${guests}. ` : "";
   let result = null;

@@ -305,6 +305,204 @@
           "verifiedOn": "2026-10-03"
         }
       ]
-    }
+    },
+    "dubsdread": {
+        "perPerson": {
+          "low": 65,
+          "high": 65,
+          "label": "Catering, starting price",
+          "chip": "published",
+          "quote": "Plated and buffet start at $65.00 per person. Prices subjected to 22% service charge at 6.5% sales tax.",
+          "note": "Starting plated or buffet price from the 2026 Q2 pricing guide. The guide says there are additional packages and does not print their prices. Drink packages start at $36 per person and are not in this line. A dessert package starts at $15 per person and is not in this line.",
+          "sourceUrl": "https://eventsbydubsdread.com/wp-content/uploads/EventsByDubsdread-PricingGuide-2026-Q2.pdf",
+          "verifiedOn": "2026-10-03"
+        },
+        "serviceCharge": {
+          "pct": 22,
+          "quote": "Prices shown are before 22% service charge and 6.5% sales tax.",
+          "note": "22% service charge from the pricing guide, applied to the catering line. It is not a tip. The same guide says the rental is also before this charge; that part is a separate line.",
+          "sourceUrl": "https://eventsbydubsdread.com/wp-content/uploads/EventsByDubsdread-PricingGuide-2026-Q2.pdf",
+          "verifiedOn": "2026-10-03"
+        },
+        "tax": {
+          "ratePct": 6.5,
+          "onService": false,
+          "onSite": true,
+          "onAddOnIds": [
+            "ceremony"
+          ],
+          "quote": "Prices shown are before 22% service charge and 6.5% sales tax.",
+          "note": "6.5% from the pricing guide, applied to catering, the rental, and the ceremony fee. The guide does not say the service charge is taxed, so the service lines are not taxed here.",
+          "sourceUrl": "https://eventsbydubsdread.com/wp-content/uploads/EventsByDubsdread-PricingGuide-2026-Q2.pdf",
+          "verifiedOn": "2026-10-03"
+        },
+        "addOns": [
+          {
+            "id": "ceremony",
+            "type": "ceremony_fee",
+            "label": "Ceremony fee",
+            "perGuest": true,
+            "amount": 6,
+            "required": true,
+            "quote": "Ceremony fee $6 per person. Ceremony minimum fee $600.",
+            "note": "The guide charges $6 per person, with a $600 minimum. This total uses $6 times the guest count. Below 100 guests that is under the $600 minimum. The 22% service charge is not also applied to this ceremony line.",
+            "sourceUrl": "https://eventsbydubsdread.com/wp-content/uploads/EventsByDubsdread-PricingGuide-2026-Q2.pdf",
+            "verifiedOn": "2026-10-03"
+          },
+          {
+            "id": "rental_service",
+            "type": "service_charge",
+            "label": "Service charge on the rental, 22%",
+            "pct": 22,
+            "pctOf": "site",
+            "required": true,
+            "quote": "Saturday peak season rates shown are before 22% service charge and 6.5% sales tax.",
+            "note": "22% of the starting rental. The guide says the printed rental is before the service charge.",
+            "sourceUrl": "https://eventsbydubsdread.com/wp-content/uploads/EventsByDubsdread-PricingGuide-2026-Q2.pdf",
+            "verifiedOn": "2026-10-03"
+          }
+        ],
+        "review": "This all-in total uses the guide's starting catering price of $65 per person. Higher menus are not priced. Bar packages start at $36 per person and are not included. The ceremony line is $6 per guest and does not enforce the $600 minimum under 100 guests. The catering pages say prices are valid for events from June 1 through December 31, 2026, while the venue chart calls September through May peak season."
+      },
+      "the-highland-manor": {
+        "perPerson": {
+          "low": 65,
+          "high": 65,
+          "label": "Catering, starting price",
+          "chip": "published",
+          "quote": "Plated and buffet start at $65.00 per person. Prices subjected to 22% service charge at 6.5% sales tax.",
+          "note": "Starting plated or buffet price from the 2026 Q2 pricing guide. The guide says there are additional packages and does not print their prices. Drink packages start at $36 per person and are not in this line. A dessert package starts at $15 per person and is not in this line.",
+          "sourceUrl": "https://eventsbydubsdread.com/wp-content/uploads/EventsByDubsdread-PricingGuide-2026-Q2.pdf",
+          "verifiedOn": "2026-10-03"
+        },
+        "serviceCharge": {
+          "pct": 22,
+          "quote": "Prices shown are before 22% service charge and 6.5% sales tax.",
+          "note": "22% service charge from the pricing guide, applied to the catering line. It is not a tip. The same guide says the rental is also before this charge; that part is a separate line.",
+          "sourceUrl": "https://eventsbydubsdread.com/wp-content/uploads/EventsByDubsdread-PricingGuide-2026-Q2.pdf",
+          "verifiedOn": "2026-10-03"
+        },
+        "tax": {
+          "ratePct": 6.5,
+          "onService": false,
+          "onSite": true,
+          "onAddOnIds": [
+            "ceremony"
+          ],
+          "quote": "Prices shown are before 22% service charge and 6.5% sales tax.",
+          "note": "6.5% from the pricing guide, applied to catering, the rental, and the ceremony fee. The guide does not say the service charge is taxed, so the service lines are not taxed here.",
+          "sourceUrl": "https://eventsbydubsdread.com/wp-content/uploads/EventsByDubsdread-PricingGuide-2026-Q2.pdf",
+          "verifiedOn": "2026-10-03"
+        },
+        "addOns": [
+          {
+            "id": "ceremony",
+            "type": "ceremony_fee",
+            "label": "Ceremony fee",
+            "perGuest": true,
+            "amount": 6,
+            "required": true,
+            "quote": "Ceremony fee $6 per person. Ceremony minimum fee $600.",
+            "note": "The guide charges $6 per person, with a $600 minimum. This total uses $6 times the guest count. Below 100 guests that is under the $600 minimum. The 22% service charge is not also applied to this ceremony line.",
+            "sourceUrl": "https://eventsbydubsdread.com/wp-content/uploads/EventsByDubsdread-PricingGuide-2026-Q2.pdf",
+            "verifiedOn": "2026-10-03"
+          },
+          {
+            "id": "rental_service",
+            "type": "service_charge",
+            "label": "Service charge on the rental, 22%",
+            "pct": 22,
+            "pctOf": "site",
+            "required": true,
+            "quote": "Saturday peak season rates shown are before 22% service charge and 6.5% sales tax.",
+            "note": "22% of the starting rental. The guide says the printed rental is before the service charge.",
+            "sourceUrl": "https://eventsbydubsdread.com/wp-content/uploads/EventsByDubsdread-PricingGuide-2026-Q2.pdf",
+            "verifiedOn": "2026-10-03"
+          }
+        ],
+        "review": "This all-in total uses the guide's starting catering price of $65 per person. Higher menus are not priced. Bar packages start at $36 per person and are not included. The ceremony line is $6 per guest and does not enforce the $600 minimum under 100 guests. The catering pages say prices are valid for events from June 1 through December 31, 2026, while the venue chart calls September through May peak season."
+      },
+      "azalea-lodge": {
+        "perPerson": {
+          "low": 65,
+          "high": 65,
+          "label": "Catering, starting price",
+          "chip": "published",
+          "quote": "Plated and buffet start at $65.00 per person. Prices subjected to 22% service charge at 6.5% sales tax.",
+          "note": "Starting plated or buffet price from the 2026 Q2 pricing guide. The guide says there are additional packages and does not print their prices. Drink packages start at $36 per person and are not in this line. A dessert package starts at $15 per person and is not in this line.",
+          "sourceUrl": "https://eventsbydubsdread.com/wp-content/uploads/EventsByDubsdread-PricingGuide-2026-Q2.pdf",
+          "verifiedOn": "2026-10-03"
+        },
+        "serviceCharge": {
+          "pct": 22,
+          "quote": "Prices shown are before 22% service charge and 6.5% sales tax.",
+          "note": "22% service charge from the pricing guide, applied to the catering line. It is not a tip. The same guide says the rental is also before this charge; that part is a separate line.",
+          "sourceUrl": "https://eventsbydubsdread.com/wp-content/uploads/EventsByDubsdread-PricingGuide-2026-Q2.pdf",
+          "verifiedOn": "2026-10-03"
+        },
+        "tax": {
+          "ratePct": 6.5,
+          "onService": false,
+          "onSite": true,
+          "onAddOnIds": [
+            "ceremony"
+          ],
+          "quote": "Prices shown are before 22% service charge and 6.5% sales tax.",
+          "note": "6.5% from the pricing guide, applied to catering, the rental, and the ceremony fee. The guide does not say the service charge is taxed, so the service lines are not taxed here.",
+          "sourceUrl": "https://eventsbydubsdread.com/wp-content/uploads/EventsByDubsdread-PricingGuide-2026-Q2.pdf",
+          "verifiedOn": "2026-10-03"
+        },
+        "addOns": [
+          {
+            "id": "ceremony",
+            "type": "ceremony_fee",
+            "label": "Ceremony fee",
+            "perGuest": true,
+            "amount": 6,
+            "required": true,
+            "quote": "Ceremony fee $6 per person. Ceremony minimum fee $600.",
+            "note": "The guide charges $6 per person, with a $600 minimum. This total uses $6 times the guest count. Below 100 guests that is under the $600 minimum. The 22% service charge is not also applied to this ceremony line.",
+            "sourceUrl": "https://eventsbydubsdread.com/wp-content/uploads/EventsByDubsdread-PricingGuide-2026-Q2.pdf",
+            "verifiedOn": "2026-10-03"
+          },
+          {
+            "id": "rental_service",
+            "type": "service_charge",
+            "label": "Service charge on the rental, 22%",
+            "pct": 22,
+            "pctOf": "site",
+            "required": true,
+            "quote": "Saturday peak season rates shown are before 22% service charge and 6.5% sales tax.",
+            "note": "22% of the starting rental. The guide says the printed rental is before the service charge.",
+            "sourceUrl": "https://eventsbydubsdread.com/wp-content/uploads/EventsByDubsdread-PricingGuide-2026-Q2.pdf",
+            "verifiedOn": "2026-10-03"
+          }
+        ],
+        "review": "This all-in total uses the guide's starting catering price of $65 per person. Higher menus are not priced. Bar packages start at $36 per person and are not included. The ceremony line is $6 per guest and does not enforce the $600 minimum under 100 guests. The catering pages say prices are valid for events from June 1 through December 31, 2026, while the venue chart calls September through May peak season."
+      },
+      "sterling-event-venue": {
+        "siteBySeason": {
+          "peak": {
+            "saturday": {
+              "low": 5950,
+              "high": 8450
+            },
+            "quote": "Peak-season dates range from $5,950 to $8,450.",
+            "note": "Peak-season venue price from the Sterling pricing page. The page does not say which months are peak, and it does not print a Friday or Sunday figure.",
+            "sourceUrl": "https://sterlingeventvenue.com/pricing/",
+            "verifiedOn": "2026-10-03"
+          },
+          "off": {
+            "saturday": {
+              "low": 5450,
+              "high": 6950
+            },
+            "quote": "Off-season pricing ranges from $5,450 to $6,950.",
+            "note": "Off-season venue price. Weekdays are not given their own number.",
+            "sourceUrl": "https://sterlingeventvenue.com/pricing/",
+            "verifiedOn": "2026-10-03"
+          }
+        }
+      }
   }
 }

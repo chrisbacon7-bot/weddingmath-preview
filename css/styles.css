@@ -543,6 +543,10 @@ th { font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; colo
 .faq h3 { font-family: var(--serif); font-size: 1.2rem; margin: 0.8em 0 0.3em; }
 .metro-table { content-visibility: auto; contain-intrinsic-size: auto 480px; }
 .venue-card.is-hidden, .tool-card.is-hidden { display: none; }
+.pager { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 8px 0 18px; }
+.pager p { margin: 0; }
+.venue-index { margin-top: 8px; }
+.choices { flex-wrap: wrap; }
 
 @media (max-width: 719px) {
   .site-header { position: sticky; }

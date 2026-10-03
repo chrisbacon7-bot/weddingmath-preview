@@ -12,8 +12,9 @@ import { quoteVenue } from "./venue-quote.js";
 import { allIn } from "./price-engine.js";
 import { allInHeadline, allInHtml, listedPrice } from "./price-present.js";
 import {
-  metroById, metroPath, venueMetros, venuePath, venues, venuesForMetro, venuesForState,
+  isBooking, metroById, metroPath, venueMetros, venuePath, venues, venuesForMetro, venuesForState,
 } from "./venue-catalog.js";
+import { PAGE_SIZE, VENUE_TYPES, venueTypeLabel, venueTypeOf } from "./venue-types.js";
 
 const dataDir = path.join(path.dirname(fileURLToPath(import.meta.url)), "../data");
 const costs = JSON.parse(readFileSync(path.join(dataDir, "costs.json"), "utf8"));
@@ -125,7 +126,7 @@ ${finderShell(metro.id)}`,
 }
 
 function finderShell(metroId, beforeResults = "") {
-  const list = metroId ? venuesForMetro(metroId) : venues;
+  const list = metroId ? venuesForMetro(metroId) : venues.filter(isBooking);
   const data = JSON.stringify(list.map(clientVenue)).replaceAll("<", "\\u003c");
   return `<form class="finder card stack" data-venue-app data-metro="${escapeHtml(metroId)}" id="venue-finder">
   <div class="loc" data-location>
@@ -171,6 +172,12 @@ function finderShell(metroId, beforeResults = "") {
     </select>
   </div>
   <div>
+    <p class="label" id="type-label">Venue type</p>
+    <div class="choices" id="venue-types" role="group" aria-labelledby="type-label">
+      ${VENUE_TYPES.map(([id, label]) => `<button type="button" data-type="${id}" aria-pressed="false">${escapeHtml(label)}</button>`).join("")}
+    </div>
+  </div>
+  <div>
     <p class="label" id="vibe-label">Vibe</p>
     <div class="choices" id="vibes" role="group" aria-labelledby="vibe-label">
       ${["garden", "historic", "waterfront", "estate", "resort", "art", "museum", "ballroom", "all-inclusive"].map((vibe) => `<button type="button" data-vibe="${vibe}" aria-pressed="false">${labelVibe(vibe)}</button>`).join("")}
@@ -179,6 +186,9 @@ function finderShell(metroId, beforeResults = "") {
   <details class="more-filters">
     <summary id="more-filters-label">More filters</summary>
     <div class="choices" id="more-filters">
+      <button type="button" data-filter="cap-75" aria-pressed="false">Holds up to 75</button>
+      <button type="button" data-filter="cap-200" aria-pressed="false">Holds 76–200</button>
+      <button type="button" data-filter="cap-201" aria-pressed="false">Holds 201 or more</button>
       <button type="button" data-filter="indoor" aria-pressed="false">Indoor option</button>
       <button type="button" data-filter="outdoor" aria-pressed="false">Outdoor</button>
       <button type="button" data-filter="ceremony" aria-pressed="false">Ceremony on site</button>
@@ -197,8 +207,10 @@ ${beforeResults}
   <p class="no-print"><button type="button" class="text-btn" data-share>Copy link</button></p>
 </div>
 <div id="saved-compare" hidden></div>
-<div id="venue-grid" class="venue-grid">${list.map((venue) => venueCard(venue)).join("")}</div>
+<div id="venue-grid" class="venue-grid">${list.slice(0, PAGE_SIZE).map((venue) => venueCard(venue)).join("")}</div>
+<nav id="venue-pager" class="pager" aria-label="Venue pages"></nav>
 <p id="capacity-note" class="hint" hidden></p>
+${metroId ? `<details class="card venue-index"><summary>Every venue in this list (${list.length})</summary><p class="chip-row">${list.map((venue) => `<a href="${venuePath(venue)}">${escapeHtml(venue.name)}</a>`).join("")}</p></details>` : ""}
 <div id="venue-none" class="empty-note card" hidden>
   <p data-none-copy>No venues match these filters.</p>
   <button type="button" class="btn" id="loosen-filters">Loosen filters</button>
@@ -213,11 +225,14 @@ function venuePage(venue) {
   const saturday = quoteVenue(venue, 100, "sat");
   const off = quoteVenue(venue, 100, "off");
   const path = venuePath(venue);
+  const closed = Boolean(venue.closed);
   return {
     file: `venues/${metro.stateSlug}/${metro.slug}/${venue.id}.html`,
     path,
-    title: `${venue.name} Wedding Cost`,
-    description: `${venue.name} in ${venue.city}. ${blurb(quote)} Checked ${venue.price.verifiedOn}.`,
+    title: closed ? `${venue.name} is not booking weddings` : `${venue.name} Wedding Cost`,
+    description: closed
+      ? `${venue.name} in ${venue.city} is not accepting new wedding bookings. Checked ${venue.price.verifiedOn}.`
+      : `${venue.name} in ${venue.city}. ${blurb(quote)} Checked ${venue.price.verifiedOn}.`,
     script: "/js/venue.js",
     wide: true,
     schema: "venue",
@@ -249,9 +264,9 @@ function venuePage(venue) {
   <section class="summary-card card" id="quote">
     <div class="summary-top">
       <div>
-        <p class="kicker" data-quote-label>${escapeHtml(priced.allInReady ? "All-in estimate" : quote.label)}</p>
-        <p class="money" data-quote-total>${escapeHtml(priced.allInReady ? allInHeadline(priced) : headline(quote))}</p>
-        <p class="subhead" data-quote-detail>At 100 guests, ${quote.day === "off" ? "a weekday" : "Saturday"}. ${escapeHtml(quote.note)}</p>
+        <p class="kicker" data-quote-label>${escapeHtml(closed ? "Not booking weddings" : priced.allInReady ? "All-in estimate" : quote.label)}</p>
+        <p class="money" data-quote-total>${escapeHtml(closed ? "Closed to new weddings" : priced.allInReady ? allInHeadline(priced) : headline(quote))}</p>
+        <p class="subhead" data-quote-detail>${closed ? escapeHtml(venue.price.note) : `At 100 guests, ${quote.day === "off" ? "a weekday" : "Saturday"}. ${escapeHtml(quote.note)}`}</p>
       </div>
       <div class="summary-actions no-print">
         <button type="button" class="btn" data-heart="${escapeHtml(venue.id)}" aria-pressed="false">Save</button>
@@ -331,13 +346,15 @@ function venueCard(venue) {
       ? "Site fee only"
       : quote.label;
   const metro = metroById(venue.metro);
-  return `<article class="venue-card card" data-venue-card data-id="${escapeHtml(venue.id)}" data-capacity="${venue.capacity || ""}" data-vibes="${escapeHtml(venue.vibes.join(" "))}" data-indoor="${venue.indoorOutdoor}" data-ceremony="${venue.ceremonyOnsite ? "1" : ""}" data-rooms="${venue.accommodations ? "1" : ""}" data-rain="${venue.rainPlan ? "1" : ""}" data-access="${venue.accessible ? "1" : ""}" data-offday="${venue.price.offday != null ? "1" : ""}">
+  const typeId = venueTypeOf(venue);
+  const typeLabel = venueTypeLabel(typeId);
+  return `<article class="venue-card card" data-venue-card data-id="${escapeHtml(venue.id)}" data-capacity="${venue.capacity || ""}" data-type="${escapeHtml(typeId)}" data-vibes="${escapeHtml(venue.vibes.join(" "))}" data-indoor="${venue.indoorOutdoor}" data-ceremony="${venue.ceremonyOnsite ? "1" : ""}" data-rooms="${venue.accommodations ? "1" : ""}" data-rain="${venue.rainPlan ? "1" : ""}" data-access="${venue.accessible ? "1" : ""}" data-offday="${venue.price.offday != null ? "1" : ""}">
   <a class="venue-card-link" href="${venuePath(venue)}">
     <span class="swatch swatch-${escapeHtml(venue.vibes[0] || "garden")}" aria-hidden="true">${swatchIcon(venue.vibes[0])}</span>
     <span class="venue-card-copy">
       <span class="kicker">${escapeHtml(venue.city)}${venue.nearby ? " · Nearby" : ""}</span>
       <h2>${escapeHtml(venue.name)}</h2>
-      <span class="chip-row">${venue.vibes.slice(0, 2).map((vibe) => `<span class="chip">${escapeHtml(labelVibe(vibe))}</span>`).join("")}</span>
+      <span class="chip-row">${typeLabel ? `<span class="chip">${escapeHtml(typeLabel)}</span>` : ""}${venue.vibes.slice(0, 1).map((vibe) => `<span class="chip">${escapeHtml(labelVibe(vibe))}</span>`).join("")}</span>
       <span class="venue-price" data-price>${escapeHtml(priceText)}</span>
       <span class="hint" data-price-note>${escapeHtml(priceNote)} · ${venue.capacity ? `Up to ${venue.capacity}` : "Capacity not published"} · ${escapeHtml(includedShort(venue))}</span>
     </span>
@@ -363,12 +380,14 @@ function clientVenue(venue) {
     city: venue.city,
     capacity: venue.capacity,
     vibes: venue.vibes,
+    venueType: venueTypeOf(venue),
     indoorOutdoor: venue.indoorOutdoor,
     ceremonyOnsite: venue.ceremonyOnsite,
     accommodations: venue.accommodations,
     accessible: venue.accessible,
     rainPlan: venue.rainPlan,
     nearby: Boolean(venue.nearby),
+    closed: Boolean(venue.closed),
     price: venue.price,
     path: venuePath(venue),
   };

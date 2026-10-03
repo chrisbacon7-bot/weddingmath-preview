@@ -4,6 +4,7 @@ import { cityLine, nearestSeeded, venueAppPath } from "./place-nav.js";
 import { describe } from "./describe.js";
 import { listedPrice } from "./price-present.js";
 import { quoteVenue, fitsCapacity } from "./venue-quote.js";
+import { capacityBand, pageSlice, venueTypeLabel, venueTypeOf } from "./venue-types.js";
 import {
   bindGlobals, clear, el, loadData,   mountLocation, readParams, readShortlist,
   siteHref, storageGet, storageSet, toggleShortlist, writeParams,
@@ -34,8 +35,10 @@ let data = null;
 let booted = false;
 let showOver = false;
 let sortMode = params.get("sort") || "best";
+let page = Number(params.get("p")) || 1;
 const STOPS = [0, 5000, 10000, 20000, 40000, 80000];
 const vibes = new Set();
+const types = new Set();
 const filters = new Set();
 
 const initialBudget = params.get("b") || storageGet("budget", "");
@@ -51,11 +54,16 @@ for (const key of (params.get("f") || "").split(",").filter(Boolean)) {
   filters.add(key);
   document.querySelector(`[data-filter="${key}"]`)?.setAttribute("aria-pressed", "true");
 }
+for (const type of (params.get("t") || "").split(",").filter(Boolean)) {
+  types.add(type);
+  document.querySelector(`[data-type="${type}"]`)?.setAttribute("aria-pressed", "true");
+}
 const sortInput = document.querySelector("#venue-sort");
 if (sortInput) {
   sortInput.value = sortMode;
   sortInput.addEventListener("change", () => {
     sortMode = sortInput.value;
+    page = 1;
     render();
   });
 }
@@ -64,6 +72,7 @@ document.querySelectorAll("[data-budget-chip]").forEach((button) => {
     const amount = Number(button.dataset.budgetChip);
     budgetInput.value = amount ? String(amount) : "";
     budgetRange.value = String(posFromMoney(amount));
+    page = 1;
     render();
   });
 });
@@ -74,6 +83,7 @@ document.querySelectorAll("[data-vibe]").forEach((button) => {
     if (vibes.has(vibe)) vibes.delete(vibe);
     else vibes.add(vibe);
     button.setAttribute("aria-pressed", vibes.has(vibe) ? "true" : "false");
+    page = 1;
     render();
   });
 });
@@ -83,6 +93,17 @@ document.querySelectorAll("[data-filter]").forEach((button) => {
     if (filters.has(key)) filters.delete(key);
     else filters.add(key);
     button.setAttribute("aria-pressed", filters.has(key) ? "true" : "false");
+    page = 1;
+    render();
+  });
+});
+document.querySelectorAll("[data-type]").forEach((button) => {
+  button.addEventListener("click", () => {
+    const type = button.dataset.type;
+    if (types.has(type)) types.delete(type);
+    else types.add(type);
+    button.setAttribute("aria-pressed", types.has(type) ? "true" : "false");
+    page = 1;
     render();
   });
 });
@@ -90,14 +111,19 @@ document.querySelectorAll("[data-filter]").forEach((button) => {
 budgetRange.addEventListener("input", () => {
   const amount = moneyFromPos(budgetRange.value);
   budgetInput.value = amount ? String(amount) : "";
+  page = 1;
   render();
 });
 budgetInput.addEventListener("input", () => {
   const amount = Number(String(budgetInput.value).replace(/[$,\s]/g, "")) || 0;
   budgetRange.value = String(posFromMoney(amount));
+  page = 1;
   render();
 });
-guestsInput.addEventListener("input", render);
+guestsInput.addEventListener("input", () => {
+  page = 1;
+  render();
+});
 document.querySelector("#loosen-filters")?.addEventListener("click", loosen);
 
 loadData().then((loaded) => {
@@ -198,8 +224,10 @@ function render() {
     b: budget || null,
     loc: lockedMetro ? null : (place && place.id !== "national" ? place.id : null),
     v: [...vibes].join(",") || null,
+    t: [...types].join(",") || null,
     f: [...filters].join(",") || null,
     sort: sortMode && sortMode !== "best" ? sortMode : null,
+    p: page > 1 ? page : null,
   });
   const readout = document.querySelector("#budget-readout");
   if (readout) readout.textContent = budget ? `Up to ${formatMoney(budget, { exact: true })}` : "Any budget";
@@ -212,61 +240,35 @@ function render() {
   }
   paintHead(guests, budget, showGap);
 
-  const cards = [...grid.querySelectorAll("[data-venue-card]")];
-  let shown = 0;
-  const ranked = cards.map((card) => {
-    const venue = records.find((item) => item.id === card.dataset.id);
-    let quote = quoteVenue(venue, guests, "sat");
-    if (quote.status !== "priced" && quote.status !== "range") {
-      const off = quoteVenue(venue, guests, "off");
-      if (off.status === "priced" || off.status === "range") quote = off;
-    }
-    const priceEl = card.querySelector("[data-price]");
+  const ranked = records.map((venue) => {
     const fits = fitsCapacity(venue, guests);
-    card.querySelector("[data-fit]")?.remove();
-    card.querySelector("[data-unpriced]")?.remove();
-    card.querySelector("[data-food-note]")?.remove();
     const listed = priceFor(venue, guests);
-    if (priceEl) {
-      const published = listed.basis !== "ask";
-      if (published) {
-        priceEl.classList.remove("price-muted");
-        const figure = listed.text;
-        priceEl.textContent = fits || !venue.capacity ? figure : `${figure} · over ${venue.capacity} guests`;
-        const note = card.querySelector("[data-price-note]");
-        if (note) {
-          const kind = listed.basis === "all-in" ? `All-in estimate at ${guests} guests` : `Site fee only at ${guests} guests`;
-          note.textContent = `${kind} · ${venue.capacity ? `Up to ${venue.capacity}` : "Capacity not published"}`;
-        }
-      } else {
-        priceEl.classList.add("price-muted");
-        priceEl.textContent = typicalVenueLine(guests) || "Ask for pricing";
-        const muted = el("span", { class: "hint price-muted", "data-unpriced": "1", text: "Pricing not published" });
-        priceEl.after(muted);
-      }
-      if (listed.basis === "site" && quote.includesFood === false) {
-        const food = foodEstimate(guests);
-        if (food) priceEl.after(el("span", { class: "hint", "data-food-note": "1", text: food }));
-      }
-    }
-    const badge = el("span", { class: `fit-badge ${fits ? "fits" : "over"}`, "data-fit": "1", text: fitBadge(listed, guests, budget, fits) });
-    card.querySelector(".venue-card-copy")?.append(badge);
-    return { card, venue, quote, fits, listed };
-  });
-  ranked.sort((a, b) => compareRank(a, b, budget, guests));
-  for (const item of ranked) grid.append(item.card);
-  for (const { card, venue, listed, fits } of ranked) {
+    return { venue, fits, listed };
+  }).sort((a, b) => compareRank(a, b, budget, guests));
+  const visibleRows = ranked.filter(({ venue, listed, fits }) => {
     const metroOk = !metroId || venue.metro === metroId;
-    const vibeOk = !vibes.size || venue.vibes.some((vibe) => vibes.has(vibe));
-    const filterOk = passes(card);
     const amount = listed.ceiling;
     const budgetOk = !budget || amount == null || amount <= budget * 1.05;
-    const visible = !showGap && metroOk && vibeOk && filterOk && budgetOk && (fits || showOver);
-    card.classList.toggle("is-tight", !fits);
-    card.classList.toggle("is-hidden", !visible);
-    if (visible) shown += 1;
-  }
-  const tight = ranked.filter(({ venue, fits }) => venue && !fits && (!metroId || venue.metro === metroId)).length;
+    return !showGap && metroOk && venueMatches(venue) && budgetOk && (fits || showOver);
+  });
+  const sliced = pageSlice(visibleRows, page);
+  page = sliced.page;
+  writeParams({
+    g: guests,
+    b: budget || null,
+    loc: lockedMetro ? null : (place && place.id !== "national" ? place.id : null),
+    v: [...vibes].join(",") || null,
+    t: [...types].join(",") || null,
+    f: [...filters].join(",") || null,
+    sort: sortMode && sortMode !== "best" ? sortMode : null,
+    p: page > 1 ? page : null,
+  });
+  clear(grid);
+  for (const row of sliced.items) grid.append(buildCard(row, guests, budget));
+  paintPager(sliced.page, sliced.pages, visibleRows.length);
+  paintHearts();
+  const shown = visibleRows.length;
+  const tight = ranked.filter(({ venue, fits }) => venue && !fits && (!metroId || venue.metro === metroId) && venueMatches(venue)).length;
   const note = document.querySelector("#capacity-note");
   if (note) {
     note.hidden = showGap || tight === 0;
@@ -288,7 +290,7 @@ function render() {
   if (count && !showGap) {
     const where = place && place.id !== "national" ? cityLine(place) : (lockedMetro ? "this city" : "all cities");
     const vibeLabel = vibes.size === 1 ? labelVibe([...vibes][0]) : "";
-    const vibeCount = vibeLabel ? ranked.filter(({ card, venue }) => venue && card.dataset.vibes.includes([...vibes][0]) && (!metroId || venue.metro === metroId)).length : 0;
+    const vibeCount = vibeLabel ? ranked.filter(({ venue }) => venue.vibes.some((vibe) => vibes.has(vibe)) && (!metroId || venue.metro === metroId)).length : 0;
     const within = budget ? ranked.filter(({ listed, venue }) => {
       return listed.ceiling != null && listed.ceiling <= budget && (!metroId || venue.metro === metroId);
     }).length : 0;
@@ -338,6 +340,14 @@ function paintHead(guests, budget, showGap) {
   if (place && place.id !== "national") chips.append(chip(`${cityLine(place)} ×`, () => focusField("#where")));
   chips.append(chip(`${guests} guests ×`, () => focusField("#guests")));
   chips.append(chip(budgetText ? `Under ${budgetText} ×` : "Any budget ×", () => focusField("#venue-budget")));
+  for (const type of types) {
+    chips.append(chip(`${venueTypeLabel(type) || type} ×`, () => {
+      types.delete(type);
+      document.querySelector(`[data-type="${type}"]`)?.setAttribute("aria-pressed", "false");
+      page = 1;
+      render();
+    }));
+  }
   for (const vibe of vibes) {
     chips.append(chip(`${labelVibe(vibe)} ×`, () => {
       vibes.delete(vibe);
@@ -352,7 +362,7 @@ function paintHead(guests, budget, showGap) {
       render();
     }));
   }
-  if (vibes.size || filters.size || budget) {
+  if (vibes.size || types.size || filters.size || budget) {
     chips.append(chip("Clear all", loosen));
   }
 }
@@ -372,8 +382,10 @@ function focusField(selector) {
 
 function loosen() {
   vibes.clear();
+  types.clear();
   filters.clear();
-  document.querySelectorAll("[data-vibe], [data-filter]").forEach((button) => {
+  page = 1;
+  document.querySelectorAll("[data-vibe], [data-type], [data-filter]").forEach((button) => {
     button.setAttribute("aria-pressed", "false");
   });
   budgetInput.value = "";
@@ -471,6 +483,9 @@ function posFromMoney(money) {
 
 function filterLabel(key) {
   return ({
+    "cap-75": "Holds up to 75",
+    "cap-200": "Holds 76–200",
+    "cap-201": "Holds 201 or more",
     indoor: "Indoor option",
     outdoor: "Outdoor",
     ceremony: "Ceremony on site",
@@ -479,6 +494,91 @@ function filterLabel(key) {
     access: "Accessible",
     offday: "Off-day price listed",
   })[key] || key;
+}
+
+function venueMatches(venue) {
+  if (types.size && !types.has(venueTypeOf(venue))) return false;
+  if (vibes.size && !venue.vibes.some((vibe) => vibes.has(vibe))) return false;
+  const caps = [...filters].filter((key) => key.startsWith("cap-"));
+  if (caps.length && !caps.some((key) => capacityBand(venue, key))) return false;
+  if (filters.has("indoor") && venue.indoorOutdoor === "outdoor") return false;
+  if (filters.has("outdoor") && venue.indoorOutdoor === "indoor") return false;
+  if (filters.has("ceremony") && !venue.ceremonyOnsite) return false;
+  if (filters.has("rooms") && !venue.accommodations) return false;
+  if (filters.has("rain") && !venue.rainPlan) return false;
+  if (filters.has("access") && !venue.accessible) return false;
+  if (filters.has("offday") && venue.price.offday == null && venue.price.offLow == null && venue.price.offHigh == null) return false;
+  return true;
+}
+
+function buildCard({ venue, listed, fits }, guests, budget) {
+  const metro = (data && data.venueIndex && data.venueIndex.metros || []).find((item) => item.id === venue.metro);
+  const typeLabel = venueTypeLabel(venueTypeOf(venue));
+  const published = listed.basis !== "ask";
+  const figure = published
+    ? (fits || !venue.capacity ? listed.text : `${listed.text} · over ${venue.capacity} guests`)
+    : (typicalVenueLine(guests) || "Ask for pricing");
+  const kind = listed.basis === "all-in"
+    ? `All-in estimate at ${guests} guests`
+    : listed.basis === "site"
+      ? `Site fee only at ${guests} guests`
+      : "Pricing not published";
+  const quote = quoteVenue(venue, guests, "sat");
+  const copy = [
+    el("span", { class: "kicker", text: `${venue.city || ""}${venue.nearby ? " · Nearby" : ""}` }),
+    el("h2", { text: venue.name }),
+    el("span", { class: "chip-row" }, [
+      typeLabel ? el("span", { class: "chip", text: typeLabel }) : null,
+      venue.vibes[0] ? el("span", { class: "chip", text: labelVibe(venue.vibes[0]) }) : null,
+    ]),
+    el("span", { class: published ? "venue-price" : "venue-price price-muted", "data-price": "1", text: figure }),
+    el("span", { class: "hint", "data-price-note": "1", text: `${kind} · ${venue.capacity ? `Up to ${venue.capacity}` : "Capacity not published"}` }),
+  ];
+  if (!published) copy.push(el("span", { class: "hint price-muted", "data-unpriced": "1", text: "Pricing not published" }));
+  if (listed.basis === "site" && quote.includesFood === false) {
+    const food = foodEstimate(guests);
+    if (food) copy.push(el("span", { class: "hint", "data-food-note": "1", text: food }));
+  }
+  copy.push(el("span", { class: `fit-badge ${fits ? "fits" : "over"}`, "data-fit": "1", text: fitBadge(listed, guests, budget, fits) }));
+  const card = el("article", {
+    class: `venue-card card${fits ? "" : " is-tight"}`,
+    "data-venue-card": "1",
+    "data-id": venue.id,
+  }, [
+    el("a", { class: "venue-card-link", href: siteHref(venue.path) }, [
+      el("span", { class: `swatch swatch-${venue.vibes[0] || "garden"}`, "aria-hidden": "true" }),
+      el("span", { class: "venue-card-copy" }, copy),
+    ]),
+    el("button", { type: "button", class: "heart", "data-heart": venue.id, "aria-pressed": "false", "aria-label": `Save ${venue.name}`, text: "♡" }),
+  ]);
+  if (metro) card.append(el("a", { class: "sr", href: siteHref(`/venues/${metro.stateSlug}/${metro.slug}`), text: `More in ${metro.name}` }));
+  return card;
+}
+
+function paintPager(current, pages, total) {
+  const box = document.querySelector("#venue-pager");
+  if (!box) return;
+  clear(box);
+  if (pages <= 1) {
+    box.hidden = true;
+    return;
+  }
+  box.hidden = false;
+  const prev = el("button", { type: "button", class: "btn-ghost", text: "Previous page", disabled: current <= 1 });
+  prev.addEventListener("click", () => {
+    page = current - 1;
+    render();
+    head?.focus();
+  });
+  const next = el("button", { type: "button", class: "btn-ghost", text: "Next page", disabled: current >= pages });
+  next.addEventListener("click", () => {
+    page = current + 1;
+    render();
+    head?.focus();
+  });
+  box.append(prev);
+  box.append(el("p", { text: `Page ${current} of ${pages} · ${total} venues` }));
+  box.append(next);
 }
 
 function paintSaved(guests) {
@@ -523,17 +623,6 @@ function paintSaved(guests) {
   table.append(body);
   box.append(table);
   box.append(el("p", {}, [el("a", { href: siteHref(`/shortlist?g=${guests}`), text: "Open the shortlist" })]));
-}
-
-function passes(card) {
-  if (filters.has("indoor") && card.dataset.indoor === "outdoor") return false;
-  if (filters.has("outdoor") && card.dataset.indoor === "indoor") return false;
-  if (filters.has("ceremony") && !card.dataset.ceremony) return false;
-  if (filters.has("rooms") && !card.dataset.rooms) return false;
-  if (filters.has("rain") && !card.dataset.rain) return false;
-  if (filters.has("access") && !card.dataset.access) return false;
-  if (filters.has("offday") && !card.dataset.offday) return false;
-  return true;
 }
 
 function fillGap(guests, budget) {

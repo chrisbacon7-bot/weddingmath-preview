@@ -89,6 +89,12 @@
     </select>
   </div>
   <div>
+    <p class="label" id="type-label">Venue type</p>
+    <div class="choices" id="venue-types" role="group" aria-labelledby="type-label">
+      <button type="button" data-type="hotel" aria-pressed="false">Hotel or resort</button><button type="button" data-type="garden" aria-pressed="false">Garden</button><button type="button" data-type="barn" aria-pressed="false">Barn or farm</button><button type="button" data-type="estate" aria-pressed="false">Historic estate</button><button type="button" data-type="museum" aria-pressed="false">Museum</button><button type="button" data-type="winery" aria-pressed="false">Winery or brewery</button><button type="button" data-type="loft" aria-pressed="false">Rooftop or loft</button><button type="button" data-type="waterfront" aria-pressed="false">Waterfront</button><button type="button" data-type="club" aria-pressed="false">Country club</button><button type="button" data-type="restaurant" aria-pressed="false">Restaurant</button><button type="button" data-type="park" aria-pressed="false">Park</button><button type="button" data-type="ballroom" aria-pressed="false">Ballroom</button>
+    </div>
+  </div>
+  <div>
     <p class="label" id="vibe-label">Vibe</p>
     <div class="choices" id="vibes" role="group" aria-labelledby="vibe-label">
       <button type="button" data-vibe="garden" aria-pressed="false">Garden</button><button type="button" data-vibe="historic" aria-pressed="false">Historic</button><button type="button" data-vibe="waterfront" aria-pressed="false">Waterfront</button><button type="button" data-vibe="estate" aria-pressed="false">Estate</button><button type="button" data-vibe="resort" aria-pressed="false">Resort</button><button type="button" data-vibe="art" aria-pressed="false">Art</button><button type="button" data-vibe="museum" aria-pressed="false">Museum</button><button type="button" data-vibe="ballroom" aria-pressed="false">Ballroom</button><button type="button" data-vibe="all-inclusive" aria-pressed="false">All-inclusive</button>
@@ -97,6 +103,9 @@
   <details class="more-filters">
     <summary id="more-filters-label">More filters</summary>
     <div class="choices" id="more-filters">
+      <button type="button" data-filter="cap-75" aria-pressed="false">Holds up to 75</button>
+      <button type="button" data-filter="cap-200" aria-pressed="false">Holds 76–200</button>
+      <button type="button" data-filter="cap-201" aria-pressed="false">Holds 201 or more</button>
       <button type="button" data-filter="indoor" aria-pressed="false">Indoor option</button>
       <button type="button" data-filter="outdoor" aria-pressed="false">Outdoor</button>
       <button type="button" data-filter="ceremony" aria-pressed="false">Ceremony on site</button>
@@ -115,117 +124,117 @@
   <p class="no-print"><button type="button" class="text-btn" data-share>Copy link</button></p>
 </div>
 <div id="saved-compare" hidden></div>
-<div id="venue-grid" class="venue-grid"><article class="venue-card card" data-venue-card data-id="lady-bird-wildflower" data-capacity="20" data-vibes="garden" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="" data-offday="1">
+<div id="venue-grid" class="venue-grid"><article class="venue-card card" data-venue-card data-id="lady-bird-wildflower" data-capacity="20" data-type="garden" data-vibes="garden" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="" data-offday="1">
   <a class="venue-card-link" href="../../../venues/texas/austin/lady-bird-wildflower/index.html">
     <span class="swatch swatch-garden" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M24 40V18"/><path d="M24 28c-8 0-12-6-12-12 6 0 12 4 12 12zM24 24c8-2 14-8 14-14-8 2-14 8-14 14z"/></svg></span>
     <span class="venue-card-copy">
       <span class="kicker">Austin</span>
       <h2>Lady Bird Johnson Wildflower Center</h2>
-      <span class="chip-row"><span class="chip">Garden</span></span>
+      <span class="chip-row"><span class="chip">Garden</span><span class="chip">Garden</span></span>
       <span class="venue-price" data-price>$9,076–$11,739 all-in</span>
       <span class="hint" data-price-note>All-in estimate at 100 guests · Up to 20 · Rental only, food extra</span>
     </span>
   </a>
   <button type="button" class="heart" data-heart="lady-bird-wildflower" aria-pressed="false" aria-label="Save Lady Bird Johnson Wildflower Center">♡</button>
   <a class="sr" href="../../../venues/texas/austin/index.html">More in Austin</a>
-</article><article class="venue-card card" data-venue-card data-id="zilker-botanical-garden" data-capacity="100" data-vibes="garden" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="" data-access="" data-offday="">
+</article><article class="venue-card card" data-venue-card data-id="zilker-botanical-garden" data-capacity="100" data-type="garden" data-vibes="garden" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="" data-access="" data-offday="">
   <a class="venue-card-link" href="../../../venues/texas/austin/zilker-botanical-garden/index.html">
     <span class="swatch swatch-garden" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M24 40V18"/><path d="M24 28c-8 0-12-6-12-12 6 0 12 4 12 12zM24 24c8-2 14-8 14-14-8 2-14 8-14 14z"/></svg></span>
     <span class="venue-card-copy">
       <span class="kicker">Austin</span>
       <h2>Zilker Botanical Garden</h2>
-      <span class="chip-row"><span class="chip">Garden</span></span>
+      <span class="chip-row"><span class="chip">Garden</span><span class="chip">Garden</span></span>
       <span class="venue-price" data-price>$7,953–$11,839 all-in</span>
       <span class="hint" data-price-note>All-in estimate at 100 guests · Up to 100 · Several packages on their PDF</span>
     </span>
   </a>
   <button type="button" class="heart" data-heart="zilker-botanical-garden" aria-pressed="false" aria-label="Save Zilker Botanical Garden">♡</button>
   <a class="sr" href="../../../venues/texas/austin/index.html">More in Austin</a>
-</article><article class="venue-card card" data-venue-card data-id="umlauf-sculpture-garden" data-capacity="250" data-vibes="art garden" data-indoor="outdoor" data-ceremony="1" data-rooms="" data-rain="" data-access="" data-offday="">
+</article><article class="venue-card card" data-venue-card data-id="umlauf-sculpture-garden" data-capacity="250" data-type="museum" data-vibes="art garden" data-indoor="outdoor" data-ceremony="1" data-rooms="" data-rain="" data-access="" data-offday="">
   <a class="venue-card-link" href="../../../venues/texas/austin/umlauf-sculpture-garden/index.html">
     <span class="swatch swatch-art" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="10" y="14" width="28" height="20" rx="2"/><path d="M10 20h28M18 14v-4h12v4"/></svg></span>
     <span class="venue-card-copy">
       <span class="kicker">Austin</span>
       <h2>UMLAUF Sculpture Garden + Museum</h2>
-      <span class="chip-row"><span class="chip">Art</span><span class="chip">Garden</span></span>
+      <span class="chip-row"><span class="chip">Museum</span><span class="chip">Art</span></span>
       <span class="venue-price" data-price>Pricing not published, ask the venue</span>
       <span class="hint" data-price-note>Pricing not published · Up to 250 · Ask what's included</span>
     </span>
   </a>
   <button type="button" class="heart" data-heart="umlauf-sculpture-garden" aria-pressed="false" aria-label="Save UMLAUF Sculpture Garden + Museum">♡</button>
   <a class="sr" href="../../../venues/texas/austin/index.html">More in Austin</a>
-</article><article class="venue-card card" data-venue-card data-id="french-legation" data-capacity="290" data-vibes="historic garden" data-indoor="outdoor" data-ceremony="1" data-rooms="" data-rain="" data-access="" data-offday="">
+</article><article class="venue-card card" data-venue-card data-id="french-legation" data-capacity="290" data-type="garden" data-vibes="historic garden" data-indoor="outdoor" data-ceremony="1" data-rooms="" data-rain="" data-access="" data-offday="">
   <a class="venue-card-link" href="../../../venues/texas/austin/french-legation/index.html">
     <span class="swatch swatch-historic" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 40V22L24 10l16 12v18"/><path d="M20 40V28h8v12"/></svg></span>
     <span class="venue-card-copy">
       <span class="kicker">Austin</span>
       <h2>French Legation</h2>
-      <span class="chip-row"><span class="chip">Historic</span><span class="chip">Garden</span></span>
+      <span class="chip-row"><span class="chip">Garden</span><span class="chip">Historic</span></span>
       <span class="venue-price" data-price>Pricing not published, ask the venue</span>
       <span class="hint" data-price-note>Pricing not published · Up to 290 · Ask what's included</span>
     </span>
   </a>
   <button type="button" class="heart" data-heart="french-legation" aria-pressed="false" aria-label="Save French Legation">♡</button>
   <a class="sr" href="../../../venues/texas/austin/index.html">More in Austin</a>
-</article><article class="venue-card card" data-venue-card data-id="neill-cochran-house" data-capacity="200" data-vibes="historic" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="1" data-offday="">
+</article><article class="venue-card card" data-venue-card data-id="neill-cochran-house" data-capacity="200" data-type="estate" data-vibes="historic" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="1" data-offday="">
   <a class="venue-card-link" href="../../../venues/texas/austin/neill-cochran-house/index.html">
     <span class="swatch swatch-historic" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 40V22L24 10l16 12v18"/><path d="M20 40V28h8v12"/></svg></span>
     <span class="venue-card-copy">
       <span class="kicker">Austin</span>
       <h2>Neill-Cochran House Museum</h2>
-      <span class="chip-row"><span class="chip">Historic</span></span>
+      <span class="chip-row"><span class="chip">Historic estate</span><span class="chip">Historic</span></span>
       <span class="venue-price" data-price>Pricing not published, ask the venue</span>
       <span class="hint" data-price-note>Pricing not published · Up to 200 · Ask what's included</span>
     </span>
   </a>
   <button type="button" class="heart" data-heart="neill-cochran-house" aria-pressed="false" aria-label="Save Neill-Cochran House Museum">♡</button>
   <a class="sr" href="../../../venues/texas/austin/index.html">More in Austin</a>
-</article><article class="venue-card card" data-venue-card data-id="laguna-gloria" data-capacity="" data-vibes="art garden historic waterfront" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="" data-access="" data-offday="">
+</article><article class="venue-card card" data-venue-card data-id="laguna-gloria" data-capacity="" data-type="museum" data-vibes="art garden historic waterfront" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="" data-access="" data-offday="">
   <a class="venue-card-link" href="../../../venues/texas/austin/laguna-gloria/index.html">
     <span class="swatch swatch-art" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="10" y="14" width="28" height="20" rx="2"/><path d="M10 20h28M18 14v-4h12v4"/></svg></span>
     <span class="venue-card-copy">
       <span class="kicker">Austin</span>
       <h2>Laguna Gloria</h2>
-      <span class="chip-row"><span class="chip">Art</span><span class="chip">Garden</span></span>
+      <span class="chip-row"><span class="chip">Museum</span><span class="chip">Art</span></span>
       <span class="venue-price" data-price>Pricing not published, ask the venue</span>
       <span class="hint" data-price-note>Pricing not published · Capacity not published · Ask what's included</span>
     </span>
   </a>
   <button type="button" class="heart" data-heart="laguna-gloria" aria-pressed="false" aria-label="Save Laguna Gloria">♡</button>
   <a class="sr" href="../../../venues/texas/austin/index.html">More in Austin</a>
-</article><article class="venue-card card" data-venue-card data-id="jones-center" data-capacity="" data-vibes="art" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="" data-offday="">
+</article><article class="venue-card card" data-venue-card data-id="jones-center" data-capacity="" data-type="museum" data-vibes="art" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="" data-offday="">
   <a class="venue-card-link" href="../../../venues/texas/austin/jones-center/index.html">
     <span class="swatch swatch-art" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="10" y="14" width="28" height="20" rx="2"/><path d="M10 20h28M18 14v-4h12v4"/></svg></span>
     <span class="venue-card-copy">
       <span class="kicker">Austin</span>
       <h2>The Jones Center at The Contemporary Austin</h2>
-      <span class="chip-row"><span class="chip">Art</span></span>
+      <span class="chip-row"><span class="chip">Museum</span><span class="chip">Art</span></span>
       <span class="venue-price" data-price>Pricing not published, ask the venue</span>
       <span class="hint" data-price-note>Pricing not published · Capacity not published · Ask what's included</span>
     </span>
   </a>
   <button type="button" class="heart" data-heart="jones-center" aria-pressed="false" aria-label="Save The Jones Center at The Contemporary Austin">♡</button>
   <a class="sr" href="../../../venues/texas/austin/index.html">More in Austin</a>
-</article><article class="venue-card card" data-venue-card data-id="bullock-museum" data-capacity="1200" data-vibes="museum" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="" data-offday="">
+</article><article class="venue-card card" data-venue-card data-id="bullock-museum" data-capacity="1200" data-type="museum" data-vibes="museum" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="" data-offday="">
   <a class="venue-card-link" href="../../../venues/texas/austin/bullock-museum/index.html">
     <span class="swatch swatch-museum" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="10" y="14" width="28" height="20" rx="2"/><path d="M10 20h28M18 14v-4h12v4"/></svg></span>
     <span class="venue-card-copy">
       <span class="kicker">Austin</span>
       <h2>Bullock Texas State History Museum</h2>
-      <span class="chip-row"><span class="chip">Museum</span></span>
+      <span class="chip-row"><span class="chip">Museum</span><span class="chip">Museum</span></span>
       <span class="venue-price" data-price>Pricing not published, ask the venue</span>
       <span class="hint" data-price-note>Pricing not published · Up to 1200 · Ask what's included</span>
     </span>
   </a>
   <button type="button" class="heart" data-heart="bullock-museum" aria-pressed="false" aria-label="Save Bullock Texas State History Museum">♡</button>
   <a class="sr" href="../../../venues/texas/austin/index.html">More in Austin</a>
-</article><article class="venue-card card" data-venue-card data-id="mayfield-cottage" data-capacity="100" data-vibes="garden historic" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="" data-offday="">
+</article><article class="venue-card card" data-venue-card data-id="mayfield-cottage" data-capacity="100" data-type="garden" data-vibes="garden historic" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="" data-offday="">
   <a class="venue-card-link" href="../../../venues/texas/austin/mayfield-cottage/index.html">
     <span class="swatch swatch-garden" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M24 40V18"/><path d="M24 28c-8 0-12-6-12-12 6 0 12 4 12 12zM24 24c8-2 14-8 14-14-8 2-14 8-14 14z"/></svg></span>
     <span class="venue-card-copy">
       <span class="kicker">Austin</span>
       <h2>Mayfield Cottage &amp; Gardens</h2>
-      <span class="chip-row"><span class="chip">Garden</span><span class="chip">Historic</span></span>
+      <span class="chip-row"><span class="chip">Garden</span><span class="chip">Garden</span></span>
       <span class="venue-price" data-price>Pricing not published, ask the venue</span>
       <span class="hint" data-price-note>Pricing not published · Up to 100 · Ask what's included</span>
     </span>
@@ -233,12 +242,14 @@
   <button type="button" class="heart" data-heart="mayfield-cottage" aria-pressed="false" aria-label="Save Mayfield Cottage &amp; Gardens">♡</button>
   <a class="sr" href="../../../venues/texas/austin/index.html">More in Austin</a>
 </article></div>
+<nav id="venue-pager" class="pager" aria-label="Venue pages"></nav>
 <p id="capacity-note" class="hint" hidden></p>
+<details class="card venue-index"><summary>Every venue in this list (9)</summary><p class="chip-row"><a href="../../../venues/texas/austin/lady-bird-wildflower/index.html">Lady Bird Johnson Wildflower Center</a><a href="../../../venues/texas/austin/zilker-botanical-garden/index.html">Zilker Botanical Garden</a><a href="../../../venues/texas/austin/umlauf-sculpture-garden/index.html">UMLAUF Sculpture Garden + Museum</a><a href="../../../venues/texas/austin/french-legation/index.html">French Legation</a><a href="../../../venues/texas/austin/neill-cochran-house/index.html">Neill-Cochran House Museum</a><a href="../../../venues/texas/austin/laguna-gloria/index.html">Laguna Gloria</a><a href="../../../venues/texas/austin/jones-center/index.html">The Jones Center at The Contemporary Austin</a><a href="../../../venues/texas/austin/bullock-museum/index.html">Bullock Texas State History Museum</a><a href="../../../venues/texas/austin/mayfield-cottage/index.html">Mayfield Cottage &amp; Gardens</a></p></details>
 <div id="venue-none" class="empty-note card" hidden>
   <p data-none-copy>No venues match these filters.</p>
   <button type="button" class="btn" id="loosen-filters">Loosen filters</button>
 </div>
-<script type="application/json" id="venue-data">[{"id":"lady-bird-wildflower","name":"Lady Bird Johnson Wildflower Center","metro":"12420","city":"Austin","capacity":20,"vibes":["garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-03","sourceUrl":"https://www.wildflower.org/private-events/elopements","saturday":1250,"offday":1000,"note":"Lady Bird Johnson Wildflower Center elopement page, open October 3, 2026. Saturday and Sunday during public hours, 9 a.m.–5 p.m., are $1,250. Monday–Friday are $1,000. This is a 20-person daytime ceremony, not a reception. After-hours pricing is not printed."},"path":"/venues/texas/austin/lady-bird-wildflower"},{"id":"zilker-botanical-garden","name":"Zilker Botanical Garden","metro":"12420","city":"Austin","capacity":100,"vibes":["garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"published","kind":"range","verifiedOn":"2026-10-03","sourceUrl":"https://zilkergarden.org/wp-content/uploads/2025/12/2026-Rental-Guidebook-Final.pdf","low":126.5,"high":1350,"includesFood":false,"note":"Zilker Botanical Garden's 2026 rental guidebook. A Memorial Arch ceremony minimum is $126.50 for two hours. A footnote on the Promenade, Alcove, and South Lawn says the resident wedding-reception minimum of $1,350 is a $1,200 two-hour wedding grounds fee plus two additional hours. The Oak Grove prints a 4-hour flat rate of $450 and an 8-hour flat rate of $900 in the wedding column, the same numbers as the party and memorial columns. Saturday is not priced differently from other days. Staffing, maintenance, and deposits are extra and not in this span. No tax percent is stated. Columns in the PDF are tight, so this is the published span rather than one cell."},"path":"/venues/texas/austin/zilker-botanical-garden"},{"id":"umlauf-sculpture-garden","name":"UMLAUF Sculpture Garden + Museum","metro":"12420","city":"Austin","capacity":250,"vibes":["art","garden"],"indoorOutdoor":"outdoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://www.umlaufsculpture.org/private-weddings","includesFood":false,"note":"The UMLAUF private-weddings page was open on October 3, 2026. It describes the garden wedding and says to inquire for rates. No wedding rental is published. Ask the venue."},"path":"/venues/texas/austin/umlauf-sculpture-garden"},{"id":"french-legation","name":"French Legation","metro":"12420","city":"Austin","capacity":290,"vibes":["historic","garden"],"indoorOutdoor":"outdoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://thc.texas.gov/state-historic-sites/french-legation/rent-french-legation","includesFood":false,"note":"The Texas Historical Commission rental page for the French Legation was open on October 3, 2026. It describes wedding lawns and capacities and does not publish a fee. Ask the venue."},"path":"/venues/texas/austin/french-legation"},{"id":"neill-cochran-house","name":"Neill-Cochran House Museum","metro":"12420","city":"Austin","capacity":200,"vibes":["historic"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":true,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://www.nchmuseum.org/s/Venue-Rental-Rate-Card-2025.pdf","includesFood":false,"note":"The Neill-Cochran House 2025 rate card was open on October 3, 2026. It prices a Saturday evening cocktail or dinner party at $1,500 and Friday/Saturday gala packages at $4,000 or $4,500, and it does not label either line as a wedding. Those figures are not entered as the wedding rental. Ask the venue which line applies. Photo shoots at $100 an hour are not a wedding rental."},"path":"/venues/texas/austin/neill-cochran-house"},{"id":"laguna-gloria","name":"Laguna Gloria","metro":"12420","city":"Austin","capacity":null,"vibes":["art","garden","historic","waterfront"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://thecontemporaryaustin.org/site-rentals/","includesFood":false,"note":"The Contemporary Austin site-rentals page was open on October 3, 2026. It offers weddings at Laguna Gloria and does not publish a fee. Ask the venue."},"path":"/venues/texas/austin/laguna-gloria"},{"id":"jones-center","name":"The Jones Center at The Contemporary Austin","metro":"12420","city":"Austin","capacity":null,"vibes":["art"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://thecontemporaryaustin.org/site-rentals/","includesFood":false,"note":"The Contemporary Austin site-rentals page was open on October 3, 2026. It describes wedding use of the Jones Center rooftop and Community Room and does not publish a fee. Ask the venue."},"path":"/venues/texas/austin/jones-center"},{"id":"bullock-museum","name":"Bullock Texas State History Museum","metro":"12420","city":"Austin","capacity":1200,"vibes":["museum"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://www.thestoryoftexas.com/venue-rentals/weddings/","includesFood":false,"note":"The Bullock Museum wedding page was open on October 3, 2026. It lists spaces, hours, and a $500 early-load-in rate, and it says pricing comes from the events team. No wedding rental is published. The $500 hour is load-in, not the rental. Ask the venue."},"path":"/venues/texas/austin/bullock-museum"},{"id":"mayfield-cottage","name":"Mayfield Cottage & Gardens","metro":"12420","city":"Austin","capacity":100,"vibes":["garden","historic"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://www.austintexas.gov/parks/locations/mayfield-park","includesFood":false,"note":"The City of Austin Mayfield Park page was open on October 3, 2026. It says weddings require a rental and that prices are in the rental guidebook. That PDF (Mayfield-Rental-Guidebook-2026.pdf) did not open, so no figure is recorded. Ask the venue."},"path":"/venues/texas/austin/mayfield-cottage"}]</script><details class="explainer-fold"><summary>About this page and common questions</summary><section class="explainer" aria-label="About this page"><h2>Venues in Austin</h2><p>This list is a starter set for Austin–Round Rock–San Marcos. A missing price means the venue's site did not publish one. It is not a guess.</p><h2>Common questions</h2><div class="faq"><details class="faq-item"><summary>How much does a wedding venue cost in Austin?</summary><p>The cards below use each venue's own published price when one exists. 2 of 9 venues on this page had a public price when we checked.</p></details></div><p>Every figure is cited on the <a href="../../../sources/index.html">sources page</a>.</p></section></details>
+<script type="application/json" id="venue-data">[{"id":"lady-bird-wildflower","name":"Lady Bird Johnson Wildflower Center","metro":"12420","city":"Austin","capacity":20,"vibes":["garden"],"venueType":"garden","indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"closed":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-03","sourceUrl":"https://www.wildflower.org/private-events/elopements","saturday":1250,"offday":1000,"note":"Lady Bird Johnson Wildflower Center elopement page, open October 3, 2026. Saturday and Sunday during public hours, 9 a.m.–5 p.m., are $1,250. Monday–Friday are $1,000. This is a 20-person daytime ceremony, not a reception. After-hours pricing is not printed."},"path":"/venues/texas/austin/lady-bird-wildflower"},{"id":"zilker-botanical-garden","name":"Zilker Botanical Garden","metro":"12420","city":"Austin","capacity":100,"vibes":["garden"],"venueType":"garden","indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"closed":false,"price":{"confidence":"published","kind":"range","verifiedOn":"2026-10-03","sourceUrl":"https://zilkergarden.org/wp-content/uploads/2025/12/2026-Rental-Guidebook-Final.pdf","low":126.5,"high":1350,"includesFood":false,"note":"Zilker Botanical Garden's 2026 rental guidebook. A Memorial Arch ceremony minimum is $126.50 for two hours. A footnote on the Promenade, Alcove, and South Lawn says the resident wedding-reception minimum of $1,350 is a $1,200 two-hour wedding grounds fee plus two additional hours. The Oak Grove prints a 4-hour flat rate of $450 and an 8-hour flat rate of $900 in the wedding column, the same numbers as the party and memorial columns. Saturday is not priced differently from other days. Staffing, maintenance, and deposits are extra and not in this span. No tax percent is stated. Columns in the PDF are tight, so this is the published span rather than one cell."},"path":"/venues/texas/austin/zilker-botanical-garden"},{"id":"umlauf-sculpture-garden","name":"UMLAUF Sculpture Garden + Museum","metro":"12420","city":"Austin","capacity":250,"vibes":["art","garden"],"venueType":"museum","indoorOutdoor":"outdoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"closed":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://www.umlaufsculpture.org/private-weddings","includesFood":false,"note":"The UMLAUF private-weddings page was open on October 3, 2026. It describes the garden wedding and says to inquire for rates. No wedding rental is published. Ask the venue."},"path":"/venues/texas/austin/umlauf-sculpture-garden"},{"id":"french-legation","name":"French Legation","metro":"12420","city":"Austin","capacity":290,"vibes":["historic","garden"],"venueType":"garden","indoorOutdoor":"outdoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"closed":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://thc.texas.gov/state-historic-sites/french-legation/rent-french-legation","includesFood":false,"note":"The Texas Historical Commission rental page for the French Legation was open on October 3, 2026. It describes wedding lawns and capacities and does not publish a fee. Ask the venue."},"path":"/venues/texas/austin/french-legation"},{"id":"neill-cochran-house","name":"Neill-Cochran House Museum","metro":"12420","city":"Austin","capacity":200,"vibes":["historic"],"venueType":"estate","indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":true,"rainPlan":true,"nearby":false,"closed":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://www.nchmuseum.org/s/Venue-Rental-Rate-Card-2025.pdf","includesFood":false,"note":"The Neill-Cochran House 2025 rate card was open on October 3, 2026. It prices a Saturday evening cocktail or dinner party at $1,500 and Friday/Saturday gala packages at $4,000 or $4,500, and it does not label either line as a wedding. Those figures are not entered as the wedding rental. Ask the venue which line applies. Photo shoots at $100 an hour are not a wedding rental."},"path":"/venues/texas/austin/neill-cochran-house"},{"id":"laguna-gloria","name":"Laguna Gloria","metro":"12420","city":"Austin","capacity":null,"vibes":["art","garden","historic","waterfront"],"venueType":"museum","indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"closed":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://thecontemporaryaustin.org/site-rentals/","includesFood":false,"note":"The Contemporary Austin site-rentals page was open on October 3, 2026. It offers weddings at Laguna Gloria and does not publish a fee. Ask the venue."},"path":"/venues/texas/austin/laguna-gloria"},{"id":"jones-center","name":"The Jones Center at The Contemporary Austin","metro":"12420","city":"Austin","capacity":null,"vibes":["art"],"venueType":"museum","indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"closed":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://thecontemporaryaustin.org/site-rentals/","includesFood":false,"note":"The Contemporary Austin site-rentals page was open on October 3, 2026. It describes wedding use of the Jones Center rooftop and Community Room and does not publish a fee. Ask the venue."},"path":"/venues/texas/austin/jones-center"},{"id":"bullock-museum","name":"Bullock Texas State History Museum","metro":"12420","city":"Austin","capacity":1200,"vibes":["museum"],"venueType":"museum","indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"closed":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://www.thestoryoftexas.com/venue-rentals/weddings/","includesFood":false,"note":"The Bullock Museum wedding page was open on October 3, 2026. It lists spaces, hours, and a $500 early-load-in rate, and it says pricing comes from the events team. No wedding rental is published. The $500 hour is load-in, not the rental. Ask the venue."},"path":"/venues/texas/austin/bullock-museum"},{"id":"mayfield-cottage","name":"Mayfield Cottage & Gardens","metro":"12420","city":"Austin","capacity":100,"vibes":["garden","historic"],"venueType":"garden","indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"closed":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://www.austintexas.gov/parks/locations/mayfield-park","includesFood":false,"note":"The City of Austin Mayfield Park page was open on October 3, 2026. It says weddings require a rental and that prices are in the rental guidebook. That PDF (Mayfield-Rental-Guidebook-2026.pdf) did not open, so no figure is recorded. Ask the venue."},"path":"/venues/texas/austin/mayfield-cottage"}]</script><details class="explainer-fold"><summary>About this page and common questions</summary><section class="explainer" aria-label="About this page"><h2>Venues in Austin</h2><p>This list is a starter set for Austin–Round Rock–San Marcos. A missing price means the venue's site did not publish one. It is not a guess.</p><h2>Common questions</h2><div class="faq"><details class="faq-item"><summary>How much does a wedding venue cost in Austin?</summary><p>The cards below use each venue's own published price when one exists. 2 of 9 venues on this page had a public price when we checked.</p></details></div><p>Every figure is cited on the <a href="../../../sources/index.html">sources page</a>.</p></section></details>
   </main>
   <footer class="site-footer">
     
