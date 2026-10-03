@@ -228,6 +228,68 @@
         "review": "The 8.25% line sits on the beverage page. Confirm the caterer's food is taxed at the same percent."
       }
     },
+    "brooklyn-botanic-palm-house": {
+      "review": "Room rental and the food minimum are Palm House only. The Atrium on the same kit is a smaller room and is not mixed into this total. The 26% administrative fee is applied to the food line because the kit says the food minimum is before that fee. It does not say the percent also applies to the room rental, so the rental is not marked up. Off-day food uses the May–October Sunday minimum. Other Sunday minimums are lower and stay in the note.",
+      "siteBySeason": {
+        "peak": {
+          "saturday": 12000,
+          "offday": 6000,
+          "quote": "Palm House room rental, May, Jun, Sep, Oct: Saturday $12,000. Sunday $6,000. Friday $6,800.",
+          "note": "Palm House peak Saturday room rental from Union Square Events' 2027 wedding kit, the garden's exclusive caterer. Sunday in those months is $6,000. Friday is $6,800 and is not this off-day figure. The garden's own weddings page does not print these fees.",
+          "sourceUrl": "https://images.getbento.com/accounts/b53111d66d2e8a97868c11879af5848b/media/WuqWQOuS76cNi8SiZo0B_2027%20USE%20at%20BBG%20Events%20Kit%20(V2).pdf",
+          "verifiedOn": "2026-10-03"
+        },
+        "off": {
+          "saturday": { "low": 7500, "high": 8500 },
+          "offday": { "low": 4500, "high": 5000 },
+          "quote": "Palm House Saturday room rental is $8,500 in Mar, Apr, Nov and $7,500 in Jul, Aug and Dec, Jan, Feb. Sunday is $5,000 in Mar, Apr, Nov and $4,500 in the other off-peak months.",
+          "note": "Palm House Saturday room rental outside May, June, September, and October. The low figure is July–August and December–February. The high figure is March, April, and November.",
+          "sourceUrl": "https://images.getbento.com/accounts/b53111d66d2e8a97868c11879af5848b/media/WuqWQOuS76cNi8SiZo0B_2027%20USE%20at%20BBG%20Events%20Kit%20(V2).pdf",
+          "verifiedOn": "2026-10-03"
+        }
+      },
+      "fnbMinimum": {
+        "sourceUrl": "https://images.getbento.com/accounts/b53111d66d2e8a97868c11879af5848b/media/WuqWQOuS76cNi8SiZo0B_2027%20USE%20at%20BBG%20Events%20Kit%20(V2).pdf",
+        "verifiedOn": "2026-10-03",
+        "quote": "Palm House Saturday food and beverage minimum, May–June and Sep–Oct: $55,000. Event package breakdown starting at $228 per person. Before room rental, membership fee, 26% administrative fee, and tax.",
+        "note": "Union Square Events' Palm House food-and-beverage minimum for a peak Saturday, or $228 a person when that is higher. The $228 package is their published starting menu: cocktail hour, a seated dinner, wedding cake, and a four-hour open bar. It replaces the study food line. It is not a quote from the garden's own page.",
+        "perPerson": 228,
+        "saturday": { "amount": 55000 },
+        "off": { "amount": 30500 },
+        "offSeason": { "low": 26000, "high": 47250 }
+      },
+      "serviceCharge": {
+        "pct": 26,
+        "quote": "Before Room Rental, Membership Fee, 26% Administrative Fee and Tax.",
+        "note": "26% administrative fee from the exclusive caterer's kit, applied to the food line. It is not a tip. The kit does not say this percent is also charged on the room rental.",
+        "sourceUrl": "https://images.getbento.com/accounts/b53111d66d2e8a97868c11879af5848b/media/WuqWQOuS76cNi8SiZo0B_2027%20USE%20at%20BBG%20Events%20Kit%20(V2).pdf",
+        "verifiedOn": "2026-10-03"
+      },
+      "addOns": [
+        {
+          "id": "wedding-day",
+          "type": "package_flat",
+          "label": "Wedding day fee",
+          "amount": 4000,
+          "required": true,
+          "quote": "WEDDING DAY FEE: $4,000. (1) VIP Server for up to 9 hours. Setup and breakdown of ceremony with white folding chairs. Coat check and restroom attendants.",
+          "note": "Required wedding-day fee on the Palm House page of the same kit. It is separate from the room rental.",
+          "sourceUrl": "https://images.getbento.com/accounts/b53111d66d2e8a97868c11879af5848b/media/WuqWQOuS76cNi8SiZo0B_2027%20USE%20at%20BBG%20Events%20Kit%20(V2).pdf",
+          "verifiedOn": "2026-10-03"
+        },
+        {
+          "id": "membership",
+          "type": "admin_fee",
+          "label": "Patron membership",
+          "amount": 800,
+          "required": true,
+          "quote": "Patron Membership Fee: $800 ($677 tax deductible); Only Patron-level members may host events on BBG premises.",
+          "note": "The kit says only Patron-level members may host. The charge is $800. The kit says $677 of that is tax deductible. The deductible portion is not subtracted here.",
+          "sourceUrl": "https://images.getbento.com/accounts/b53111d66d2e8a97868c11879af5848b/media/WuqWQOuS76cNi8SiZo0B_2027%20USE%20at%20BBG%20Events%20Kit%20(V2).pdf",
+          "verifiedOn": "2026-10-03"
+        }
+      ]
+    },
     "rhodes-hall": {
       "addOns": [
         {

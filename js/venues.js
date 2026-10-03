@@ -2,8 +2,7 @@ import { categorySplit, planFor, venueBenchmarks, compareBudget } from "./estima
 import { formatMoney, formatPlan } from "./format.js";
 import { cityLine, nearestSeeded, venueAppPath } from "./place-nav.js";
 import { describe } from "./describe.js";
-import { allIn } from "./price-engine.js";
-import { allInHeadline } from "./price-present.js";
+import { listedPrice } from "./price-present.js";
 import { quoteVenue, fitsCapacity } from "./venue-quote.js";
 import {
   bindGlobals, clear, el, loadData,   mountLocation, readParams, readShortlist,
@@ -227,55 +226,40 @@ function render() {
     card.querySelector("[data-fit]")?.remove();
     card.querySelector("[data-unpriced]")?.remove();
     card.querySelector("[data-food-note]")?.remove();
-    const allInResult = data && data.taxTable
-      ? allIn(venue, {
-        guests,
-        day: "sat",
-        season: "peak",
-        costs: data.costs,
-        place: place && place.metroId === venue.metro ? place : describe(`metro:${venue.metro}`, data.ctx),
-        taxTable: data.taxTable,
-        fees: data.fees,
-      })
-      : null;
+    const listed = priceFor(venue, guests);
     if (priceEl) {
-      const published = quote.status === "priced" || quote.status === "range";
-      const money = quote.status === "priced"
-        ? formatMoney(quote.total, { exact: true })
-        : quote.status === "range"
-          ? `${formatMoney(quote.low, { exact: true })}–${formatMoney(quote.high, { exact: true })}`
-          : "";
-      if (allInResult && allInResult.allInReady) {
+      const published = listed.basis !== "ask";
+      if (published) {
         priceEl.classList.remove("price-muted");
-        const figure = `${allInHeadline(allInResult)} all-in`;
+        const figure = listed.text;
         priceEl.textContent = fits || !venue.capacity ? figure : `${figure} · over ${venue.capacity} guests`;
         const note = card.querySelector("[data-price-note]");
-        if (note) note.textContent = `All-in estimate at ${guests} guests · ${venue.capacity ? `Up to ${venue.capacity}` : "Capacity not published"}`;
-      } else if (published) {
-        priceEl.classList.remove("price-muted");
-        priceEl.textContent = fits || !venue.capacity ? money : `${money} · over ${venue.capacity} guests`;
+        if (note) {
+          const kind = listed.basis === "all-in" ? `All-in estimate at ${guests} guests` : `Site fee only at ${guests} guests`;
+          note.textContent = `${kind} · ${venue.capacity ? `Up to ${venue.capacity}` : "Capacity not published"}`;
+        }
       } else {
         priceEl.classList.add("price-muted");
         priceEl.textContent = typicalVenueLine(guests) || "Ask for pricing";
         const muted = el("span", { class: "hint price-muted", "data-unpriced": "1", text: "Pricing not published" });
         priceEl.after(muted);
       }
-      if (quote.includesFood === false && published && !(allInResult && allInResult.allInReady)) {
+      if (listed.basis === "site" && quote.includesFood === false) {
         const food = foodEstimate(guests);
         if (food) priceEl.after(el("span", { class: "hint", "data-food-note": "1", text: food }));
       }
     }
-    const badge = el("span", { class: `fit-badge ${fits ? "fits" : "over"}`, "data-fit": "1", text: fitBadge(venue, quote, guests, budget, fits) });
+    const badge = el("span", { class: `fit-badge ${fits ? "fits" : "over"}`, "data-fit": "1", text: fitBadge(listed, guests, budget, fits) });
     card.querySelector(".venue-card-copy")?.append(badge);
-    return { card, venue, quote, fits };
+    return { card, venue, quote, fits, listed };
   });
   ranked.sort((a, b) => compareRank(a, b, budget, guests));
   for (const item of ranked) grid.append(item.card);
-  for (const { card, venue, quote, fits } of ranked) {
+  for (const { card, venue, listed, fits } of ranked) {
     const metroOk = !metroId || venue.metro === metroId;
     const vibeOk = !vibes.size || venue.vibes.some((vibe) => vibes.has(vibe));
     const filterOk = passes(card);
-    const amount = quote.total ?? quote.high ?? null;
+    const amount = listed.ceiling;
     const budgetOk = !budget || amount == null || amount <= budget * 1.05;
     const visible = !showGap && metroOk && vibeOk && filterOk && budgetOk && (fits || showOver);
     card.classList.toggle("is-tight", !fits);
@@ -305,9 +289,8 @@ function render() {
     const where = place && place.id !== "national" ? cityLine(place) : (lockedMetro ? "this city" : "all cities");
     const vibeLabel = vibes.size === 1 ? labelVibe([...vibes][0]) : "";
     const vibeCount = vibeLabel ? ranked.filter(({ card, venue }) => venue && card.dataset.vibes.includes([...vibes][0]) && (!metroId || venue.metro === metroId)).length : 0;
-    const within = budget ? ranked.filter(({ quote, venue }) => {
-      const amount = quote.total ?? quote.high ?? null;
-      return amount != null && amount <= budget && (!metroId || venue.metro === metroId);
+    const within = budget ? ranked.filter(({ listed, venue }) => {
+      return listed.ceiling != null && listed.ceiling <= budget && (!metroId || venue.metro === metroId);
     }).length : 0;
     const bits = [`${shown} venues in ${where}`];
     if (vibeLabel) bits.push(`${vibeCount} match ${vibeLabel}`);
@@ -406,8 +389,20 @@ function focusResults(seeded) {
   node.scrollIntoView({ block: "start" });
 }
 
+function priceFor(venue, guests) {
+  return listedPrice(venue, {
+    guests,
+    day: "sat",
+    season: "peak",
+    costs: data && data.costs,
+    place: data ? describe(`metro:${venue.metro}`, data.ctx) : null,
+    taxTable: data && data.taxTable,
+    fees: data && data.fees,
+  });
+}
+
 function score(item, budget) {
-  const amount = item.quote.total ?? item.quote.high ?? null;
+  const amount = item.listed.ceiling;
   if (!budget || amount == null) return amount == null ? 1e12 : amount;
   return Math.abs(amount - budget);
 }
@@ -416,8 +411,8 @@ function compareRank(a, b, budget, guests) {
   if (sortMode === "name") return a.venue.name.localeCompare(b.venue.name);
   if (sortMode === "capacity") return (b.venue.capacity || 0) - (a.venue.capacity || 0);
   if (sortMode === "price") {
-    const left = a.quote.total ?? a.quote.low ?? 1e12;
-    const right = b.quote.total ?? b.quote.low ?? 1e12;
+    const left = a.listed.sort ?? 1e12;
+    const right = b.listed.sort ?? 1e12;
     return left - right;
   }
   const fitOrder = Number(a.fits) === Number(b.fits) ? 0 : a.fits ? -1 : 1;
@@ -425,10 +420,12 @@ function compareRank(a, b, budget, guests) {
   return score(a, budget) - score(b, budget) || (b.venue.capacity || 0) - (a.venue.capacity || 0);
 }
 
-function fitBadge(venue, quote, guests, budget, fits) {
+function fitBadge(listed, guests, budget, fits) {
   const parts = [];
-  parts.push(fits ? `Fits ${guests}` : `Max ${venue.capacity} — too small`);
-  const amount = quote.total ?? quote.high ?? null;
+  parts.push(fits ? `Fits ${guests}` : "Over capacity");
+  if (listed.basis === "all-in") parts.push("all-in");
+  else if (listed.basis === "site") parts.push("site fee only");
+  const amount = listed.ceiling;
   if (budget && amount != null) {
     const gap = Math.round(budget - amount);
     parts.push(gap >= 0 ? `${formatMoney(gap, { exact: true })} under` : `${formatMoney(-gap, { exact: true })} over`);
@@ -494,24 +491,28 @@ function paintSaved(guests) {
   }
   box.hidden = false;
   clear(box);
-  const prices = saved.map((venue) => {
-    const quote = quoteVenue(venue, guests, "sat");
-    return quote.total ?? quote.low ?? null;
-  }).filter((amount) => amount != null);
+  const prices = saved.map((venue) => priceFor(venue, guests).sort).filter((amount) => amount != null);
   const best = prices.length ? Math.min(...prices) : null;
   box.append(el("h2", { text: `Compare ${saved.length} saved` }));
   const table = el("table", { class: "split-table" });
   table.append(el("thead", {}, [el("tr", {}, ["Venue", "Price", "Off day", "Capacity", "Ceremony", "Rooms", "Rain plan", "Access"].map((label) => el("th", { text: label })))]));
   const body = el("tbody");
   saved.forEach((venue) => {
-    const quote = quoteVenue(venue, guests, "sat");
-    const off = quoteVenue(venue, guests, "off");
-    const amount = quote.total ?? quote.low ?? null;
-    const winner = best != null && amount === best;
+    const listed = priceFor(venue, guests);
+    const offListed = listedPrice(venue, {
+      guests,
+      day: "off",
+      season: "peak",
+      costs: data && data.costs,
+      place: data ? describe(`metro:${venue.metro}`, data.ctx) : null,
+      taxTable: data && data.taxTable,
+      fees: data && data.fees,
+    });
+    const winner = best != null && listed.sort === best;
     body.append(el("tr", { class: winner ? "winner" : "" }, [
       el("td", { text: venue.name }),
-      el("td", { text: amount == null ? "Ask" : formatMoney(amount, { exact: true }) }),
-      el("td", { text: off.total != null ? formatMoney(off.total, { exact: true }) : off.label }),
+      el("td", { text: listed.text }),
+      el("td", { text: offListed.text }),
       el("td", { text: venue.capacity ? String(venue.capacity) : "—" }),
       el("td", { text: venue.ceremonyOnsite ? "Yes" : "No" }),
       el("td", { text: venue.accommodations ? "Yes" : "No" }),

@@ -1,7 +1,7 @@
 import { describe } from "./describe.js";
 import { formatMoney } from "./format.js";
 import { allIn } from "./price-engine.js";
-import { allInHeadline, allInHtml } from "./price-present.js";
+import { allInHeadline, allInHtml, listedPrice } from "./price-present.js";
 import { fitsCapacity, quoteVenue } from "./venue-quote.js";
 import { bindGlobals, readShortlist, siteHref, toggleShortlist } from "./common.js";
 
@@ -81,9 +81,13 @@ function render() {
   detailEl.textContent = `${warn}${bits.join(" · ")}. ${quote.note}`;
   const box = document.querySelector("[data-allin]");
   if (box && result) box.outerHTML = allInHtml(result);
+  const listed = result
+    ? listedPrice(venue, { result })
+    : { basis: quote.status === "priced" || quote.status === "range" ? "site" : "ask", low: quote.total ?? quote.low ?? null, high: quote.total ?? quote.high ?? null };
   const params = new URLSearchParams({ loc: `metro:${venue.metro}`, g: String(guests), venueName: venue.name });
-  const total = result && result.allInReady ? result.low : quote.total;
-  if (total != null) params.set("venueTotal", String(total));
+  if (listed.low != null) params.set("venueTotal", String(listed.low));
+  if (listed.high != null && listed.high !== listed.low) params.set("venueHigh", String(listed.high));
+  if (listed.basis !== "ask") params.set("venueBasis", listed.basis);
   budgetLink.href = siteHref(`/budget?${params.toString()}`);
 }
 

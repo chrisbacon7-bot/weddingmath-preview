@@ -128,19 +128,28 @@ function siteFromQuote(quote, venue, asOf) {
   });
 }
 
+function spanOf(amount) {
+  if (typeof amount === "number" && Number.isFinite(amount)) return { low: amount, high: amount };
+  if (amount && typeof amount === "object" && Number.isFinite(amount.low)) {
+    const high = Number.isFinite(amount.high) ? amount.high : amount.low;
+    return { low: amount.low, high };
+  }
+  return null;
+}
+
 function seasonalSite(fee, day, season, asOf) {
   const table = fee.siteBySeason;
   if (!table) return null;
   const row = table[season] || table.peak;
   if (!row) return null;
-  const amount = day === "off" ? row.offday : row.saturday;
-  if (amount == null) return null;
+  const span = spanOf(day === "off" ? row.offday : row.saturday);
+  if (!span) return null;
   return line({
     id: "site_fee",
     type: "site_fee",
     label: day === "off" ? "Site fee, off day" : "Site fee",
-    low: amount,
-    high: amount,
+    low: span.low,
+    high: span.high,
     chip: row.chip || "published",
     note: row.note || "",
     sourceUrl: row.sourceUrl,

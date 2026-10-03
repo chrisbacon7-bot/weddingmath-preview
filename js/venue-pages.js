@@ -10,7 +10,7 @@ import { formatMoney } from "./format.js";
 import { describe } from "./describe.js";
 import { quoteVenue } from "./venue-quote.js";
 import { allIn } from "./price-engine.js";
-import { allInHeadline, allInHtml } from "./price-present.js";
+import { allInHeadline, allInHtml, listedPrice } from "./price-present.js";
 import {
   metroById, metroPath, venueMetros, venuePath, venues, venuesForMetro, venuesForState,
 } from "./venue-catalog.js";
@@ -70,14 +70,14 @@ function hubPage() {
     ],
     explainerTitle: "How the venue finder chooses a number",
     explainer: [
-      "The number on a card is the published rental or package at your guest count. Food is included only when the venue publishes a per-guest price or an all-in package. A range means the venue's own sheet lists several Saturday packages and the columns are too easy to mix up.",
+      "When the site fee, food, service charge, and tax can each be labeled, the card shows that all-in total at 100 guests and says all-in. Otherwise it shows the published site fee and says site fee only. A venue with no published fee stays ask-the-venue. A range means the source lists more than one Saturday figure.",
       "Outside the seeded metros, the page shows the local venue benchmark from The Knot's national venue average scaled to that place. That benchmark is not a quote from a real venue.",
     ],
     body: `<section class="hero hero-tight">
   <div>
     <p class="kicker">Venue finder</p>
     <h1>Find a venue that fits the guest list</h1>
-    <p class="hero-sub">Guests, a place, and a venue budget. The price on the card is from the venue's own site.</p>
+    <p class="hero-sub">Guests, a place, and a venue budget. A card says all-in when food, service, and tax are labeled with the site fee. Otherwise it says site fee only.</p>
   </div>
 </section>
 ${finderShell("", cityGrid)}
@@ -323,7 +323,13 @@ function displayQuote(venue, guests) {
 function venueCard(venue) {
   const quote = displayQuote(venue, 100);
   const priced = allInFor(venue, 100, "sat");
-  const allInLabel = priced.allInReady ? `${allInHeadline(priced)} all-in` : "";
+  const listed = listedPrice(venue, { result: priced });
+  const priceText = listed.basis === "ask" ? headline(quote) : listed.text;
+  const priceNote = listed.basis === "all-in"
+    ? "All-in estimate at 100 guests"
+    : listed.basis === "site"
+      ? "Site fee only"
+      : quote.label;
   const metro = metroById(venue.metro);
   return `<article class="venue-card card" data-venue-card data-id="${escapeHtml(venue.id)}" data-capacity="${venue.capacity || ""}" data-vibes="${escapeHtml(venue.vibes.join(" "))}" data-indoor="${venue.indoorOutdoor}" data-ceremony="${venue.ceremonyOnsite ? "1" : ""}" data-rooms="${venue.accommodations ? "1" : ""}" data-rain="${venue.rainPlan ? "1" : ""}" data-access="${venue.accessible ? "1" : ""}" data-offday="${venue.price.offday != null ? "1" : ""}">
   <a class="venue-card-link" href="${venuePath(venue)}">
@@ -332,8 +338,8 @@ function venueCard(venue) {
       <span class="kicker">${escapeHtml(venue.city)}${venue.nearby ? " · Nearby" : ""}</span>
       <h2>${escapeHtml(venue.name)}</h2>
       <span class="chip-row">${venue.vibes.slice(0, 2).map((vibe) => `<span class="chip">${escapeHtml(labelVibe(vibe))}</span>`).join("")}</span>
-      <span class="venue-price" data-price>${escapeHtml(allInLabel || headline(quote))}</span>
-      <span class="hint" data-price-note>${escapeHtml(priced.allInReady ? "All-in estimate at 100 guests" : quote.label)} · ${venue.capacity ? `Up to ${venue.capacity}` : "Capacity not published"} · ${escapeHtml(includedShort(venue))}</span>
+      <span class="venue-price" data-price>${escapeHtml(priceText)}</span>
+      <span class="hint" data-price-note>${escapeHtml(priceNote)} · ${venue.capacity ? `Up to ${venue.capacity}` : "Capacity not published"} · ${escapeHtml(includedShort(venue))}</span>
     </span>
   </a>
   <button type="button" class="heart" data-heart="${escapeHtml(venue.id)}" aria-pressed="false" aria-label="Save ${escapeHtml(venue.name)}">♡</button>

@@ -280,7 +280,7 @@
         "Two hospitality suites"
       ],
       "notIncluded": [
-        "Food and drink. Arthur's Catering is the exclusive caterer, and menu prices are not on the rental page",
+        "Food and drink. Arthur's Catering is the exclusive caterer. Their wedding menu pages list dishes and do not print a per-person price. Marketplace starting prices are not used",
         "The 6.5% tax the venue says to add",
         "Extra hours, which are by request"
       ],
@@ -1204,7 +1204,7 @@
       "metro": "33100",
       "city": "Miami Beach",
       "address": "2000 Convention Center Drive, Miami Beach, FL 33139",
-      "website": "https://www.mbgarden.org/rentthegarden",
+      "website": "https://www.mbgarden.org/private-events",
       "vibes": [
         "garden"
       ],
@@ -1233,8 +1233,8 @@
         "confidence": "unpublished",
         "kind": "unpublished",
         "verifiedOn": "2026-10-02",
-        "sourceUrl": "https://www.mbgarden.org/rentthegarden",
-        "note": "The Garden's rental and private-event pages were open on October 2, 2026. They describe weddings and do not publish a wedding fee. A $150-an-hour personal photo shoot is a different product and is not used here. Pricing not published, ask the venue."
+        "sourceUrl": "https://www.mbgarden.org/private-events",
+        "note": "The old rental URL /rentthegarden returned 404 on October 3, 2026. The private-events page at mbgarden.org returned 200 and still does not publish a wedding fee. A $150-an-hour personal photo shoot on the visit page is a different product and is not used here. Pricing not published, ask the venue."
       }
     },
     {
@@ -4640,11 +4640,11 @@
       }
     },
     {
-      "capacity": 250,
+      "capacity": 220,
       "indoorOutdoor": "both",
       "ceremonyOnsite": true,
       "catering": "exclusive",
-      "alcohol": "licensed-caterer",
+      "alcohol": "in-house",
       "accommodations": false,
       "accessible": false,
       "rainPlan": true,
@@ -4658,25 +4658,29 @@
         "garden"
       ],
       "included": [
-        "The Palm House is listed for seated events up to 250",
-        "The Lillian and Amy Goldman Atrium is listed up to 125"
+        "Palm House room rental for a five-hour event, with load-in five hours before guest arrival",
+        "Tables, white linens, ceremony chairs, chiavari reception chairs, china, flatware, and glassware listed in the kit",
+        "The wedding-day fee: a VIP server, ceremony chair setup, coat check, and restroom attendants"
       ],
       "notIncluded": [
-        "A printed rental or catering minimum"
+        "Food and the open bar, which are the minimum or the $228 starting package, whichever is higher",
+        "The 26% administrative fee and sales tax",
+        "The $800 Patron membership the kit requires",
+        "The Atrium, which is a smaller room with its own rental"
       ],
       "questions": [
-        "What is the Saturday Palm House rental?",
-        "Is catering exclusive to Union Square Events?",
-        "Can the $628 morning ceremony be combined with a reception?"
+        "Are we in May, June, September, or October, or a lower Saturday season?",
+        "Will the guest count clear the $55,000 food minimum, or stay on the $228 starting package?",
+        "The Atrium seats 125 and costs less. Is Palm House the room we want?"
       ],
       "price": {
-        "confidence": "unpublished",
-        "kind": "unpublished",
+        "confidence": "published",
+        "kind": "rental",
         "verifiedOn": "2026-10-03",
-        "sourceUrl": "https://www.bbg.org/visit/weddings",
-        "saturday": null,
-        "offday": null,
-        "note": "The Brooklyn Botanic Garden weddings page, open October 3, 2026, describes Palm House and Atrium receptions and does not print a price. The $628 figure on the ceremony page is a morning permit, not this reception. Pricing not published, ask the venue."
+        "sourceUrl": "https://images.getbento.com/accounts/b53111d66d2e8a97868c11879af5848b/media/WuqWQOuS76cNi8SiZo0B_2027%20USE%20at%20BBG%20Events%20Kit%20(V2).pdf",
+        "saturday": 12000,
+        "offday": 6000,
+        "note": "Union Square Events 2027 wedding kit, the exclusive caterer named for Brooklyn Botanic Garden. Palm House Saturday room rental is $12,000 in May, June, September, and October, and $7,500–$8,500 in other months. Sunday in the peak months is $6,000. Friday peak is $6,800 and is not the off-day column. The garden's own weddings page still does not print a fee. The $628 morning ceremony permit is a different product. Palm House seats 220 on this kit. Atrium rates are not included."
       }
     },
     {

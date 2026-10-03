@@ -1,5 +1,54 @@
 import { escapeHtml } from "./html.js";
 import { formatMoney } from "./format.js";
+import { allIn } from "./price-engine.js";
+
+/** Comparable price for lists, filters, and the shortlist. All-in wins when it exists. */
+export function listedPrice(venue, options = {}) {
+  const result = options.result || allIn(venue, options);
+  const quote = result.quote;
+  if (result.allInReady) {
+    return {
+      basis: "all-in",
+      label: "All-in",
+      low: result.low,
+      high: result.high,
+      sort: result.low,
+      ceiling: result.high,
+      text: `${allInHeadline(result)} all-in`,
+      result,
+      quote,
+    };
+  }
+  if (quote.status === "priced" || quote.status === "range") {
+    const low = quote.status === "priced" ? quote.total : quote.low;
+    const high = quote.status === "priced" ? quote.total : quote.high;
+    const amount = quote.status === "priced"
+      ? formatMoney(low, { exact: true })
+      : `${formatMoney(low, { exact: true })}–${formatMoney(high, { exact: true })}`;
+    return {
+      basis: "site",
+      label: "Site fee only",
+      low,
+      high,
+      sort: low,
+      ceiling: high,
+      text: `${amount} site fee only`,
+      result,
+      quote,
+    };
+  }
+  return {
+    basis: "ask",
+    label: "Ask the venue",
+    low: null,
+    high: null,
+    sort: null,
+    ceiling: null,
+    text: "Ask the venue",
+    result,
+    quote,
+  };
+}
 
 export function allInHeadline(result) {
   if (!result || !result.allInReady) return "";

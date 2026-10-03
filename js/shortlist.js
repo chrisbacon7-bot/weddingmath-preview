@@ -1,5 +1,6 @@
+import { describe } from "./describe.js";
 import { formatMoney } from "./format.js";
-import { quoteVenue } from "./venue-quote.js";
+import { listedPrice } from "./price-present.js";
 import { bindGlobals, clear, el, readShortlist, siteHref, storageGet, storageSet, writeShortlist } from "./common.js";
 
 bindGlobals();
@@ -21,19 +22,26 @@ guests = Math.min(400, Math.max(10, Math.round(guests)));
 storageSet("guests", guests);
 const out = document.querySelector("#out");
 
+const file = (name) => fetch(new URL(`../data/${name}`, import.meta.url)).then((response) => response.json());
 Promise.all([
-  fetch(new URL("../data/venues.json", import.meta.url)).then((response) => response.json()),
-  fetch(new URL("../data/vendors.json", import.meta.url)).then((response) => response.json()).catch(() => ({ vendors: [], metros: [] })),
+  file("venues.json"),
+  file("vendors.json").catch(() => ({ vendors: [], metros: [] })),
+  file("costs.json"),
+  file("geo.json"),
+  file("tax.json"),
+  file("venue-fees.json"),
 ])
-  .then(([catalog, vendorCatalog]) => paint(catalog, vendorCatalog))
+  .then(([catalog, vendorCatalog, costs, geo, taxTable, fees]) => paint(catalog, vendorCatalog, { costs, geo, taxTable, fees }))
   .catch(() => {
     clear(out);
     out.append(el("p", { class: "error", text: "The saved list didn't load. Refresh the page." }));
   });
 
-function paint(catalog, vendorCatalog = paint.vendors) {
+function paint(catalog, vendorCatalog = paint.vendors, pricing = paint.pricing) {
   paint.vendors = vendorCatalog || { vendors: [], metros: [] };
+  paint.pricing = pricing || paint.pricing || null;
   vendorCatalog = paint.vendors;
+  pricing = paint.pricing;
   ids = readShortlist();
   const venueIds = ids.filter((id) => !id.startsWith("vendor:"));
   const vendorIds = ids.filter((id) => id.startsWith("vendor:")).map((id) => id.slice("vendor:".length));
@@ -63,8 +71,8 @@ function paint(catalog, vendorCatalog = paint.vendors) {
     head.append(th);
   }
   table.append(head);
-  row(table, "Saturday, at your guest count", compare.map((venue) => textQuote(quoteVenue(venue, guests, "sat"))));
-  row(table, "Off day", compare.map((venue) => textQuote(quoteVenue(venue, guests, "off"))));
+  row(table, "Saturday, at your guest count", compare.map((venue) => listedFor(venue, "sat", pricing).text));
+  row(table, "Off day", compare.map((venue) => listedFor(venue, "off", pricing).text));
   row(table, "Capacity", compare.map((venue) => venue.capacity ? String(venue.capacity) : "Not published"));
   row(table, "Vibe", compare.map((venue) => venue.vibes.join(", ")));
   row(table, "Included", compare.map((venue) => venue.included[0] || ""));
@@ -73,12 +81,12 @@ function paint(catalog, vendorCatalog = paint.vendors) {
   wrap.append(table);
   const cards = el("div", { class: "compare-cards" });
   for (const venue of compare) {
-    const saturday = quoteVenue(venue, guests, "sat");
-    const off = quoteVenue(venue, guests, "off");
+    const saturday = listedFor(venue, "sat", pricing);
+    const off = listedFor(venue, "off", pricing);
     cards.append(el("article", { class: "card" }, [
       el("h2", {}, [el("a", { href: siteHref(pathFor(venue, catalog)), text: venue.name })]),
-      el("p", { class: "money-sm", text: textQuote(saturday) }),
-      el("p", { class: "hint", text: `Saturday at ${guests} guests · Off day ${textQuote(off)}` }),
+      el("p", { class: "money-sm", text: saturday.text }),
+      el("p", { class: "hint", text: `${saturday.label} on Saturday at ${guests} guests · Off day ${off.text}` }),
       el("p", { text: `${venue.capacity ? `Up to ${venue.capacity}` : "Capacity not published"} · ${venue.vibes.join(", ")}` }),
       el("p", { text: venue.included[0] || "" }),
       removeButton(venue.id, catalog),
@@ -104,9 +112,11 @@ function paint(catalog, vendorCatalog = paint.vendors) {
   }
   const actions = el("div", { class: "stack" });
   for (const venue of compare) {
-    const quote = quoteVenue(venue, guests, "sat");
+    const listed = listedFor(venue, "sat", pricing);
     const search = new URLSearchParams({ loc: `metro:${venue.metro}`, g: String(guests), venueName: venue.name });
-    if (quote.total != null) search.set("venueTotal", String(quote.total));
+    if (listed.low != null) search.set("venueTotal", String(listed.low));
+    if (listed.high != null && listed.high !== listed.low) search.set("venueHigh", String(listed.high));
+    if (listed.basis !== "ask") search.set("venueBasis", listed.basis);
     actions.append(el("a", { href: siteHref(`/budget?${search.toString()}`), text: `Send ${venue.name} to my budget` }));
   }
   out.append(el("div", { class: "card" }, [el("h2", { text: "Use one number" }), actions]));
@@ -163,6 +173,18 @@ function syncUrl() {
 function pathFor(venue, catalog) {
   const metro = catalog.metros.find((item) => item.id === venue.metro);
   return `/venues/${metro.stateSlug}/${metro.slug}/${venue.id}`;
+}
+
+function listedFor(venue, day, pricing) {
+  return listedPrice(venue, {
+    guests,
+    day,
+    season: "peak",
+    costs: pricing && pricing.costs,
+    place: pricing ? describe(`metro:${venue.metro}`, { geo: pricing.geo, costs: pricing.costs }) : null,
+    taxTable: pricing && pricing.taxTable,
+    fees: pricing && pricing.fees,
+  });
 }
 
 function textQuote(quote) {

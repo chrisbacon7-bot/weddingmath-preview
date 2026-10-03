@@ -15,6 +15,8 @@ const state = {
   budget: params.get("b") || "",
   venueNote: params.get("venueName") || "",
   venueTotal: params.get("venueTotal") || "",
+  venueHigh: params.get("venueHigh") || "",
+  venueBasis: params.get("venueBasis") || "",
   venueLoc: params.get("loc") || "",
   season: params.get("season") || "",
   priorities: (params.get("p") || "").split(",").filter(Boolean).slice(0, 3),
@@ -67,6 +69,8 @@ loadData().then(async (data) => {
       if (state.venueNote && place && place.id !== state.venueLoc) {
         state.venueNote = "";
         state.venueTotal = "";
+        state.venueHigh = "";
+        state.venueBasis = "";
       }
       state.place = place;
       render(data);
@@ -108,6 +112,20 @@ function syncPriorityButtons() {
   });
 }
 
+function venueCarryText() {
+  const low = Number(state.venueTotal);
+  const high = Number(state.venueHigh);
+  const hasLow = Number.isFinite(low) && low > 0;
+  if (!hasLow) return `${state.venueNote} did not publish a price. The split below is the full wedding, not a venue quote.`;
+  const money = Number.isFinite(high) && high > low
+    ? `${formatMoney(low, { exact: true })}–${formatMoney(high, { exact: true })}`
+    : formatMoney(low, { exact: true });
+  if (state.venueBasis === "all-in") {
+    return `${state.venueNote}: all-in estimate ${money}. That is the site fee plus food, service, and tax as labeled on the venue page. It is not the whole wedding. The split below is still the full wedding.`;
+  }
+  return `${state.venueNote}: site fee only ${money}. Food, service, and tax are not all in that number. The split below is the full wedding.`;
+}
+
 function render(data) {
   const rawGuests = guestsInput.value.trim();
   const typedGuests = rawGuests === "" ? NaN : Number(rawGuests);
@@ -127,6 +145,8 @@ function render(data) {
     off: state.offpeak ? "1" : null,
     venueName: state.venueNote || null,
     venueTotal: state.venueTotal || null,
+    venueHigh: state.venueHigh || null,
+    venueBasis: state.venueBasis || null,
     lock: lockParam(state.locks),
   });
   const tune = document.querySelector("#tune-summary");
@@ -169,9 +189,7 @@ function render(data) {
   const movedSum = movedToward.reduce((sum, line) => sum + line.delta, 0);
   const result = el("section", { class: "result", id: "result", tabindex: "-1" }, [
     state.venueNote ? el("div", { class: "tone tone-fits", "data-venue-note": "1" }, [
-      el("p", { text: Number(state.venueTotal)
-        ? `${state.venueNote}: the venue page shows ${formatMoney(Number(state.venueTotal), { exact: true })}. That is the venue, not the whole wedding. The split below is still the full wedding.`
-        : `${state.venueNote} did not publish a price. The split below is the full wedding, not a venue quote.` }),
+      el("p", { text: venueCarryText() }),
     ]) : null,
     el("p", { class: "subhead", text: `${plan.guests} guests · ${state.place.shortLabel}${countNote ? `. ${countNote}` : ""}` }),
     el("p", {}, [el("span", { class: `tier tier-${state.place.tier.toLowerCase()}`, text: state.place.tierLabel })]),
