@@ -44,17 +44,48 @@ export function venuePages() {
   return [hubPage(), ...venueMetros.map(metroPage), ...venues.map(venuePage)];
 }
 
+function cheapestLine(metro) {
+  let best = null;
+  for (const venue of venuesForMetro(metro.id)) {
+    const listed = listedPrice(venue, { result: allInFor(venue, 100, "sat") });
+    if (listed.sort == null) continue;
+    if (!best || listed.sort < best.sort) best = listed;
+  }
+  if (!best) return "Ask for a price";
+  const amount = money(best.low);
+  return best.basis === "all-in" ? `from ${amount} all-in` : `from ${amount}`;
+}
+
+function cityChip(metro, extra) {
+  const count = venuesForMetro(metro.id).length;
+  const label = `${metro.name}, ${metro.state}`;
+  const letter = metro.name.trim().charAt(0).toUpperCase();
+  const mark = metro.name.length % 6;
+  return `<a class="city-chip${extra ? " city-chip-extra" : ""}" href="${metroPath(metro)}"${extra ? " hidden" : ""}>
+    <span class="city-mark" data-mark="${mark}" aria-hidden="true">${escapeHtml(letter)}</span>
+    <span class="city-chip-copy">
+      <span class="city-chip-name">${escapeHtml(label)}</span>
+      <span class="city-chip-meta">${count} ${count === 1 ? "venue" : "venues"}</span>
+      <span class="city-chip-price">${escapeHtml(cheapestLine(metro))}</span>
+    </span>
+  </a>`;
+}
+
 function hubPage() {
-  const cards = venueMetros.map((metro) => {
-    const count = venuesForMetro(metro.id).length;
-    const priced = venuesForMetro(metro.id).filter((venue) => venue.price.confidence === "published").length;
-    const label = `${metro.name}, ${metro.state}`;
-    return `<a class="tool-card card" href="${metroPath(metro)}"><span class="swatch swatch-garden" aria-hidden="true"></span><h2>${escapeHtml(label)}</h2><p>${count} ${count === 1 ? "venue" : "venues"}${priced ? ` · ${priced} with a published price` : ""}</p></a>`;
-  }).join("");
+  const ranked = venueMetros
+    .map((metro) => ({ metro, count: venuesForMetro(metro.id).length }))
+    .sort((a, b) => b.count - a.count || a.metro.name.localeCompare(b.metro.name));
+  const shown = ranked.slice(0, 8);
+  const rest = ranked.slice(8);
+  const total = ranked.length;
   const cityGrid = `<section id="city-grid" aria-labelledby="city-grid-title">
   <h2 id="city-grid-title">Pick your city</h2>
-  <p class="hint">${venueMetros.length} cities with a curated list. Every venue is below until you pick one.</p>
-  <div class="app-grid">${cards}</div>
+  <p class="hint">${shown.length} of ${total} cities. The venue list is just below.</p>
+  <div class="city-picker">
+    ${shown.map(({ metro }) => cityChip(metro, false)).join("")}
+    ${rest.map(({ metro }) => cityChip(metro, true)).join("")}
+  </div>
+  ${rest.length ? `<button type="button" class="city-picker-toggle" data-city-more data-city-count="${total}" aria-expanded="false">Show all ${total} cities</button>` : ""}
 </section>`;
   return {
     file: "venues.html",

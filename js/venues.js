@@ -58,6 +58,18 @@ for (const type of (params.get("t") || "").split(",").filter(Boolean)) {
   types.add(type);
   document.querySelector(`[data-type="${type}"]`)?.setAttribute("aria-pressed", "true");
 }
+const cityMore = document.querySelector("[data-city-more]");
+if (cityMore) {
+  cityMore.addEventListener("click", () => {
+    const open = cityMore.getAttribute("aria-expanded") === "true";
+    document.querySelectorAll(".city-chip-extra").forEach((chip) => {
+      chip.hidden = open;
+    });
+    cityMore.setAttribute("aria-expanded", String(!open));
+    const count = cityMore.dataset.cityCount || "";
+    cityMore.textContent = open ? `Show all ${count} cities` : "Show fewer cities";
+  });
+}
 const sortInput = document.querySelector("#venue-sort");
 if (sortInput) {
   sortInput.value = sortMode;
