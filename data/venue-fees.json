@@ -503,6 +503,48 @@
             "verifiedOn": "2026-10-03"
           }
         }
+      },
+      "capen-house": {
+        "siteBySeason": {
+          "peak": {
+            "saturday": {
+              "low": 3750,
+              "high": 4150
+            },
+            "quote": "October–April Saturdays are $3,750 for 8 hours or $4,150 for 12 hours.",
+            "note": "Peak-season Saturday rental from the Capen House rates page. October through April. The 8-hour and 12-hour packages are both Saturday prices. Friday, Sunday, and weekday prices are not used here.",
+            "sourceUrl": "https://capenhouse.com/plan-event/rates-amenities/",
+            "verifiedOn": "2026-10-03"
+          },
+          "off": {
+            "saturday": {
+              "low": 2750,
+              "high": 3050
+            },
+            "quote": "May–September Saturdays are $2,750 for 8 hours or $3,050 for 12 hours.",
+            "note": "Off-season Saturday rental, May through September. Weekdays stay ask-the-venue because the page lists more than one weekday length.",
+            "sourceUrl": "https://capenhouse.com/plan-event/rates-amenities/",
+            "verifiedOn": "2026-10-03"
+          }
+        }
+      },
+      "morikami-museum-and-japanese-gardens": {
+        "siteBySeason": {
+          "peak": {
+            "saturday": 6000,
+            "quote": "October–May, Friday–Sunday, 6:30 p.m. to midnight, is $6,000.",
+            "note": "Peak-season Friday–Sunday evening rental. October through May. Weekday evenings and Monday daytime are not used here.",
+            "sourceUrl": "https://morikami.org/spacing-fees-guidelines/",
+            "verifiedOn": "2026-10-03"
+          },
+          "off": {
+            "saturday": 5000,
+            "quote": "June–September, Friday–Sunday, 6:30 p.m. to midnight, is $5,000.",
+            "note": "Off-season Friday–Sunday evening rental, June through September. Weekdays stay ask-the-venue.",
+            "sourceUrl": "https://morikami.org/spacing-fees-guidelines/",
+            "verifiedOn": "2026-10-03"
+          }
+        }
       }
   }
 }
