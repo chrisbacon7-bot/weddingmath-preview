@@ -8,12 +8,15 @@ import {
 import { bigResult, copySummaryButton, embedSnippet, means, nextStep, presetBar, sourceStrip, summaryText, verdictView } from "./ui.js";
 import { lowerFirst } from "./format.js";
 import { venueAppPath } from "./place-nav.js";
+import { vendorAppPath, weddingBuild } from "./vendor-math.js";
 
 const params = readParams();
 const state = {
   place: null,
   guests: Number(params.get("g") || storageGet("guests", 117)),
   budget: params.get("b") || storageGet("budget", "") || "",
+  buildTier: "typical",
+  music: "dj",
 };
 
 bindGlobals();
@@ -99,6 +102,8 @@ function render(data) {
     setSticky("");
     const band = document.querySelector("#math-band");
     if (band) band.hidden = true;
+    const build = document.querySelector("#build-wedding");
+    if (build) build.hidden = true;
     return;
   }
   const plan = planFor(state.place, state.guests, data.costs);
@@ -128,7 +133,7 @@ function render(data) {
   const cards = bigResult([
     { role: "main", kicker: plan.estimated ? "Estimated range" : "All-in estimate", money: totalText, note: `${plan.guests} guests · ${state.place.shortLabel}` },
     { role: "plain", kicker: "Per guest", money: formatMoney(perGuest), note: "The whole wedding, divided by the guest count." },
-    { role: "gap", kicker: "Not in that number", money: `+${formatMoney(outside.total, { exact: true })}`, note: `+${onTop}% on top. Knot averages for rings, the rehearsal dinner, and the honeymoon. Plus-plus on food and the place is often another ${formatMoney(plus.low)}–${formatMoney(plus.high)} (Zola's ${plus.lowPct}–${plus.highPct}%).` },
+    { role: "gap", kicker: "Not in that number", money: `+${formatMoney(outside.total, { exact: true })}`, note: `Rings, rehearsal, honeymoon. +${onTop}% on top.` },
   ]);
   const mainMoney = cards.querySelector(".big-card.main .money-sm");
   if (mainMoney) mainMoney.dataset.total = "1";
@@ -159,6 +164,7 @@ function render(data) {
   ]);
   out.append(result);
   paintMath(plan, outside, plus, data);
+  paintBuild(plan, data);
   paintTeasers(plan, data);
   setPrintSummary(`${state.place.shortLabel} · ${plan.guests} guests · ${state.budget ? `budget ${state.budget}` : "no budget typed"}`);
   registerSummary(() => summaryText("Wedding cost", [totalText, `${plan.guests} guests in ${state.place.shortLabel}`]));
@@ -175,6 +181,70 @@ function render(data) {
     lines: split.lines.map((line) => ({ id: line.id, label: line.label, amount: line.amount })),
   });
   track("calc_complete", { tool: "home", tier: state.place.tier });
+}
+
+function paintBuild(plan, data) {
+  const section = document.querySelector("#build-wedding");
+  if (!section) return;
+  section.hidden = false;
+  const controls = document.querySelector("#build-controls");
+  if (controls && !controls.childElementCount) {
+    const tiers = el("div", { class: "choices" });
+    for (const tier of [["budget", "Budget"], ["typical", "Typical"], ["splurge", "Splurge"]]) {
+      const button = el("button", { type: "button", text: tier[1], "aria-pressed": tier[0] === state.buildTier ? "true" : "false" });
+      button.addEventListener("click", () => {
+        state.buildTier = tier[0];
+        tiers.querySelectorAll("button").forEach((item) => item.setAttribute("aria-pressed", item === button ? "true" : "false"));
+        render(data);
+      });
+      tiers.append(button);
+    }
+    const playlist = el("input", { id: "playlist-cost", type: "text", inputmode: "decimal", placeholder: "Playlist cost", "data-money": "1" });
+    playlist.addEventListener("input", () => render(data));
+    controls.append(el("p", { class: "label", text: "Style" }), tiers, playlist);
+  }
+  const playlistValue = document.querySelector("#playlist-cost")?.value || "";
+  const built = weddingBuild({
+    place: state.place,
+    guests: plan.guests,
+    costs: data.costs,
+    tier: state.buildTier,
+    music: state.music,
+    playlist: playlistValue,
+  });
+  const total = document.querySelector("#build-total");
+  const note = document.querySelector("#build-note");
+  if (total) total.textContent = formatMoney(built.total, { exact: true });
+  if (note) note.textContent = built.season.note;
+  const lines = document.querySelector("#build-lines");
+  clear(lines);
+  for (const line of built.lines) {
+    const calcHref = line.calc ? siteHref(`/costs/${line.calc}?g=${plan.guests}${state.place.id !== "national" ? `&loc=${encodeURIComponent(state.place.id)}` : ""}`) : siteHref(`/budget?g=${plan.guests}`);
+    const vendorHref = line.vendorCategory ? siteHref(vendorAppPath(state.place, line.vendorCategory, data.vendorMetros || [])) : "";
+    const row = el("article", { class: "line-card" }, [
+      el("header", {}, [
+        el("strong", { text: line.label }),
+        el("span", { text: line.amount == null ? "—" : formatMoney(line.amount, { exact: true }) }),
+      ]),
+    ]);
+    if (line.note) row.append(el("p", { class: "hint", text: line.note }));
+    const links = el("p", { class: "inline-actions" }, [
+      el("a", { href: calcHref, text: line.calc ? "Calculator" : "Budget" }),
+    ]);
+    if (vendorHref) links.append(el("a", { href: vendorHref, text: "Local vendors" }));
+    if (line.id === "dj" || line.swapped) {
+      for (const mode of [["dj", "DJ"], ["band", "Band"], ["playlist", "Playlist"]]) {
+        const button = el("button", { type: "button", class: "text-btn", text: mode[1], "aria-pressed": state.music === mode[0] ? "true" : "false" });
+        button.addEventListener("click", () => {
+          state.music = mode[0];
+          render(data);
+        });
+        links.append(button);
+      }
+    }
+    row.append(links);
+    lines.append(row);
+  }
 }
 
 function paintMath(plan, outside, plus, data) {

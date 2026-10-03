@@ -7,18 +7,21 @@ import { formatAbout, formatMoney, formatPlan, formatRange } from "./format.js";
 const prefix = SITE.storagePrefix;
 
 export async function loadData() {
-  const [costs, geo, aliases, extra, venueIndex] = await Promise.all([
+  const [costs, geo, aliases, extra, venueIndex, vendorCatalog] = await Promise.all([
     fetch(dataUrl("costs.json")).then(readJson),
     fetch(dataUrl("geo.json")).then(readJson),
     fetch(dataUrl("aliases.json")).then(readJson),
     fetch(dataUrl("extra-aliases.json")).then(readJson).catch(() => []),
     fetch(dataUrl("venue-index.json")).then(readJson).catch(() => ({ metros: [] })),
+    fetch(dataUrl("vendors.json")).then(readJson).catch(() => ({ metros: [], vendors: [] })),
   ]);
   return {
     costs,
     geo,
     aliases: prepareAliases(mergeAliases(aliases, extra), geo),
     venueIndex,
+    vendorMetros: vendorCatalog.metros || [],
+    vendors: vendorCatalog.vendors || [],
     ctx: { costs, geo },
   };
 }

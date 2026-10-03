@@ -35,14 +35,14 @@
     <a class="brand" href="index.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">WeddingMath</span></a>
     <input id="nav-toggle" class="nav-toggle" type="checkbox">
     <label for="nav-toggle" class="nav-toggle-btn">Menu</label>
-    <nav aria-label="Primary"><a href="venues/index.html">Venues</a><a href="budget/index.html">Budget</a><a href="guides/index.html">Guides</a><a href="guests/index.html">Guests</a><a href="shop/index.html">Shop</a><a href="wedding-cost/index.html">Cost by State</a><a href="honeymoon/index.html">Honeymoon</a></nav>
+    <nav aria-label="Primary"><a href="venues/index.html">Venues</a><a href="vendors/index.html">Vendors</a><a href="budget/index.html">Budget</a><a href="guides/index.html">Guides</a><a href="guests/index.html">Guests</a><a href="shop/index.html">Shop</a><a href="wedding-cost/index.html">Cost by State</a><a href="honeymoon/index.html">Honeymoon</a></nav>
   </header>
   <main id="main" class="wrap-wide">
     <section class="hero home-hero calc-grid">
   <div>
     <p class="kicker">WeddingMath</p>
     <h1>Wedding cost calculator</h1>
-    <p class="hero-sub" id="hero-sub">A place, a guest count, and a budget if you have one. The US average is on screen until you pick a city.</p>
+    <p class="hero-sub" id="hero-sub">ZIP or city, then guests.</p>
     <div id="out" class="stack" aria-live="polite"></div>
   </div>
   <form id="cost-form" class="card stack calc-inputs">
@@ -85,6 +85,13 @@
     <button class="btn mobile-scroll-btn" type="submit">See my total</button>
   </form>
 </section>
+<section class="card" id="build-wedding" hidden>
+  <h2>Build my wedding</h2>
+  <div id="build-controls"></div>
+  <p class="money-sm" id="build-total"></p>
+  <p class="hint" id="build-note"></p>
+  <div id="build-lines" class="stack"></div>
+</section>
 <section class="card" id="math-band" hidden></section>
 <ul class="app-grid">
   <li class="tool-card card"><a href="venues/index.html" data-find-venues><span class="icon-blob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20V10l8-6 8 6v10"/><path d="M10 20v-6h4v6"/></svg></span><h2>Find venues</h2><p data-teaser="venues">Guest count, budget, and vibe. Prices from each venue's own site.</p></a></li>
@@ -99,9 +106,10 @@
   </main>
   <footer class="site-footer">
     
-    <nav aria-label="Footer"><a href="index.html">Wedding cost calculator</a><a href="venues/index.html" data-find-venues>Find venues</a><a href="shortlist/index.html">Venue shortlist</a><a href="tools/index.html">Wedding budget tools</a><a href="budget/index.html">Wedding budget calculator</a><a href="budget/reverse/index.html">How much can we afford</a><a href="budget/per-guest/index.html">Cost per guest</a><a href="budget/tracker/index.html">Wedding budget tracker</a><a href="wedding-cost/index.html">Wedding cost by state</a><a href="guides/index.html">Guides</a><a href="guests/index.html">Guest list</a><a href="shop/index.html">Shopping lists</a><a href="honeymoon/index.html">Honeymoon budget</a><a href="sources/index.html">Sources</a><a href="disclosures/index.html">Disclosures</a><a href="about/index.html">About</a><a href="list-your-venue/index.html">List your venue</a><a href="https://vacationmath.co/?utm_source=weddingmath.co&utm_medium=referral&utm_campaign=footer">VacationMath</a></nav>
+    <nav aria-label="Footer"><a href="index.html">Wedding cost calculator</a><a href="venues/index.html" data-find-venues>Find venues</a><a href="vendors/index.html">Find vendors</a><a href="costs/index.html">Vendor calculators</a><a href="shortlist/index.html">Saved venues and vendors</a><a href="suggest-a-vendor/index.html">Suggest a vendor</a><a href="tools/index.html">Wedding budget tools</a><a href="budget/index.html">Wedding budget calculator</a><a href="budget/reverse/index.html">How much can we afford</a><a href="budget/per-guest/index.html">Cost per guest</a><a href="budget/tracker/index.html">Wedding budget tracker</a><a href="wedding-cost/index.html">Wedding cost by state</a><a href="guides/index.html">Guides</a><a href="guests/index.html">Guest list</a><a href="shop/index.html">Shopping lists</a><a href="honeymoon/index.html">Honeymoon budget</a><a href="sources/index.html">Sources</a><a href="disclosures/index.html">Disclosures</a><a href="about/index.html">About</a><a href="list-your-venue/index.html">List your venue</a><a href="https://vacationmath.co/?utm_source=weddingmath.co&utm_medium=referral&utm_campaign=footer">VacationMath</a></nav>
     <p>Estimates are not quotes. Your numbers stay in this browser unless you copy a link or download a file.</p>
   </footer>
+  <nav class="tab-bar" aria-label="Sections"><a href="index.html" aria-current="page">Plan</a><a href="venues/index.html">Venues</a><a href="vendors/index.html">Vendors</a><a href="budget/index.html">Budget</a><a href="shortlist/index.html">Saved</a></nav>
   <div class="sticky" data-sticky hidden>
     <div><p class="kicker" data-sticky-kicker>Planning estimate</p><p class="money-sm" data-sticky-money>—</p></div>
     <button type="button" class="btn-ghost" data-sticky-copy>Copy</button>

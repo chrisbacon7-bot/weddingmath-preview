@@ -21,27 +21,37 @@ guests = Math.min(400, Math.max(10, Math.round(guests)));
 storageSet("guests", guests);
 const out = document.querySelector("#out");
 
-fetch(new URL("../data/venues.json", import.meta.url))
-  .then((response) => response.json())
-  .then((catalog) => paint(catalog))
+Promise.all([
+  fetch(new URL("../data/venues.json", import.meta.url)).then((response) => response.json()),
+  fetch(new URL("../data/vendors.json", import.meta.url)).then((response) => response.json()).catch(() => ({ vendors: [], metros: [] })),
+])
+  .then(([catalog, vendorCatalog]) => paint(catalog, vendorCatalog))
   .catch(() => {
     clear(out);
-    out.append(el("p", { class: "error", text: "The venue list didn't load. Refresh the page." }));
+    out.append(el("p", { class: "error", text: "The saved list didn't load. Refresh the page." }));
   });
 
-function paint(catalog) {
+function paint(catalog, vendorCatalog = paint.vendors) {
+  paint.vendors = vendorCatalog || { vendors: [], metros: [] };
+  vendorCatalog = paint.vendors;
   ids = readShortlist();
-  const chosen = ids.map((id) => catalog.venues.find((venue) => venue.id === id)).filter(Boolean);
+  const venueIds = ids.filter((id) => !id.startsWith("vendor:"));
+  const vendorIds = ids.filter((id) => id.startsWith("vendor:")).map((id) => id.slice("vendor:".length));
+  const chosen = venueIds.map((id) => catalog.venues.find((venue) => venue.id === id)).filter(Boolean);
+  const chosenVendors = vendorIds.map((id) => (vendorCatalog.vendors || []).find((vendor) => vendor.id === id)).filter(Boolean);
   clear(out);
   syncUrl();
-  if (!chosen.length) {
+  if (!chosen.length && !chosenVendors.length) {
     out.append(el("div", { class: "card" }, [
       el("h2", { text: "Nothing saved yet" }),
-      el("p", { text: "Open the venue finder and tap the heart on the places you want to compare." }),
+      el("p", { text: "Tap the heart on a venue or a vendor. They stay in this browser together." }),
       el("a", { class: "btn", href: siteHref("/venues"), "data-find-venues": "1", text: "Find venues" }),
+      el("a", { class: "btn", href: siteHref("/vendors"), text: "Find vendors" }),
     ]));
     return;
   }
+  if (chosenVendors.length) paintVendors(chosenVendors, vendorCatalog, catalog);
+  if (!chosen.length) return;
   const compare = chosen.slice(0, 4);
   const table = document.createElement("table");
   table.className = "compare-table";
@@ -100,6 +110,26 @@ function paint(catalog) {
     actions.append(el("a", { href: siteHref(`/budget?${search.toString()}`), text: `Send ${venue.name} to my budget` }));
   }
   out.append(el("div", { class: "card" }, [el("h2", { text: "Use one number" }), actions]));
+}
+
+function paintVendors(list, vendorCatalog, catalog) {
+  const box = el("div", { class: "card" }, [el("h2", { text: "Saved vendors" })]);
+  for (const vendor of list) {
+    const metro = (vendorCatalog.metros || []).find((item) => item.id === vendor.metro);
+    const href = metro ? `/vendors/${vendor.category}/${metro.stateSlug}/${metro.slug}/${vendor.id}` : "/vendors";
+    const price = vendor.price && vendor.price.confidence === "published" && vendor.price.amount != null
+      ? formatMoney(vendor.price.amount, { exact: true })
+      : "Ask for pricing";
+    box.append(el("p", { class: "inline-actions" }, [
+      el("a", { href: siteHref(href), text: vendor.name }),
+      el("span", { text: price }),
+      actionButton("Remove", () => {
+        writeShortlist(readShortlist().filter((item) => item !== `vendor:${vendor.id}`));
+        paint(catalog, vendorCatalog);
+      }),
+    ]));
+  }
+  out.append(box);
 }
 
 function moveFirst(id, catalog) {

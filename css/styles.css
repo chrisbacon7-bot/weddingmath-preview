@@ -575,6 +575,33 @@ th { font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; colo
   .nav-toggle:checked ~ nav { display: flex; }
   .nav-toggle:checked + .nav-toggle-btn { background: var(--ink); }
   .site-header nav a { min-height: var(--tap); }
+  .tab-bar {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 35;
+    background: var(--surface);
+    border-top: 1px solid var(--line);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .tab-bar a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-decoration: none;
+    color: var(--muted);
+    padding: 8px 2px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    min-height: 52px;
+  }
+  .tab-bar a[aria-current="page"] { color: var(--ink); }
+  body { padding-bottom: calc(64px + env(safe-area-inset-bottom)); }
+  .sticky { bottom: calc(76px + env(safe-area-inset-bottom)); }
 }
 
 @media (min-width: 720px) {
@@ -603,7 +630,11 @@ th { font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; colo
   }
 }
 
-.app-grid[hidden], #city-grid[hidden], #venue-gap[hidden], #venue-none[hidden], .venue-card.is-hidden { display: none !important; }
+.app-grid[hidden], #city-grid[hidden], #venue-gap[hidden], #venue-none[hidden], #vendor-gap[hidden], #build-wedding[hidden], .venue-card.is-hidden { display: none !important; }
+.check-row { display: flex; align-items: center; gap: 8px; min-height: 44px; }
+@media (min-width: 720px) {
+  .tab-bar { display: none; }
+}
 .guide-copy { margin-top: 28px; }
 .guest-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; padding: 12px 0; border-top: 1px solid var(--line); }
 .guest-field { display: grid; gap: 4px; min-width: 0; }
@@ -701,7 +732,7 @@ input[aria-invalid="true"] { border-color: var(--over-ink); }
 @media print {
   body { background: white; padding: 0; }
   .print-summary { display: block; font-size: 12pt; margin-bottom: 12px; }
-  .site-header nav, .nav-toggle-btn, .site-footer, .sticky, .no-print, .suggestions, .btn, .text-btn, .heart, .step { display: none !important; }
+  .site-header nav, .nav-toggle-btn, .site-footer, .sticky, .no-print, .suggestions, .btn, .text-btn, .heart, .step, .tab-bar { display: none !important; }
   .compare-cards { display: none !important; }
   .compare-table-wrap { display: block !important; }
   .card, .result, .cat, .line-card, .venue-card { break-inside: avoid; box-shadow: none; }

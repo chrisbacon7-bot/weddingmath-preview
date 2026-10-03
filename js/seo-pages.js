@@ -316,6 +316,8 @@ National Knot average ${knot}. National Zola average ${zola}. Knot median ${mone
 - [Wedding planning guides](${origin}/guides)
 - [Guest list](${origin}/guests)
 - [Shopping lists](${origin}/shop)
+- [Vendor calculators](${origin}/costs): food, music, photo, flowers, and the other lines
+- [Vendor finder](${origin}/vendors): caterers, DJs, photographers, florists, bakers, hair and makeup
 - [Wedding cost sources](${origin}/sources): every figure, source, and date
 
 ## Guides

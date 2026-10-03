@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Catering and bar calculator · WeddingMath</title>
+  <meta name="description" content="Food and drinks from The Knot's category lines, localized to your place. Meal style and bar package do not change the dollars until you type a quote.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="wm-root" content="../../">
+  <link rel="canonical" href="https://weddingmath.co/costs/catering">
+  <meta property="og:title" content="Catering and bar calculator">
+  <meta property="og:description" content="Food and drinks from The Knot's category lines, localized to your place. Meal style and bar package do not change the dollars until you type a quote.">
+  <meta property="og:url" content="https://weddingmath.co/costs/catering">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="WeddingMath">
+  <meta property="og:image" content="../../og/costs-catering.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Catering and bar calculator">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Catering and bar calculator">
+  <meta name="twitter:description" content="Food and drinks from The Knot's category lines, localized to your place. Meal style and bar package do not change the dollars until you type a quote.">
+  <meta name="twitter:image" content="../../og/costs-catering.png">
+  <meta name="theme-color" content="#f3eee6">
+  <link rel="icon" href="../../favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../../fonts/fraunces-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../../fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../../css/styles.css">
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://weddingmath.co/"},{"@type":"ListItem","position":2,"name":"Vendor calculators","item":"https://weddingmath.co/costs"},{"@type":"ListItem","position":3,"name":"Food and bar","item":"https://weddingmath.co/costs/catering"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Do plated, buffet, family style, stations, and food trucks have different prices here?","acceptedAnswer":{"@type":"Answer","text":"No published study in our sources separates those styles. The first number is The Knot's food line for your place and guest count. Type a caterer's price if you have one."}},{"@type":"Question","name":"Is the service charge included?","acceptedAnswer":{"@type":"Answer","text":"Not until you type a percent. Zola cites 18–22% on many quotes. That range is a hint, not a default added to the total."}}]},{"@type":["WebApplication","SoftwareApplication"],"name":"Catering and bar calculator","applicationCategory":"FinanceApplication","operatingSystem":"Web","browserRequirements":"Requires JavaScript. Requires HTML5.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isAccessibleForFree":true,"url":"https://weddingmath.co/costs/catering","description":"Food and drinks from The Knot's category lines, localized to your place. Meal style and bar package do not change the dollars until you type a quote.","provider":{"@type":"Organization","name":"WeddingMath","url":"https://weddingmath.co/"}}]}</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="../../index.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">WeddingMath</span></a>
+    <input id="nav-toggle" class="nav-toggle" type="checkbox">
+    <label for="nav-toggle" class="nav-toggle-btn">Menu</label>
+    <nav aria-label="Primary"><a href="../../venues/index.html">Venues</a><a href="../../vendors/index.html" aria-current="page">Vendors</a><a href="../../budget/index.html">Budget</a><a href="../../guides/index.html">Guides</a><a href="../../guests/index.html">Guests</a><a href="../../shop/index.html">Shop</a><a href="../../wedding-cost/index.html">Cost by State</a><a href="../../honeymoon/index.html">Honeymoon</a></nav>
+  </header>
+  <main id="main" class="wrap-wide">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../../costs/index.html">Vendor calculators</a></li><li><span aria-current="page">Food and bar</span></li></ol></nav><section class="hero home-hero calc-grid">
+  <div>
+    <p class="kicker">Catering</p>
+    <h1>Food and bar cost</h1>
+    <div id="out" class="stack" aria-live="polite">
+      <article class="big-card main">
+        <p class="kicker">US average · 117 guests</p>
+        <p class="money-sm" data-total>$8,710</p>
+        <p class="hint">Food and drinks from The Knot's category lines, localized to your place. Meal style and bar package do not change the dollars until you type a quote.</p>
+      </article>
+    </div>
+  </div>
+  <form id="cost-form" class="card stack calc-inputs">
+    <div id="cost-presets"></div>
+    <div class="loc" data-location>
+      <label for="where">Where's the wedding?</label>
+      <input id="where" type="text" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="where-list" placeholder="ZIP code or city">
+      <ul id="where-list" class="suggestions" role="listbox" hidden></ul>
+      <button type="button" class="text-btn" data-national>Not sure yet</button>
+      <p class="loc-status" data-status role="status"></p>
+    </div>
+    <div>
+      <label for="guests">Guests</label>
+      <div class="stepper" data-stepper>
+        <div class="stepper-row">
+          <button type="button" class="step" data-step="-10" aria-label="Ten fewer guests">−</button>
+          <input id="guests" type="number" inputmode="numeric" min="10" max="400" value="117">
+          <button type="button" class="step" data-step="10" aria-label="Ten more guests">+</button>
+        </div>
+        <input type="range" min="10" max="400" value="117" aria-label="Guest count">
+      </div>
+    </div>
+    <div><p class="label" id="label-meal">Meal style</p><div class="choices" role="group" aria-labelledby="label-meal"><button type="button" data-choice="meal" data-value="plated" aria-pressed="true">Plated</button><button type="button" data-choice="meal" data-value="buffet" aria-pressed="false">Buffet</button><button type="button" data-choice="meal" data-value="family" aria-pressed="false">Family style</button><button type="button" data-choice="meal" data-value="stations" aria-pressed="false">Stations</button><button type="button" data-choice="meal" data-value="truck" aria-pressed="false">Food truck</button></div><input type="hidden" name="meal" value="plated"><p class="hint">Changes the label only. No published price separates these.</p></div><div><p class="label" id="label-bar">Bar package</p><div class="choices" role="group" aria-labelledby="label-bar"><button type="button" data-choice="bar" data-value="open" aria-pressed="true">Open bar</button><button type="button" data-choice="bar" data-value="beer" aria-pressed="false">Beer and wine</button><button type="button" data-choice="bar" data-value="cash" aria-pressed="false">Cash bar</button><button type="button" data-choice="bar" data-value="dry" aria-pressed="false">Dry</button></div><input type="hidden" name="bar" value="open"><p class="hint">Changes the label only until you type a bar price.</p></div><div><label for="field-foodQuote">Your food price</label><span class="money-field"><input id="field-foodQuote" name="foodQuote" type="text" inputmode="decimal" placeholder="e.g. 9,400" data-money autocomplete="off"></span><p class="hint">Replaces the study food line.</p></div><div><label for="field-barQuote">Your bar price</label><span class="money-field"><input id="field-barQuote" name="barQuote" type="text" inputmode="decimal" placeholder="e.g. 2,800" data-money autocomplete="off"></span><p class="hint">Replaces the study drinks line.</p></div><div><label for="field-cakeCut">Cake-cutting fee</label><span class="money-field"><input id="field-cakeCut" name="cakeCut" type="text" inputmode="decimal" placeholder="e.g. 250" data-money autocomplete="off"></span><p class="hint">Leave blank if you don't have a fee yet.</p></div><div><label for="field-servicePct">Service charge %</label><span><input id="field-servicePct" name="servicePct" type="text" inputmode="decimal" placeholder="18–22 is Zola's range" autocomplete="off"></span><p class="hint">Blank means not added.</p></div><div><label for="field-taxPct">Tax %</label><span><input id="field-taxPct" name="taxPct" type="text" inputmode="decimal" placeholder="your quote's rate" autocomplete="off"></span><p class="hint">We don't assume a state rate.</p></div><div><label for="field-gratuityPct">Gratuity %</label><span><input id="field-gratuityPct" name="gratuityPct" type="text" inputmode="decimal" placeholder="e.g. 18" autocomplete="off"></span><p class="hint">Blank means not added.</p></div><label class="check-row"><input type="checkbox" name="taxOnService"> Tax the service charge too</label>
+  </form>
+</section>
+<script type="application/json" id="calc-config">{"slug":"catering"}</script><details class="explainer-fold"><summary>About this page and common questions</summary><section class="explainer" aria-label="About this page"><h2>Common questions</h2><div class="faq"><details class="faq-item"><summary>Do plated, buffet, family style, stations, and food trucks have different prices here?</summary><p>No published study in our sources separates those styles. The first number is The Knot's food line for your place and guest count. Type a caterer's price if you have one.</p></details><details class="faq-item"><summary>Is the service charge included?</summary><p>Not until you type a percent. Zola cites 18–22% on many quotes. That range is a hint, not a default added to the total.</p></details></div><p>Every figure is cited on the <a href="../../sources/index.html">sources page</a>.</p></section></details>
+  </main>
+  <footer class="site-footer">
+    
+    <nav aria-label="Footer"><a href="../../index.html">Wedding cost calculator</a><a href="../../venues/index.html" data-find-venues>Find venues</a><a href="../../vendors/index.html">Find vendors</a><a href="../../costs/index.html">Vendor calculators</a><a href="../../shortlist/index.html">Saved venues and vendors</a><a href="../../suggest-a-vendor/index.html">Suggest a vendor</a><a href="../../tools/index.html">Wedding budget tools</a><a href="../../budget/index.html">Wedding budget calculator</a><a href="../../budget/reverse/index.html">How much can we afford</a><a href="../../budget/per-guest/index.html">Cost per guest</a><a href="../../budget/tracker/index.html">Wedding budget tracker</a><a href="../../wedding-cost/index.html">Wedding cost by state</a><a href="../../guides/index.html">Guides</a><a href="../../guests/index.html">Guest list</a><a href="../../shop/index.html">Shopping lists</a><a href="../../honeymoon/index.html">Honeymoon budget</a><a href="../../sources/index.html">Sources</a><a href="../../disclosures/index.html">Disclosures</a><a href="../../about/index.html">About</a><a href="../../list-your-venue/index.html">List your venue</a><a href="https://vacationmath.co/?utm_source=weddingmath.co&utm_medium=referral&utm_campaign=footer">VacationMath</a></nav>
+    <p>Estimates are not quotes. Your numbers stay in this browser unless you copy a link or download a file.</p>
+  </footer>
+  <nav class="tab-bar" aria-label="Sections"><a href="../../index.html">Plan</a><a href="../../venues/index.html">Venues</a><a href="../../vendors/index.html" aria-current="page">Vendors</a><a href="../../budget/index.html">Budget</a><a href="../../shortlist/index.html">Saved</a></nav>
+  <div class="sticky" data-sticky hidden>
+    <div><p class="kicker" data-sticky-kicker>Planning estimate</p><p class="money-sm" data-sticky-money>—</p></div>
+    <button type="button" class="btn-ghost" data-sticky-copy>Copy</button>
+    <a class="btn" href="#result">See my total</a>
+  </div>
+  <script type="module" src="../../js/cost.js"></script>
+</body>
+</html>
