@@ -448,13 +448,14 @@ summary:hover { color: var(--sage); }
   overflow: visible;
   overflow-wrap: anywhere;
 }
-.city-chip-meta, .city-chip-price {
+.city-chip-meta, .city-chip-price, .city-chip-allin {
   display: block;
   color: var(--muted);
   font-size: 0.78rem;
   line-height: 1.35;
+  overflow: visible;
 }
-.city-chip-price { color: var(--ink); }
+.city-chip-price, .city-chip-allin { color: var(--ink); }
 .city-chip-extra[hidden] { display: none; }
 .city-picker-toggle {
   margin-top: 8px;

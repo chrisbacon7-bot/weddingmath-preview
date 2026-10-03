@@ -44,16 +44,63 @@ export function venuePages() {
   return [hubPage(), ...venueMetros.map(metroPage), ...venues.map(venuePage)];
 }
 
-function cheapestLine(metro) {
-  let best = null;
-  for (const venue of venuesForMetro(metro.id)) {
+function venueText(venue) {
+  return `${venue.name} ${venue.price?.note || ""}`.toLowerCase();
+}
+
+/** Ceremony permits, ceremony-only lawns, and picnic shelters are not full reception rentals. */
+function isLimitedSite(venue) {
+  const name = venue.name.toLowerCase();
+  const text = venueText(venue);
+  if (/\bpermit\b/.test(name)) return true;
+  if (/\bceremony\b/.test(name)) return true;
+  if (/ceremony permit only|ceremonies only|ceremony only|ceremony package|ceremony brochure|ceremony minimum|reception is not permitted|does not have bridal or reception/.test(text)) return true;
+  if (/picnic (shelter|site|pavilion|area)|covered shelter|\bshelter\b/.test(text)) return true;
+  if (/2-hour limit/.test(text) && !/reception/.test(text)) return true;
+  if (/\b(staircase|summit|overlook|boardwalk|gazebo|amphitheater)\b/.test(name) && !/reception/.test(text)) return true;
+  if (/\bpavilion\b/.test(name) && venue.venueType === "park" && !/reception/.test(text)) return true;
+  return false;
+}
+
+function fitsFullWedding(venue) {
+  if (venue.closed || isLimitedSite(venue)) return false;
+  return venue.capacity != null && venue.capacity >= 50;
+}
+
+function siteFeeDollar(venue) {
+  const price = venue.price || {};
+  if (price.confidence !== "published") return null;
+  const note = (price.note || "").toLowerCase();
+  if (/per person|per guest/.test(note) && /dinner|hosted bar|food/.test(note)) return null;
+  if (/per hour/.test(note) && /not a flat|hourly/.test(note)) return null;
+  if (price.saturday != null) return price.saturday;
+  if (price.low != null) return price.low;
+  if (price.floor != null) return price.floor;
+  return null;
+}
+
+function cityPriceLines(metro) {
+  const list = venuesForMetro(metro.id);
+  let site = null;
+  let permit = null;
+  let allInCount = 0;
+  for (const venue of list) {
+    const dollars = siteFeeDollar(venue);
+    if (isLimitedSite(venue)) {
+      if (dollars != null && (permit == null || dollars < permit)) permit = dollars;
+      continue;
+    }
+    if (!fitsFullWedding(venue)) continue;
     const listed = listedPrice(venue, { result: allInFor(venue, 100, "sat") });
-    if (listed.sort == null) continue;
-    if (!best || listed.sort < best.sort) best = listed;
+    if (listed.basis === "all-in") allInCount += 1;
+    if (dollars != null && (site == null || dollars < site)) site = dollars;
   }
-  if (!best) return "Ask for a price";
-  const amount = money(best.low);
-  return best.basis === "all-in" ? `from ${amount} all-in` : `from ${amount}`;
+  const feeLine = site != null
+    ? `site fees from ${money(site)}`
+    : permit != null
+      ? `permits from ${money(permit)}`
+      : "Site fees not published";
+  return { feeLine, allInLine: `${allInCount} all-in` };
 }
 
 function cityChip(metro, extra) {
@@ -61,12 +108,14 @@ function cityChip(metro, extra) {
   const label = `${metro.name}, ${metro.state}`;
   const letter = metro.name.trim().charAt(0).toUpperCase();
   const mark = metro.name.length % 6;
+  const lines = cityPriceLines(metro);
   return `<a class="city-chip${extra ? " city-chip-extra" : ""}" href="${metroPath(metro)}"${extra ? " hidden" : ""}>
     <span class="city-mark" data-mark="${mark}" aria-hidden="true">${escapeHtml(letter)}</span>
     <span class="city-chip-copy">
       <span class="city-chip-name">${escapeHtml(label)}</span>
       <span class="city-chip-meta">${count} ${count === 1 ? "venue" : "venues"}</span>
-      <span class="city-chip-price">${escapeHtml(cheapestLine(metro))}</span>
+      <span class="city-chip-price">${escapeHtml(lines.feeLine)}</span>
+      <span class="city-chip-allin">${escapeHtml(lines.allInLine)}</span>
     </span>
   </a>`;
 }
@@ -158,7 +207,8 @@ ${finderShell(metro.id)}`,
 
 function finderShell(metroId, beforeResults = "") {
   const list = metroId ? venuesForMetro(metroId) : venues.filter(isBooking);
-  const data = JSON.stringify(list.map(clientVenue)).replaceAll("<", "\\u003c");
+  const ids = metroId ? [metroId] : venueMetros.map((metro) => metro.id);
+  const data = JSON.stringify({ metro: metroId, ids, count: list.length }).replaceAll("<", "\\u003c");
   return `<form class="finder card stack" data-venue-app data-metro="${escapeHtml(metroId)}" id="venue-finder">
   <div class="loc" data-location>
     <label for="where">Where's the wedding?</label>
@@ -403,24 +453,82 @@ export function venueLinksForState(abbr) {
   return `<h2>Venues</h2><p class="chip-row">${items}</p><p><a class="btn" href="${metroPath(metro)}">See ${escapeHtml(metro.name)} venues</a></p>`;
 }
 
+const LIST_PRICE_KEYS = [
+  "kind", "confidence", "saturday", "offday", "low", "high",
+  "offLow", "offHigh", "offdayLow", "offdayHigh", "floor", "offFloor",
+  "sourceKind", "includesFood", "foodPerGuest", "includedGuests", "extraGuest", "taxPct",
+];
+
+function slimPrice(price, keepNote) {
+  const src = price || {};
+  const out = {};
+  for (const key of LIST_PRICE_KEYS) {
+    const value = src[key];
+    if (value == null || value === false || value === "") continue;
+    out[key] = value;
+  }
+  if (!out.kind) out.kind = "unpublished";
+  if (!out.confidence) out.confidence = "unpublished";
+  const note = src.note || "";
+  if (keepNote === "full") {
+    if (note) out.note = note;
+    if (src.sourceUrl) out.sourceUrl = src.sourceUrl;
+    if (src.verifiedOn) out.verifiedOn = src.verifiedOn;
+  } else if (/per person|per guest/i.test(note)) {
+    out.note = note;
+  }
+  return out;
+}
+
+/** Fields the finder needs to filter, sort, and price a card. Shared across pages. */
+export function listVenueRecord(venue) {
+  const type = venueTypeOf(venue);
+  const row = {
+    id: venue.id,
+    name: venue.name,
+    metro: venue.metro,
+    city: venue.city,
+    vibes: venue.vibes || [],
+    price: slimPrice(venue.price, "list"),
+    path: venuePath(venue),
+  };
+  if (venue.capacity) row.capacity = venue.capacity;
+  if (type) row.venueType = type;
+  if (venue.indoorOutdoor && venue.indoorOutdoor !== "both") row.indoorOutdoor = venue.indoorOutdoor;
+  if (venue.ceremonyOnsite) row.ceremonyOnsite = true;
+  if (venue.accommodations) row.accommodations = true;
+  if (venue.accessible) row.accessible = true;
+  if (venue.rainPlan) row.rainPlan = true;
+  if (venue.nearby) row.nearby = true;
+  if (venue.closed) row.closed = true;
+  return row;
+}
+
+/** Shortlist compare rows. One included line and one question, not the full card. */
+export function shortlistVenue(venue) {
+  const row = {
+    id: venue.id,
+    name: venue.name,
+    metro: venue.metro,
+    city: venue.city,
+    vibes: venue.vibes || [],
+    included: venue.included && venue.included[0] ? [venue.included[0]] : [],
+    questions: venue.questions && venue.questions[0] ? [venue.questions[0]] : [],
+    price: slimPrice(venue.price, "list"),
+  };
+  if (venue.capacity) row.capacity = venue.capacity;
+  return row;
+}
+
 function clientVenue(venue) {
   return {
     id: venue.id,
     name: venue.name,
     metro: venue.metro,
     city: venue.city,
-    capacity: venue.capacity,
-    vibes: venue.vibes,
-    venueType: venueTypeOf(venue),
-    indoorOutdoor: venue.indoorOutdoor,
-    ceremonyOnsite: venue.ceremonyOnsite,
-    accommodations: venue.accommodations,
-    accessible: venue.accessible,
-    rainPlan: venue.rainPlan,
-    nearby: Boolean(venue.nearby),
+    capacity: venue.capacity || null,
     closed: Boolean(venue.closed),
-    price: venue.price,
-    path: venuePath(venue),
+    price: slimPrice(venue.price, "full"),
   };
 }
 

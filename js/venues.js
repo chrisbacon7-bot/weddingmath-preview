@@ -11,7 +11,18 @@ import {
 } from "./common.js";
 
 const root = document.querySelector("[data-venue-app]");
-const records = JSON.parse(document.querySelector("#venue-data").textContent);
+const manifest = JSON.parse(document.querySelector("#venue-data").textContent);
+let records = [];
+let recordsReady = false;
+const recordsPromise = Promise.all((manifest.ids || []).map((id) => fetch(new URL(`../data/venues/${id}.json`, import.meta.url)).then((response) => {
+  if (!response.ok) throw new Error(`Venue list ${id} did not load`);
+  return response.json();
+}))).then((lists) => {
+  records = lists.flat();
+  recordsReady = true;
+}).catch((error) => {
+  console.error(error);
+});
 const head = document.querySelector("#venue-results");
 const title = document.querySelector("#results-title");
 const chips = document.querySelector("#result-chips");
@@ -138,8 +149,9 @@ guestsInput.addEventListener("input", () => {
 });
 document.querySelector("#loosen-filters")?.addEventListener("click", loosen);
 
-loadData().then((loaded) => {
+loadData().then(async (loaded) => {
   data = loaded;
+  await recordsPromise;
   const metros = loaded.venueIndex?.metros || [];
   const loc = params.get("loc") || "";
   if (!lockedMetro && loc.startsWith("metro:")) {
@@ -218,6 +230,7 @@ function withGuestQuery(href, guests, budget) {
 }
 
 function render() {
+  if (!recordsReady) return;
   const guests = guestCount();
   const budget = budgetAmount();
   storageSet("guests", guests);
@@ -510,7 +523,7 @@ function filterLabel(key) {
 
 function venueMatches(venue) {
   if (types.size && !types.has(venueTypeOf(venue))) return false;
-  if (vibes.size && !venue.vibes.some((vibe) => vibes.has(vibe))) return false;
+  if (vibes.size && !(venue.vibes || []).some((vibe) => vibes.has(vibe))) return false;
   const caps = [...filters].filter((key) => key.startsWith("cap-"));
   if (caps.length && !caps.some((key) => capacityBand(venue, key))) return false;
   if (filters.has("indoor") && venue.indoorOutdoor === "outdoor") return false;
@@ -541,7 +554,7 @@ function buildCard({ venue, listed, fits }, guests, budget) {
     el("h2", { text: venue.name }),
     el("span", { class: "chip-row" }, [
       typeLabel ? el("span", { class: "chip", text: typeLabel }) : null,
-      venue.vibes[0] ? el("span", { class: "chip", text: labelVibe(venue.vibes[0]) }) : null,
+      (venue.vibes || [])[0] ? el("span", { class: "chip", text: labelVibe(venue.vibes[0]) }) : null,
     ]),
     el("span", { class: published ? "venue-price" : "venue-price price-muted", "data-price": "1", text: figure }),
     el("span", { class: "hint", "data-price-note": "1", text: `${kind} · ${venue.capacity ? `Up to ${venue.capacity}` : "Capacity not published"}` }),
