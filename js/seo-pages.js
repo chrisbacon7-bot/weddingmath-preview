@@ -9,6 +9,8 @@ import { describe } from "./describe.js";
 import { planFor } from "./estimate.js";
 import { formatMoney, formatPlan } from "./format.js";
 import { venueLinksForState } from "./venue-pages.js";
+import { savingGuideDefs, savingGuidePages } from "./saving-guides.js";
+import { shopPages } from "./shop-pages.js";
 
 const money = (n) => formatMoney(n, { exact: true });
 
@@ -68,7 +70,9 @@ export function toolSeo(costs) {
     ["/budget/per-guest", "Wedding cost per guest calculator", "What one guest adds, and what cutting the list saves."],
     ["/budget/tracker", "Wedding budget tracker", "Budget, quoted, and paid, in this browser."],
     ["/wedding-cost", "Wedding cost by state", "Published averages for every state."],
-    ["/guides", "Wedding planning guides", "Cost, hidden fees, and the honeymoon."],
+    ["/guides", "Wedding planning guides", "Money-saving guides with a calculator, plus the study explainers."],
+    ["/guests", "Guest list", "A, B, and C lists, a cap, and the headcount carried into the budget."],
+    ["/shop", "Shopping lists", "Amazon lists with a price only when the product page was checked."],
     ["/honeymoon", "Honeymoon budget", "Both published averages, then VacationMath."],
   ];
   const pick = (path, extra = []) => linksExcept(path, [...tools, ...extra]);
@@ -253,16 +257,16 @@ export function toolSeo(costs) {
     },
     "/guides": {
       title: "Wedding Planning Guides",
-      description: `Wedding planning guides for the average cost, a budget breakdown, cost per guest, hidden fees, and a honeymoon budget. Knot average ${knot}. Zola average ${zola}.`,
+      description: `Money-saving wedding guides with a calculator for your guest count and place, plus explainers for the average cost, the budget breakdown, hidden fees, and the honeymoon. Knot average ${knot}. Zola average ${zola}.`,
       schema: "collection",
       crumbs: [{ name: "Home", path: "/" }, { name: "Guides", path: "/guides" }],
       explainerTitle: "What these wedding planning guides cover",
       explainer: [
-        "These guides explain the published figures. The calculators do the local math. State pages are the local guides: each one has that state's Knot average, Zola range, city studies, and estimated metros.",
+        "The money-saving guides open with a number for your guest count and place. Those numbers come from the same studies as the calculators. The explainers below say what the studies measured. State pages are the local versions.",
       ],
       faqs: [
         { q: "Where are the local wedding cost guides?", a: "On the state pages under Wedding cost. Each state uses its own published figures. A metro without a city study is labeled estimated." },
-        { q: "Are the guides the same as the calculators?", a: "The guides explain the studies. The wedding cost calculator, budget calculator, affordability tool, and cost-per-guest calculator apply those studies to a place and a guest count." },
+        { q: "Are the guides the same as the calculators?", a: "Each money-saving guide has its own calculator for a guest count and a place. The explainers say what The Knot and Zola measured. Neither guide invents a percentage that is not in the studies." },
       ],
       related: pick("/guides"),
       og: { figure: knot },
@@ -272,7 +276,7 @@ export function toolSeo(costs) {
 
 export function extraPages(costs, geo) {
   const states = statePages(costs, geo);
-  return [costHubBody(costs, geo, states), guidesHub(costs), ...guidePages(costs), ...states];
+  return [costHubBody(costs, geo, states), guidesHub(costs), ...guidePages(costs), ...savingGuidePages(costs, geo), ...shopPages(), ...states];
 }
 
 export function postalRedirects(geo) {
@@ -310,9 +314,20 @@ National Knot average ${knot}. National Zola average ${zola}. Knot median ${mone
 - [Honeymoon budget](${origin}/honeymoon): hands off to VacationMath
 - [How much does a wedding cost](${origin}/wedding-cost): state index
 - [Wedding planning guides](${origin}/guides)
+- [Guest list](${origin}/guests)
+- [Shopping lists](${origin}/shop)
 - [Wedding cost sources](${origin}/sources): every figure, source, and date
 
 ## Guides
+- [Venue line](${origin}/guides/save-on-the-venue)
+- [Off-peak dates](${origin}/guides/off-peak-wedding-dates)
+- [Trimming the guest list](${origin}/guides/trim-the-guest-list)
+- [Catering and the bar](${origin}/guides/catering-and-bar)
+- [Flowers and decor](${origin}/guides/flowers-and-decor)
+- [Photo and video](${origin}/guides/photo-and-video)
+- [Attire](${origin}/guides/wedding-attire)
+- [DIY or hire](${origin}/guides/diy-or-hire)
+- [DJ or live band](${origin}/guides/dj-or-live-band)
 - [Average wedding cost in 2026](${origin}/guides/average-wedding-cost)
 - [Wedding budget breakdown](${origin}/guides/wedding-budget-breakdown)
 - [Wedding cost per guest](${origin}/guides/wedding-cost-per-guest)
@@ -364,15 +379,24 @@ function costHubBody(costs, geo, states) {
 
 function guidesHub(costs) {
   const seo = toolSeo(costs)["/guides"];
-  const cards = guideDefs(costs).map((guide) => `<li class="tool-card card"><a href="${guide.path}"><h2>${escapeHtml(guide.title)}</h2><p>${escapeHtml(guide.card)}</p></a></li>`).join("");
+  const card = (guide) => `<li class="tool-card card"><a href="${guide.path}"><h2>${escapeHtml(guide.title)}</h2><p>${escapeHtml(guide.card)}</p></a></li>`;
+  const saving = savingGuideDefs(costs).map(card).join("");
+  const explain = guideDefs(costs).map(card).join("");
+  const knot = money(costs.national.knotAverage.value);
   return {
     ...seo,
     file: "guides.html",
     path: "/guides",
     body: `<h1>Wedding Planning Guides</h1>
-<p class="lede">Short guides to the published numbers. The calculators apply them to your guest list. The state pages are the local versions.</p>
-<ul class="cards">${cards}</ul>
-<p><a href="/wedding-cost">Browse wedding cost by state</a>.</p>`,
+<p class="lede">Each money guide opens with a number for your guest count and place. The explainers underneath say what the studies measured.</p>
+<div class="big-result">
+  <article class="big-card main"><p class="kicker">US average</p><p class="money-sm" data-total="1">${knot}</p><p class="hint">The Knot, ${costs.national.knotGuests.value} guests. Open a guide to recalculate it.</p></article>
+</div>
+<h2>Money-saving guides</h2>
+<ul class="cards">${saving}</ul>
+<h2>How the studies work</h2>
+<ul class="cards">${explain}</ul>
+<p><a href="/guests">Build a guest list</a> · <a href="/shop">Shopping lists</a> · <a href="/wedding-cost">Wedding cost by state</a>.</p>`,
   };
 }
 

@@ -19,8 +19,14 @@ function hubPage() {
   const cards = venueMetros.map((metro) => {
     const count = venuesForMetro(metro.id).length;
     const priced = venuesForMetro(metro.id).filter((venue) => venue.price.confidence === "published").length;
-    return `<a class="tool-card card" href="${metroPath(metro)}"><span class="swatch swatch-garden" aria-hidden="true"></span><h2>${escapeHtml(metro.name)}</h2><p>${count} venues · ${priced} with a published price</p></a>`;
+    const label = `${metro.name}, ${metro.state}`;
+    return `<a class="tool-card card" href="${metroPath(metro)}"><span class="swatch swatch-garden" aria-hidden="true"></span><h2>${escapeHtml(label)}</h2><p>${count} ${count === 1 ? "venue" : "venues"}${priced ? ` · ${priced} with a published price` : ""}</p></a>`;
   }).join("");
+  const cityGrid = `<section id="city-grid" aria-labelledby="city-grid-title">
+  <h2 id="city-grid-title">Pick your city</h2>
+  <p class="hint">${venueMetros.length} cities with a curated list. Every venue is below until you pick one.</p>
+  <div class="app-grid">${cards}</div>
+</section>`;
   return {
     file: "venues.html",
     path: "/venues",
@@ -46,8 +52,7 @@ function hubPage() {
     <p class="hero-sub">Guests, a place, and a venue budget. The price on the card is from the venue's own site.</p>
   </div>
 </section>
-${finderShell("")}
-<div class="app-grid">${cards}</div>
+${finderShell("", cityGrid)}
 <section class="card" id="venue-gap" hidden tabindex="-1">
   <p class="kicker">This city</p>
   <h2 data-gap-title>Cost results</h2>
@@ -91,7 +96,7 @@ ${finderShell(metro.id)}`,
   };
 }
 
-function finderShell(metroId) {
+function finderShell(metroId, beforeResults = "") {
   const list = metroId ? venuesForMetro(metroId) : venues;
   const data = JSON.stringify(list.map(clientVenue)).replaceAll("<", "\\u003c");
   return `<form class="finder card stack" data-venue-app data-metro="${escapeHtml(metroId)}" id="venue-finder">
@@ -107,10 +112,10 @@ function finderShell(metroId) {
       <div class="stepper" data-stepper>
         <div class="stepper-row">
           <button type="button" class="step" data-step="-10" aria-label="Ten fewer guests">−</button>
-          <input id="guests" type="number" inputmode="numeric" min="10" max="400" value="100">
+          <input id="guests" type="number" inputmode="numeric" min="10" max="400" value="117">
           <button type="button" class="step" data-step="10" aria-label="Ten more guests">+</button>
         </div>
-        <input type="range" min="10" max="400" value="100" aria-label="Guest count">
+        <input type="range" min="10" max="400" value="117" aria-label="Guest count">
       </div>
     </div>
     <div>
@@ -156,6 +161,7 @@ function finderShell(metroId) {
     </div>
   </details>
 </form>
+${beforeResults}
 <div id="venue-results" class="results-head" tabindex="-1">
   <h2 id="results-title">Venues</h2>
   <p id="result-count" aria-live="polite"></p>

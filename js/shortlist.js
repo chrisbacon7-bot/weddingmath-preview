@@ -38,7 +38,7 @@ function paint(catalog) {
     out.append(el("div", { class: "card" }, [
       el("h2", { text: "Nothing saved yet" }),
       el("p", { text: "Open the venue finder and tap the heart on the places you want to compare." }),
-      el("a", { class: "btn", href: siteHref("/venues"), text: "Find venues" }),
+      el("a", { class: "btn", href: siteHref("/venues"), "data-find-venues": "1", text: "Find venues" }),
     ]));
     return;
   }

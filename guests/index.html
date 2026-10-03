@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Guest list · WeddingMath</title>
+  <meta name="description" content="Sort a wedding guest list into A, B, and C, set a cap, and see the headcount and local cost per guest. Saved in this browser.">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="wm-root" content="../">
+  <link rel="canonical" href="https://weddingmath.co/guests">
+  <meta property="og:title" content="Guest list">
+  <meta property="og:description" content="Sort a wedding guest list into A, B, and C, set a cap, and see the headcount and local cost per guest. Saved in this browser.">
+  <meta property="og:url" content="https://weddingmath.co/guests">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="WeddingMath">
+  <meta property="og:image" content="../og/guests.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Guest list">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Guest list">
+  <meta name="twitter:description" content="Sort a wedding guest list into A, B, and C, set a cap, and see the headcount and local cost per guest. Saved in this browser.">
+  <meta name="twitter:image" content="../og/guests.png">
+  <meta name="theme-color" content="#f3eee6">
+  <link rel="icon" href="../favicon.svg" type="image/svg+xml">
+  <link rel="preload" href="../fonts/fraunces-600.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../css/styles.css">
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://weddingmath.co/"},{"@type":"ListItem","position":2,"name":"Guest list","item":"https://weddingmath.co/guests"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Does the guest list price each meal?","acceptedAnswer":{"@type":"Answer","text":"No. A meal is a label you type. The per-guest figure is the planning total for the headcount who make the cut, divided by that headcount."}},{"@type":"Question","name":"Where is the list saved?","acceptedAnswer":{"@type":"Answer","text":"In this browser. You can download a CSV or print the page. Nothing is sent to a vendor."}}]},{"@type":["WebApplication","SoftwareApplication"],"name":"Guest list","applicationCategory":"FinanceApplication","operatingSystem":"Web","browserRequirements":"Requires JavaScript. Requires HTML5.","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"isAccessibleForFree":true,"url":"https://weddingmath.co/guests","description":"Sort a wedding guest list into A, B, and C, set a cap, and see the headcount and local cost per guest. Saved in this browser.","provider":{"@type":"Organization","name":"WeddingMath","url":"https://weddingmath.co/"}}]}</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="site-header">
+    <a class="brand" href="../index.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">WeddingMath</span></a>
+    <input id="nav-toggle" class="nav-toggle" type="checkbox">
+    <label for="nav-toggle" class="nav-toggle-btn">Menu</label>
+    <nav aria-label="Primary"><a href="../venues/index.html">Venues</a><a href="../budget/index.html">Budget</a><a href="../guides/index.html">Guides</a><a href="../guests/index.html" aria-current="page">Guests</a><a href="../shop/index.html">Shop</a><a href="../wedding-cost/index.html">Cost by State</a><a href="../honeymoon/index.html">Honeymoon</a></nav>
+  </header>
+  <main id="main" class="wrap-wide">
+    <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><span aria-current="page">Guest list</span></li></ol></nav><h1>Guest list</h1>
+<p class="lede">Add names, tag a side and a group, and sort them into A, B, and C. The cap decides who makes the cut. Meals are labels. This page does not price a plate.</p>
+<div class="calc-grid">
+<form id="guest-form" class="stack calc-inputs">
+  <div id="guest-presets"></div>
+  <div class="loc card" data-location>
+    <label for="where">Where's the wedding?</label>
+    <input id="where" type="text" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="where-list" placeholder="ZIP code or city">
+    <ul id="where-list" class="suggestions" role="listbox" hidden></ul>
+    <button type="button" class="text-btn" data-national>Not sure yet</button>
+    <p class="loc-status" data-status role="status"></p>
+  </div>
+  <div class="card stack">
+    <p class="label">Quick add</p>
+    <label for="add-name">Name</label>
+    <input id="add-name" type="text" autocomplete="name" placeholder="Aunt June">
+    <div class="form-grid two">
+      <div>
+        <label for="add-side">Side</label>
+        <select id="add-side">
+          <option value="a">Partner A</option>
+          <option value="b">Partner B</option>
+          <option value="both" selected>Both</option>
+        </select>
+      </div>
+      <div>
+        <label for="add-group">Group</label>
+        <select id="add-group">
+          <option value="family">Family</option>
+          <option value="friends" selected>Friends</option>
+          <option value="work">Work</option>
+          <option value="party">Wedding party</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-grid two">
+      <div>
+        <label for="add-list">List</label>
+        <select id="add-list">
+          <option value="A">A · first cut</option>
+          <option value="B" selected>B · if there's room</option>
+          <option value="C">C · if the list grows</option>
+        </select>
+      </div>
+      <div>
+        <label for="add-plus">Extra seats</label>
+        <input id="add-plus" type="number" inputmode="numeric" min="0" max="8" value="0">
+      </div>
+    </div>
+    <button class="btn" type="submit">Add to the list</button>
+  </div>
+  <div class="card stack">
+    <label for="cap">Who makes the cut</label>
+    <input id="cap" type="range" min="0" max="400" value="400">
+    <p class="hint" id="cap-note">Everyone on the list fits until you lower the cap.</p>
+  </div>
+  <details class="card">
+    <summary>Paste names or import a CSV</summary>
+    <div class="stack">
+      <label for="paste">One name per line. Commas can add side, group, list, rsvp, meal, and extra seats.</label>
+      <textarea id="paste" rows="5" placeholder="Aunt June&#10;Bea,b,friends,C,no,fish,1"></textarea>
+      <button type="button" class="btn-ghost" id="paste-add">Add these names</button>
+      <label for="csv-file">CSV file</label>
+      <input id="csv-file" type="file" accept=".csv,text/csv">
+    </div>
+  </details>
+</form>
+<div>
+  <div id="out" class="stack" aria-live="polite">
+    <section class="result" id="result">
+      <div class="big-result">
+        <article class="big-card main">
+          <p class="kicker">Per guest</p>
+          <p class="money-sm" data-total="1">$292</p>
+          <p class="hint">The Knot's national figure, until this list has names.</p>
+        </article>
+        <article class="big-card plain">
+          <p class="kicker">Headcount</p>
+          <p class="money-sm">0</p>
+          <p class="hint">Names who make the cut, plus extra seats.</p>
+        </article>
+        <article class="big-card gap">
+          <p class="kicker">Still deciding</p>
+          <p class="money-sm">0</p>
+          <p class="hint">Past the cap. A is kept before B, then C.</p>
+        </article>
+      </div>
+    </section>
+  </div>
+  <div id="guest-lists" class="stack"></div>
+  <p class="inline-actions no-print">
+    <button type="button" class="btn-ghost" id="export-csv">Download CSV</button>
+    <button type="button" class="text-btn" data-print>Print</button>
+  </p>
+</div>
+</div>
+<p class="hint">The list stays in this browser. A meal is a word, not a price.</p>
+<details class="explainer-fold"><summary>About this page and common questions</summary><section class="explainer" aria-label="About this page"><h2>Common questions</h2><div class="faq"><details class="faq-item"><summary>Does the guest list price each meal?</summary><p>No. A meal is a label you type. The per-guest figure is the planning total for the headcount who make the cut, divided by that headcount.</p></details><details class="faq-item"><summary>Where is the list saved?</summary><p>In this browser. You can download a CSV or print the page. Nothing is sent to a vendor.</p></details></div><p>Every figure is cited on the <a href="../sources/index.html">sources page</a>.</p></section></details>
+  </main>
+  <footer class="site-footer">
+    
+    <nav aria-label="Footer"><a href="../index.html">Wedding cost calculator</a><a href="../venues/index.html" data-find-venues>Find venues</a><a href="../shortlist/index.html">Venue shortlist</a><a href="../tools/index.html">Wedding budget tools</a><a href="../budget/index.html">Wedding budget calculator</a><a href="../budget/reverse/index.html">How much can we afford</a><a href="../budget/per-guest/index.html">Cost per guest</a><a href="../budget/tracker/index.html">Wedding budget tracker</a><a href="../wedding-cost/index.html">Wedding cost by state</a><a href="../guides/index.html">Guides</a><a href="../guests/index.html">Guest list</a><a href="../shop/index.html">Shopping lists</a><a href="../honeymoon/index.html">Honeymoon budget</a><a href="../sources/index.html">Sources</a><a href="../disclosures/index.html">Disclosures</a><a href="../about/index.html">About</a><a href="../list-your-venue/index.html">List your venue</a><a href="https://vacationmath.co/?utm_source=weddingmath.co&utm_medium=referral&utm_campaign=footer">VacationMath</a></nav>
+    <p>Estimates are not quotes. Your numbers stay in this browser unless you copy a link or download a file.</p>
+  </footer>
+  <div class="sticky" data-sticky hidden>
+    <div><p class="kicker" data-sticky-kicker>Planning estimate</p><p class="money-sm" data-sticky-money>—</p></div>
+    <button type="button" class="btn-ghost" data-sticky-copy>Copy</button>
+    <a class="btn" href="#result">See my total</a>
+  </div>
+  <script type="module" src="../js/guests.js"></script>
+</body>
+</html>

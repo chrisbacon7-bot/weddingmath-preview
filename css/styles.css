@@ -603,7 +603,18 @@ th { font-size: 0.78rem; letter-spacing: 0.04em; text-transform: uppercase; colo
   }
 }
 
-.app-grid[hidden], #venue-gap[hidden], #venue-none[hidden], .venue-card.is-hidden { display: none !important; }
+.app-grid[hidden], #city-grid[hidden], #venue-gap[hidden], #venue-none[hidden], .venue-card.is-hidden { display: none !important; }
+.guide-copy { margin-top: 28px; }
+.guest-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; padding: 12px 0; border-top: 1px solid var(--line); }
+.guest-field { display: grid; gap: 4px; min-width: 0; }
+.guest-field span { font-size: 0.85rem; color: var(--muted); }
+.guest-row.cut-out { opacity: 0.62; }
+.shop-grid { display: grid; gap: 12px; }
+.shop-card h2 { font-size: 1.15rem; }
+.disclosure { background: var(--gold-soft); padding: 12px 14px; border-radius: 14px; margin: 12px 0; }
+@media (min-width: 720px) {
+  .shop-grid { grid-template-columns: 1fr 1fr; }
+}
 .near-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
 .near-list a { display: flex; align-items: center; min-height: 64px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; color: var(--ink); text-decoration: none; }
 .calc-grid { display: grid; gap: 18px; }

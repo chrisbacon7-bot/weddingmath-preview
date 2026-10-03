@@ -1,4 +1,5 @@
 import { MIN_GUESTS, categorySplit, hiddenCostBreakdown, planFor } from "./estimate.js";
+import { venueAppPath } from "./place-nav.js";
 import { fixedVariable, marginalPerGuest } from "./present.js";
 import {
   bindGlobals, clear, el, emptyNote, formatMoney, formatPlan, guestCountNote, loadData,
@@ -131,7 +132,7 @@ function render(data) {
       el("button", { class: "text-btn", type: "button", "data-print": "1", text: "Print / Save PDF" }),
     ]),
     el("p", { class: "hint", "data-copy-status": "1", "aria-live": "polite" }),
-    nextStep(siteHref(`/venues?loc=${encodeURIComponent(state.place.id)}&g=${Math.max(MIN_GUESTS, guests - cutBy)}`), `Find venues for ${Math.max(MIN_GUESTS, guests - cutBy)} guests`),
+    nextStep(siteHref(venueAppPath(state.place, guests, "", data.venueIndex?.metros || [])), `Find venues for ${guests} guests`),
     renderMethod(plan),
   ]);
   out.append(result);

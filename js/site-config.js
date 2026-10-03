@@ -18,4 +18,6 @@ export const SITE = {
   utmCampaign: "honeymoon",
   ga4Id: "",
   storagePrefix: "wedding-tools",
+  /** Amazon Associates tag. Empty links are plain amazon.com/dp/{ASIN} pages. */
+  AMAZON_TAG: "",
 };

@@ -7,7 +7,6 @@ import {
   siteHref, storageGet, storageSet, toggleShortlist, writeParams,
 } from "./common.js";
 
-bindGlobals();
 const root = document.querySelector("[data-venue-app]");
 const records = JSON.parse(document.querySelector("#venue-data").textContent);
 const head = document.querySelector("#venue-results");
@@ -17,12 +16,17 @@ const grid = document.querySelector("#venue-grid");
 const none = document.querySelector("#venue-none");
 const noneCopy = document.querySelector("[data-none-copy]");
 const gap = document.querySelector("#venue-gap");
-const directory = document.querySelector(".app-grid");
+const directory = document.querySelector("#city-grid");
 const guestsInput = document.querySelector("#guests");
 const budgetInput = document.querySelector("#venue-budget");
 const budgetRange = document.querySelector("#venue-budget-range");
 const lockedMetro = root.dataset.metro || "";
 const params = readParams();
+const initialGuests = params.get("g") || storageGet("guests", "") || "117";
+guestsInput.value = String(initialGuests);
+const guestRange = guestsInput.closest("[data-stepper]")?.querySelector('input[type="range"]');
+if (guestRange) guestRange.value = String(initialGuests);
+bindGlobals();
 let place = null;
 let data = null;
 let booted = false;
@@ -32,12 +36,6 @@ const STOPS = [0, 5000, 10000, 20000, 40000, 80000];
 const vibes = new Set();
 const filters = new Set();
 
-const initialGuests = params.get("g") || storageGet("guests", "");
-if (initialGuests) {
-  guestsInput.value = String(initialGuests);
-  const range = guestsInput.closest("[data-stepper]")?.querySelector('input[type="range"]');
-  if (range) range.value = String(initialGuests);
-}
 const initialBudget = params.get("b") || storageGet("budget", "");
 if (initialBudget) {
   budgetInput.value = String(initialBudget);
@@ -107,7 +105,7 @@ loadData().then((loaded) => {
   if (!lockedMetro && loc.startsWith("metro:")) {
     const id = loc.slice(6);
     if (metros.some((metro) => metro.id === id)) {
-      location.replace(siteHref(venueAppPath({ id: loc, metroId: id }, guestsInput.value, budgetInput.value, metros)));
+      location.replace(siteHref(venueAppPath({ id: loc, metroId: id }, guestCount(), budgetAmount(), metros)));
       return;
     }
   }
@@ -119,7 +117,7 @@ loadData().then((loaded) => {
     onChange(next) {
       place = next;
       if (booted && leavesLocked(next)) {
-        location.assign(siteHref(venueAppPath(next, guestsInput.value, budgetInput.value, metros)));
+        location.assign(siteHref(venueAppPath(next, guestCount(), budgetAmount(), metros)));
         return;
       }
       render();
@@ -129,7 +127,7 @@ loadData().then((loaded) => {
       place = next;
       const seeded = Boolean(next.metroId && metros.some((metro) => metro.id === next.metroId));
       if ((seeded && next.metroId !== lockedMetro) || (!seeded && lockedMetro) || leavesLocked(next)) {
-        location.assign(siteHref(venueAppPath(next, guestsInput.value, budgetInput.value, metros)));
+        location.assign(siteHref(venueAppPath(next, guestCount(), budgetAmount(), metros)));
         return;
       }
       render();
@@ -149,13 +147,44 @@ function leavesLocked(next) {
   return next.metroId !== lockedMetro;
 }
 
+function guestCount() {
+  const typed = Number(guestsInput.value);
+  if (Number.isFinite(typed) && typed > 0) return Math.min(400, Math.max(10, Math.round(typed)));
+  const stored = Number(storageGet("guests", 117));
+  if (Number.isFinite(stored) && stored > 0) return Math.min(400, Math.max(10, Math.round(stored)));
+  return 117;
+}
+
+function budgetAmount() {
+  return Number(String(budgetInput.value).replace(/[$,\s]/g, "")) || 0;
+}
+
+function browsing() {
+  return !lockedMetro && (!place || place.id === "national");
+}
+
+function withGuestQuery(href, guests, budget) {
+  const hashAt = href.indexOf("#");
+  const hash = hashAt >= 0 ? href.slice(hashAt) : "";
+  const base = hashAt >= 0 ? href.slice(0, hashAt) : href;
+  const qAt = base.indexOf("?");
+  const path = qAt >= 0 ? base.slice(0, qAt) : base;
+  const params = new URLSearchParams(qAt >= 0 ? base.slice(qAt + 1) : "");
+  params.set("g", String(guests));
+  if (budget) params.set("b", String(budget));
+  else params.delete("b");
+  const query = params.toString();
+  return `${path}${query ? `?${query}` : ""}${hash}`;
+}
+
 function render() {
-  const guests = Math.min(400, Math.max(10, Number(guestsInput.value) || 100));
-  const budget = Number(String(budgetInput.value).replace(/[$,\s]/g, "")) || 0;
+  const guests = guestCount();
+  const budget = budgetAmount();
   storageSet("guests", guests);
-  const metroId = lockedMetro || (place && place.metroId) || "";
-  const seeded = records.some((venue) => venue.metro === metroId);
-  const showGap = Boolean(place && !seeded && !lockedMetro && gap);
+  const browse = browsing();
+  const metroId = lockedMetro || (!browse && place && place.metroId) || "";
+  const seeded = Boolean(metroId) && records.some((venue) => venue.metro === metroId);
+  const showGap = Boolean(!browse && place && place.id !== "national" && !seeded && !lockedMetro && gap);
   if (gap) {
     gap.hidden = !showGap;
     if (showGap) fillGap(guests, budget);
@@ -228,7 +257,7 @@ function render() {
     const filterOk = passes(card);
     const amount = quote.total ?? quote.high ?? null;
     const budgetOk = !budget || amount == null || amount <= budget * 1.05;
-    const visible = !showGap && metroOk && vibeOk && filterOk && budgetOk && (fits || showOver) && (seeded || lockedMetro || !place);
+    const visible = !showGap && metroOk && vibeOk && filterOk && budgetOk && (fits || showOver);
     card.classList.toggle("is-tight", !fits);
     card.classList.toggle("is-hidden", !visible);
     if (visible) shown += 1;
@@ -253,7 +282,7 @@ function render() {
   }
   const count = document.querySelector("#result-count");
   if (count && !showGap) {
-    const where = place && place.id !== "national" ? cityLine(place) : (lockedMetro ? "this city" : "this list");
+    const where = place && place.id !== "national" ? cityLine(place) : (lockedMetro ? "this city" : "all cities");
     const vibeLabel = vibes.size === 1 ? labelVibe([...vibes][0]) : "";
     const vibeCount = vibeLabel ? ranked.filter(({ card, venue }) => venue && card.dataset.vibes.includes([...vibes][0]) && (!metroId || venue.metro === metroId)).length : 0;
     const within = budget ? ranked.filter(({ quote, venue }) => {
@@ -265,6 +294,10 @@ function render() {
     if (budget) bits.push(`${within} within ${formatMoney(budget, { exact: true })}`);
     count.textContent = bits.join(" · ");
   } else if (count) count.textContent = "";
+  document.querySelectorAll("#city-grid a").forEach((link) => {
+    if (!link.dataset.base) link.dataset.base = link.getAttribute("href");
+    link.setAttribute("href", withGuestQuery(link.dataset.base, guests, budget));
+  });
   paintSaved(guests);
   if (none) {
     none.hidden = showGap || shown !== 0;

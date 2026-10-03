@@ -28,13 +28,15 @@ if (state.budget) budgetInput.value = state.budget;
 
 let locationApi = null;
 let loaded = null;
+let dataReady = null;
 
 document.querySelectorAll("[data-find-venues]").forEach((node) => {
   node.addEventListener("click", async (event) => {
     event.preventDefault();
+    if (!loaded && dataReady) await dataReady;
     const picked = locationApi ? await locationApi.commit({ go: false }) : null;
     const typed = Number(guestsInput.value);
-    const guests = Number.isFinite(typed)
+    const guests = Number.isFinite(typed) && typed > 0
       ? Math.min(400, Math.max(10, Math.round(typed)))
       : Math.min(400, Math.max(10, Math.round(Number(state.guests)) || 117));
     const budget = parseMoney(budgetInput.value);
@@ -42,11 +44,11 @@ document.querySelectorAll("[data-find-venues]").forEach((node) => {
     storageSet("budget", budget == null || budget <= 0 ? "" : String(budget));
     const place = picked || state.place;
     const metros = loaded && loaded.venueIndex && loaded.venueIndex.metros;
-    location.assign(siteHref(venueAppPath(place, guests, budget && budget > 0 ? budget : "", metros)));
+    location.assign(siteHref(venueAppPath(place, guests, budget && budget > 0 ? budget : "", metros || [])));
   });
 });
 
-loadData().then(async (data) => {
+dataReady = loadData().then(async (data) => {
   loaded = data;
   locationApi = mountLocation(document.querySelector("[data-location]"), {
     data,
@@ -205,6 +207,11 @@ function paintTeasers(plan, data) {
     set("reverse", `What we can afford — a ${formatMoney(budget, { exact: true })} total is ready to turn into a guest count.`);
   }
   set("venues", `Find venues for ${plan.guests} guests in ${where}.`);
+  const budgetNow = parseMoney(budgetInput.value);
+  const venueHref = siteHref(venueAppPath(state.place, plan.guests, budgetNow && budgetNow > 0 ? budgetNow : "", data.venueIndex?.metros || []));
+  document.querySelectorAll("[data-find-venues]").forEach((node) => {
+    node.href = venueHref;
+  });
   set("tracker", "Track quotes against this split.");
 }
 

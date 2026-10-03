@@ -275,6 +275,29 @@ export function bindGlobals() {
   bindSteppers();
   bindMoneyFields();
   document.addEventListener("click", async (event) => {
+    const find = event.target.closest("[data-find-venues]");
+    if (find && !event.defaultPrevented) {
+      event.preventDefault();
+      const guestField = document.querySelector("#guests");
+      const typed = guestField ? Number(guestField.value) : NaN;
+      const storedGuests = Number(storageGet("guests", 117));
+      const guests = Number.isFinite(typed) && typed > 0
+        ? Math.min(400, Math.max(10, Math.round(typed)))
+        : (Number.isFinite(storedGuests) && storedGuests > 0 ? Math.min(400, Math.max(10, Math.round(storedGuests))) : 117);
+      const budgetField = document.querySelector("#budget, #venue-budget");
+      const typedBudget = budgetField ? Number(String(budgetField.value).replace(/[$,\s]/g, "")) : NaN;
+      const storedBudget = Number(storageGet("budget", ""));
+      const budget = Number.isFinite(typedBudget) && typedBudget > 0
+        ? typedBudget
+        : (Number.isFinite(storedBudget) && storedBudget > 0 ? storedBudget : 0);
+      const loc = storageGet("loc", "");
+      const params = new URLSearchParams();
+      params.set("g", String(guests));
+      if (budget > 0) params.set("b", String(Math.round(budget)));
+      if (loc && loc !== "national") params.set("loc", loc);
+      location.assign(siteHref(`/venues?${params}`));
+      return;
+    }
     const stickyCopy = event.target.closest("[data-sticky-copy]");
     if (stickyCopy) {
       event.preventDefault();
