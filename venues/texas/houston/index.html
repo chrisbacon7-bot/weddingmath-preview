@@ -27,12 +27,14 @@
   <link rel="preload" href="../../../fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../../../css/styles.css">
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://weddingmath.co/"},{"@type":"ListItem","position":2,"name":"Venues","item":"https://weddingmath.co/venues"},{"@type":"ListItem","position":3,"name":"Houston","item":"https://weddingmath.co/venues/texas/houston"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does a wedding venue cost in Houston?","acceptedAnswer":{"@type":"Answer","text":"The cards below use each venue's own published price when one exists. 2 of 3 venues on this page had a public price when we checked."}}]},{"@type":"CollectionPage","name":"Wedding Venues in Houston","url":"https://weddingmath.co/venues/texas/houston","description":"Wedding venues in Houston–Pasadena–The Woodlands. Filter by guests, budget, and vibe. Published prices are cited to each venue's site.","isPartOf":{"@type":"WebSite","name":"WeddingMath","url":"https://weddingmath.co/","description":"See what a wedding costs where you're getting married. Local figures from published studies, with no account and no vendor emails."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://weddingmath.co/"},{"@type":"ListItem","position":2,"name":"Venues","item":"https://weddingmath.co/venues"},{"@type":"ListItem","position":3,"name":"Houston","item":"https://weddingmath.co/venues/texas/houston"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does a wedding venue cost in Houston?","acceptedAnswer":{"@type":"Answer","text":"The cards below use each venue's own published price when one exists. 7 of 11 venues on this page had a public price when we checked."}}]},{"@type":"CollectionPage","name":"Wedding Venues in Houston","url":"https://weddingmath.co/venues/texas/houston","description":"Wedding venues in Houston–Pasadena–The Woodlands. Filter by guests, budget, and vibe. Published prices are cited to each venue's site.","isPartOf":{"@type":"WebSite","name":"WeddingMath","url":"https://weddingmath.co/","description":"See what a wedding costs where you're getting married. Local figures from published studies, with no account and no vendor emails."}}]}</script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="brand" href="../../../index.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">WeddingMath</span></a>
+    <input id="nav-toggle" class="nav-toggle" type="checkbox">
+    <label for="nav-toggle" class="nav-toggle-btn">Menu</label>
     <nav aria-label="Primary"><a href="../../../venues/index.html" aria-current="page">Venues</a><a href="../../../budget/index.html">Budget</a><a href="../../../wedding-cost/index.html">Cost by State</a><a href="../../../honeymoon/index.html">Honeymoon</a></nav>
   </header>
   <main id="main" class="wrap-wide">
@@ -40,7 +42,7 @@
   <div>
     <p class="kicker">Houston–Pasadena–The Woodlands</p>
     <h1>Wedding venues in Houston</h1>
-    <p class="hero-sub">3 places. Filter by guests, budget, and vibe.</p>
+    <p class="hero-sub">11 places. Filter by guests, budget, and vibe.</p>
   </div>
 </section>
 <form class="finder card stack" data-venue-app data-metro="26420" id="venue-finder">
@@ -56,19 +58,35 @@
       <div class="stepper" data-stepper>
         <div class="stepper-row">
           <button type="button" class="step" data-step="-10" aria-label="Ten fewer guests">−</button>
-          <input id="guests" type="number" inputmode="numeric" min="25" max="300" value="100">
+          <input id="guests" type="number" inputmode="numeric" min="10" max="400" value="100">
           <button type="button" class="step" data-step="10" aria-label="Ten more guests">+</button>
         </div>
-        <input type="range" min="25" max="300" value="100" aria-label="Guest count">
+        <input type="range" min="10" max="400" value="100" aria-label="Guest count">
       </div>
     </div>
     <div>
       <label for="venue-budget">All-in venue budget <span class="hint">Optional</span></label>
+      <p id="budget-readout" class="hint">Any budget</p>
       <div class="stepper">
-        <input id="venue-budget" type="number" inputmode="decimal" min="0" step="500" placeholder="Any budget">
-        <input id="venue-budget-range" type="range" min="0" max="80000" step="500" value="0" aria-label="Venue budget">
+        <input id="venue-budget" type="text" inputmode="numeric" placeholder="e.g. 20,000" autocomplete="off">
+        <input id="venue-budget-range" type="range" min="0" max="100" step="1" value="0" aria-label="Venue budget">
+      </div>
+      <div class="choices" id="budget-chips">
+        <button type="button" data-budget-chip="5000">$5k</button>
+        <button type="button" data-budget-chip="10000">$10k</button>
+        <button type="button" data-budget-chip="20000">$20k</button>
+        <button type="button" data-budget-chip="0">Any</button>
       </div>
     </div>
+  </div>
+  <div>
+    <label for="venue-sort">Sort</label>
+    <select id="venue-sort">
+      <option value="best">Best match for budget</option>
+      <option value="price">Lowest price</option>
+      <option value="capacity">Largest capacity</option>
+      <option value="name">A–Z</option>
+    </select>
   </div>
   <div>
     <p class="label" id="vibe-label">Vibe</p>
@@ -77,7 +95,7 @@
     </div>
   </div>
   <details class="more-filters">
-    <summary>More filters</summary>
+    <summary id="more-filters-label">More filters</summary>
     <div class="choices" id="more-filters">
       <button type="button" data-filter="indoor" aria-pressed="false">Indoor option</button>
       <button type="button" data-filter="outdoor" aria-pressed="false">Outdoor</button>
@@ -89,7 +107,14 @@
     </div>
   </details>
 </form>
-<div id="venue-results" class="venue-grid"><article class="venue-card card" data-venue-card data-id="houston-botanic" data-capacity="200" data-vibes="garden" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="1" data-offday="1">
+<div id="venue-results" class="results-head" tabindex="-1">
+  <h2 id="results-title">Venues</h2>
+  <p id="result-count" aria-live="polite"></p>
+  <div id="result-chips" class="chip-row"></div>
+  <p class="no-print"><button type="button" class="text-btn" data-share>Copy link</button></p>
+</div>
+<div id="saved-compare" hidden></div>
+<div id="venue-grid" class="venue-grid"><article class="venue-card card" data-venue-card data-id="houston-botanic" data-capacity="200" data-vibes="garden" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="1" data-offday="1">
   <a class="venue-card-link" href="../../../venues/texas/houston/houston-botanic/index.html">
     <span class="swatch swatch-garden" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M24 40V18"/><path d="M24 28c-8 0-12-6-12-12 6 0 12 4 12 12zM24 24c8-2 14-8 14-14-8 2-14 8-14 14z"/></svg></span>
     <span class="venue-card-copy">
@@ -128,9 +153,117 @@
   </a>
   <button type="button" class="heart" data-heart="houston-zoo" aria-pressed="false" aria-label="Save Houston Zoo">♡</button>
   <a class="sr" href="../../../venues/texas/houston/index.html">More in Houston</a>
+</article><article class="venue-card card" data-venue-card data-id="water-works-lawn" data-capacity="3065" data-vibes="waterfront" data-indoor="outdoor" data-ceremony="1" data-rooms="" data-rain="" data-access="" data-offday="1">
+  <a class="venue-card-link" href="../../../venues/texas/houston/water-works-lawn/index.html">
+    <span class="swatch swatch-waterfront" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 30c4 4 8 4 12 0s8-4 12 0 8 4 12 0"/><path d="M8 36c4 3 8 3 12 0s8-3 12 0 6 3 8 0"/><circle cx="34" cy="14" r="4"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Houston</span>
+      <h2>Brown Foundation Lawn at the Water Works</h2>
+      <span class="chip-row"><span class="chip">Waterfront</span></span>
+      <span class="venue-price" data-price>$4,500</span>
+      <span class="hint">Published venue rental · Up to 3065 · Rental only, food extra</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="water-works-lawn" aria-pressed="false" aria-label="Save Brown Foundation Lawn at the Water Works">♡</button>
+  <a class="sr" href="../../../venues/texas/houston/index.html">More in Houston</a>
+</article><article class="venue-card card" data-venue-card data-id="water-works-hobby-pavilion" data-capacity="115" data-vibes="waterfront" data-indoor="outdoor" data-ceremony="1" data-rooms="" data-rain="" data-access="" data-offday="1">
+  <a class="venue-card-link" href="../../../venues/texas/houston/water-works-hobby-pavilion/index.html">
+    <span class="swatch swatch-waterfront" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 30c4 4 8 4 12 0s8-4 12 0 8 4 12 0"/><path d="M8 36c4 3 8 3 12 0s8-3 12 0 6 3 8 0"/><circle cx="34" cy="14" r="4"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Houston</span>
+      <h2>Hobby Family Pavilion at the Water Works</h2>
+      <span class="chip-row"><span class="chip">Waterfront</span></span>
+      <span class="venue-price" data-price>$2,500</span>
+      <span class="hint">Published venue rental · Up to 115 · Rental only, food extra</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="water-works-hobby-pavilion" aria-pressed="false" aria-label="Save Hobby Family Pavilion at the Water Works">♡</button>
+  <a class="sr" href="../../../venues/texas/houston/index.html">More in Houston</a>
+</article><article class="venue-card card" data-venue-card data-id="water-works-wortham-terrace" data-capacity="220" data-vibes="waterfront" data-indoor="outdoor" data-ceremony="1" data-rooms="" data-rain="" data-access="" data-offday="1">
+  <a class="venue-card-link" href="../../../venues/texas/houston/water-works-wortham-terrace/index.html">
+    <span class="swatch swatch-waterfront" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 30c4 4 8 4 12 0s8-4 12 0 8 4 12 0"/><path d="M8 36c4 3 8 3 12 0s8-3 12 0 6 3 8 0"/><circle cx="34" cy="14" r="4"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Houston</span>
+      <h2>Wortham Insurance Terrace at the Water Works</h2>
+      <span class="chip-row"><span class="chip">Waterfront</span></span>
+      <span class="venue-price" data-price>$3,000</span>
+      <span class="hint">Published venue rental · Up to 220 · Rental only, food extra</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="water-works-wortham-terrace" aria-pressed="false" aria-label="Save Wortham Insurance Terrace at the Water Works">♡</button>
+  <a class="sr" href="../../../venues/texas/houston/index.html">More in Houston</a>
+</article><article class="venue-card card" data-venue-card data-id="water-works" data-capacity="220" data-vibes="waterfront" data-indoor="outdoor" data-ceremony="1" data-rooms="" data-rain="1" data-access="" data-offday="1">
+  <a class="venue-card-link" href="../../../venues/texas/houston/water-works/index.html">
+    <span class="swatch swatch-waterfront" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M6 30c4 4 8 4 12 0s8-4 12 0 8 4 12 0"/><path d="M8 36c4 3 8 3 12 0s8-3 12 0 6 3 8 0"/><circle cx="34" cy="14" r="4"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Houston</span>
+      <h2>The Water Works at Buffalo Bayou</h2>
+      <span class="chip-row"><span class="chip">Waterfront</span></span>
+      <span class="venue-price" data-price>$3,000</span>
+      <span class="hint">Published venue rental · Up to 220 · Rental only, food extra</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="water-works" aria-pressed="false" aria-label="Save The Water Works at Buffalo Bayou">♡</button>
+  <a class="sr" href="../../../venues/texas/houston/index.html">More in Houston</a>
+</article><article class="venue-card card" data-venue-card data-id="rothko-chapel" data-capacity="125" data-vibes="art" data-indoor="indoor" data-ceremony="1" data-rooms="" data-rain="1" data-access="" data-offday="1">
+  <a class="venue-card-link" href="../../../venues/texas/houston/rothko-chapel/index.html">
+    <span class="swatch swatch-art" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="10" y="14" width="28" height="20" rx="2"/><path d="M10 20h28M18 14v-4h12v4"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Houston</span>
+      <h2>Rothko Chapel</h2>
+      <span class="chip-row"><span class="chip">Art</span></span>
+      <span class="venue-price" data-price>$3,000</span>
+      <span class="hint">Published venue rental · Up to 125 · Rental only, food extra</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="rothko-chapel" aria-pressed="false" aria-label="Save Rothko Chapel">♡</button>
+  <a class="sr" href="../../../venues/texas/houston/index.html">More in Houston</a>
+</article><article class="venue-card card" data-venue-card data-id="space-center-houston" data-capacity="5400" data-vibes="museum" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="" data-offday="">
+  <a class="venue-card-link" href="../../../venues/texas/houston/space-center-houston/index.html">
+    <span class="swatch swatch-museum" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="10" y="14" width="28" height="20" rx="2"/><path d="M10 20h28M18 14v-4h12v4"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Houston</span>
+      <h2>Space Center Houston</h2>
+      <span class="chip-row"><span class="chip">Museum</span></span>
+      <span class="venue-price" data-price>Pricing not published, ask the venue</span>
+      <span class="hint">Pricing not published · Up to 5400 · Ask what's included</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="space-center-houston" aria-pressed="false" aria-label="Save Space Center Houston">♡</button>
+  <a class="sr" href="../../../venues/texas/houston/index.html">More in Houston</a>
+</article><article class="venue-card card" data-venue-card data-id="childrens-museum-houston" data-capacity="2000" data-vibes="museum" data-indoor="indoor" data-ceremony="" data-rooms="" data-rain="1" data-access="" data-offday="">
+  <a class="venue-card-link" href="../../../venues/texas/houston/childrens-museum-houston/index.html">
+    <span class="swatch swatch-museum" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="10" y="14" width="28" height="20" rx="2"/><path d="M10 20h28M18 14v-4h12v4"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Houston</span>
+      <h2>Children's Museum Houston</h2>
+      <span class="chip-row"><span class="chip">Museum</span></span>
+      <span class="venue-price" data-price>Pricing not published, ask the venue</span>
+      <span class="hint">Pricing not published · Up to 2000 · Ask what's included</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="childrens-museum-houston" aria-pressed="false" aria-label="Save Children's Museum Houston">♡</button>
+  <a class="sr" href="../../../venues/texas/houston/index.html">More in Houston</a>
+</article><article class="venue-card card" data-venue-card data-id="hotel-zaza-houston" data-capacity="" data-vibes="resort ballroom" data-indoor="both" data-ceremony="1" data-rooms="1" data-rain="1" data-access="" data-offday="">
+  <a class="venue-card-link" href="../../../venues/texas/houston/hotel-zaza-houston/index.html">
+    <span class="swatch swatch-resort" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 34V18h32v16"/><path d="M8 26h32M16 18v-4h16v4"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Houston</span>
+      <h2>Hotel ZaZa Museum District</h2>
+      <span class="chip-row"><span class="chip">Resort</span><span class="chip">Ballroom</span></span>
+      <span class="venue-price" data-price>Pricing not published, ask the venue</span>
+      <span class="hint">Pricing not published · Capacity not published · Ask what's included</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="hotel-zaza-houston" aria-pressed="false" aria-label="Save Hotel ZaZa Museum District">♡</button>
+  <a class="sr" href="../../../venues/texas/houston/index.html">More in Houston</a>
 </article></div>
-<p id="venue-none" class="empty-note" hidden>Nothing in this filter. Clear a vibe or raise the budget.</p>
-<script type="application/json" id="venue-data">[{"id":"houston-botanic","name":"Houston Botanic Garden","metro":"26420","city":"Houston","capacity":200,"vibes":["garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":true,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://hbg.org/wp-content/uploads/2026/01/2026-Private-Rentals-Guide.pdf","saturday":4200,"offday":3250,"note":"From the Garden's 2026 private rentals guide. Woodland Glade, a 4-hour rental seating up to 200, is Saturday $4,200, Friday or Sunday $3,250, and Monday–Thursday $1,800. The climate-controlled Global Collection Garden Tent is Saturday $5,700 and Monday–Friday or Sunday $4,500, with admission tickets for up to 200. The FAQ says weekday Woodland Glade ceremonies start at $1,800 and the large tent starts at $4,500. Food is not in the rental. The price table is dense, so treat $4,200 as the Saturday lawn rental and confirm the hour block when you inquire."},"path":"/venues/texas/houston/houston-botanic"},{"id":"hmns","name":"Houston Museum of Natural Science","metro":"26420","city":"Houston","capacity":450,"vibes":["museum"],"indoorOutdoor":"indoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://www.hmns.org/wp-content/uploads/2025/02/HMNS-Event-Pricing-2025_February-update.pdf","saturday":4500,"offday":4500,"note":"February 2025 pricing PDF, general evening events for January–November: Grand Hall is $4,500 for four hours. The same row lists dinner capacity 450 and cocktail capacity 900. The PDF does not split Saturday from other days, so both columns use $4,500. December Grand Hall is $5,500. Food, tables, and chairs are not included. Other rooms on the sheet are not mixed into this number."},"path":"/venues/texas/houston/hmns"},{"id":"houston-zoo","name":"Houston Zoo","metro":"26420","city":"Houston","capacity":700,"vibes":["garden"],"indoorOutdoor":"both","ceremonyOnsite":false,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://www.houstonzoo.org/host-an-event/wedding-receptions/","note":"The Houston Zoo wedding-reception page was open on October 2, 2026. It describes what a rental includes and does not publish a fee. The page says individual venues seat up to 700. Pricing not published, ask the venue."},"path":"/venues/texas/houston/houston-zoo"}]</script><details class="explainer-fold"><summary>About this page and common questions</summary><section class="explainer" aria-label="About this page"><h2>Venues in Houston</h2><p>This list is a starter set for Houston–Pasadena–The Woodlands. A missing price means the venue's site did not publish one. It is not a guess.</p><h2>Common questions</h2><div class="faq"><details class="faq-item"><summary>How much does a wedding venue cost in Houston?</summary><p>The cards below use each venue's own published price when one exists. 2 of 3 venues on this page had a public price when we checked.</p></details></div><p>Every figure is cited on the <a href="../../../sources/index.html">sources page</a>.</p></section></details>
+<p id="capacity-note" class="hint" hidden></p>
+<div id="venue-none" class="empty-note card" hidden>
+  <p data-none-copy>No venues match these filters.</p>
+  <button type="button" class="btn" id="loosen-filters">Loosen filters</button>
+</div>
+<script type="application/json" id="venue-data">[{"id":"houston-botanic","name":"Houston Botanic Garden","metro":"26420","city":"Houston","capacity":200,"vibes":["garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":true,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://hbg.org/wp-content/uploads/2026/01/2026-Private-Rentals-Guide.pdf","saturday":4200,"offday":3250,"note":"From the Garden's 2026 private rentals guide. Woodland Glade, a 4-hour rental seating up to 200, is Saturday $4,200, Friday or Sunday $3,250, and Monday–Thursday $1,800. The climate-controlled Global Collection Garden Tent is Saturday $5,700 and Monday–Friday or Sunday $4,500, with admission tickets for up to 200. The FAQ says weekday Woodland Glade ceremonies start at $1,800 and the large tent starts at $4,500. Food is not in the rental. The price table is dense, so treat $4,200 as the Saturday lawn rental and confirm the hour block when you inquire."},"path":"/venues/texas/houston/houston-botanic"},{"id":"hmns","name":"Houston Museum of Natural Science","metro":"26420","city":"Houston","capacity":450,"vibes":["museum"],"indoorOutdoor":"indoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://www.hmns.org/wp-content/uploads/2025/02/HMNS-Event-Pricing-2025_February-update.pdf","saturday":4500,"offday":4500,"note":"February 2025 pricing PDF, general evening events for January–November: Grand Hall is $4,500 for four hours. The same row lists dinner capacity 450 and cocktail capacity 900. The PDF does not split Saturday from other days, so both columns use $4,500. December Grand Hall is $5,500. Food, tables, and chairs are not included. Other rooms on the sheet are not mixed into this number."},"path":"/venues/texas/houston/hmns"},{"id":"houston-zoo","name":"Houston Zoo","metro":"26420","city":"Houston","capacity":700,"vibes":["garden"],"indoorOutdoor":"both","ceremonyOnsite":false,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://www.houstonzoo.org/host-an-event/wedding-receptions/","note":"The Houston Zoo wedding-reception page was open on October 2, 2026. It describes what a rental includes and does not publish a fee. The page says individual venues seat up to 700. Pricing not published, ask the venue."},"path":"/venues/texas/houston/houston-zoo"},{"id":"water-works-lawn","name":"Brown Foundation Lawn at the Water Works","metro":"26420","city":"Houston","capacity":3065,"vibes":["waterfront"],"indoorOutdoor":"outdoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-03","sourceUrl":"https://buffalobayou.org/wp-content/uploads/2025/07/2025-Water-Works-Venue_Final.pdf","saturday":4500,"offday":3500,"note":"Buffalo Bayou Partnership's 2025 Water Works sheet. The Brown Foundation Lawn is $4,500 Friday–Sunday and $3,500 Monday–Thursday. This card uses Friday–Sunday as Saturday and Monday–Thursday as the off-day rate. All three spaces together are $10,000 Friday–Sunday and $8,000 Monday–Thursday, which is not this number. Capacity on the sheet is 3,065."},"path":"/venues/texas/houston/water-works-lawn"},{"id":"water-works-hobby-pavilion","name":"Hobby Family Pavilion at the Water Works","metro":"26420","city":"Houston","capacity":115,"vibes":["waterfront"],"indoorOutdoor":"outdoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-03","sourceUrl":"https://buffalobayou.org/wp-content/uploads/2025/07/2025-Water-Works-Venue_Final.pdf","saturday":2500,"offday":2000,"note":"2025 Water Works sheet. Hobby Family Pavilion is $2,500 Friday–Sunday and $2,000 Monday–Thursday. Capacity 115. It is a covered stage, not a full reception room by itself."},"path":"/venues/texas/houston/water-works-hobby-pavilion"},{"id":"water-works-wortham-terrace","name":"Wortham Insurance Terrace at the Water Works","metro":"26420","city":"Houston","capacity":220,"vibes":["waterfront"],"indoorOutdoor":"outdoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-03","sourceUrl":"https://buffalobayou.org/wp-content/uploads/2025/07/2025-Water-Works-Venue_Final.pdf","saturday":3000,"offday":2500,"note":"2025 Water Works sheet. Wortham Insurance Terrace is $3,000 Friday–Sunday and $2,500 Monday–Thursday. Capacity 220."},"path":"/venues/texas/houston/water-works-wortham-terrace"},{"id":"water-works","name":"The Water Works at Buffalo Bayou","metro":"26420","city":"Houston","capacity":220,"vibes":["waterfront"],"indoorOutdoor":"outdoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-03","sourceUrl":"https://buffalobayou.org/wp-content/uploads/2025/07/2025-Water-Works-Venue_Final.pdf","saturday":3000,"offday":2500,"note":"Buffalo Bayou Partnership's 2025 Water Works venue guide, still the PDF at that URL on October 3, 2026. Wortham Insurance Terrace is $3,000 Friday–Sunday and $2,500 Monday–Thursday, capacity 220. Saturday uses the Friday–Sunday fee. The guide does not add tax or a service charge. Food is not included."},"path":"/venues/texas/houston/water-works"},{"id":"rothko-chapel","name":"Rothko Chapel","metro":"26420","city":"Houston","capacity":125,"vibes":["art"],"indoorOutdoor":"indoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-03","sourceUrl":"https://rothkochapel.org/experience/private-services/","saturday":3000,"offday":3000,"includedGuests":75,"note":"Rothko Chapel private-services page. A wedding ceremony is $3,000 for up to 75 guests. From 76 to 100 guests is $100 more for the whole band, and from 101 to 125 is $200 more for the whole band. Those are not per-guest rates, so they are not entered as an extra-guest fee. The dollar amount does not change by day. No reception is allowed on site. A $750 deposit holds the date."},"path":"/venues/texas/houston/rothko-chapel"},{"id":"space-center-houston","name":"Space Center Houston","metro":"26420","city":"Houston","capacity":5400,"vibes":["museum"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://spacecenter.org/host-an-event/","note":"Space Center Houston's host-an-event page was open on October 3, 2026. It offers weddings and does not publish a fee. Pricing not published, ask the venue."},"path":"/venues/texas/houston/space-center-houston"},{"id":"childrens-museum-houston","name":"Children's Museum Houston","metro":"26420","city":"Houston","capacity":2000,"vibes":["museum"],"indoorOutdoor":"indoor","ceremonyOnsite":false,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://www.cmhouston.org/visiting/host-an-event","note":"The Children's Museum Houston host-an-event page was open on October 3, 2026. It lists wedding receptions and does not publish a fee. Pricing not published, ask the venue."},"path":"/venues/texas/houston/childrens-museum-houston"},{"id":"hotel-zaza-houston","name":"Hotel ZaZa Museum District","metro":"26420","city":"Houston","capacity":null,"vibes":["resort","ballroom"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":true,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://www.hotelzaza.com/houston-museum-district","note":"Hotel ZaZa Museum District's page was open on October 3, 2026. It offers wedding venues and does not publish a wedding fee. Room packages on the page are not used as a wedding price. Pricing not published, ask the venue."},"path":"/venues/texas/houston/hotel-zaza-houston"}]</script><details class="explainer-fold"><summary>About this page and common questions</summary><section class="explainer" aria-label="About this page"><h2>Venues in Houston</h2><p>This list is a starter set for Houston–Pasadena–The Woodlands. A missing price means the venue's site did not publish one. It is not a guess.</p><h2>Common questions</h2><div class="faq"><details class="faq-item"><summary>How much does a wedding venue cost in Houston?</summary><p>The cards below use each venue's own published price when one exists. 7 of 11 venues on this page had a public price when we checked.</p></details></div><p>Every figure is cited on the <a href="../../../sources/index.html">sources page</a>.</p></section></details>
   </main>
   <footer class="site-footer">
     

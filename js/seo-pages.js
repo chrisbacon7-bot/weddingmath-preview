@@ -4,7 +4,7 @@
  */
 
 import { SITE } from "./site-config.js";
-import { escapeHtml } from "./html.js";
+import { articleFor, escapeHtml } from "./html.js";
 import { describe } from "./describe.js";
 import { planFor } from "./estimate.js";
 import { formatMoney, formatPlan } from "./format.js";
@@ -589,7 +589,7 @@ function renderState(abbr, costs, geo) {
     <article><p class="study">Zola</p><p class="figure">${row.zolaLow == null ? "Not published" : `${money(row.zolaLow)}–${money(row.zolaHigh)}`}</p><p class="hint">${row.zolaLow == null ? `No ${escapeHtml(official)} range on the Wedding Cost Index page.` : `Published budget range. Updated ${escapeHtml(prettyDate(costs.sources["zola-index"].date))}. Shown beside The Knot.`}</p></article>
   </div>
   ${costBars(row.knot, row.zolaLow, row.zolaHigh, costs.national.knotAverage.value)}
-  <p><a class="btn" href="/?loc=state:${abbr}">Price a ${escapeHtml(label)} wedding</a></p>
+  <p><a class="btn" href="/?loc=state:${abbr}">Price ${articleFor(label)} ${escapeHtml(label)} wedding</a></p>
 </section>
 <p class="lede">The Knot's 2026 average for a ${escapeHtml(official)} wedding is ${knotText}. That is ${escapeHtml(compare)}.</p>
 ${zolaHtml}
@@ -650,7 +650,7 @@ function renderDc({ label, slug, path, place, costs, geo, guests }) {
     <article><p class="study">Zola</p><p class="figure">${zolaText}</p><p class="hint">150-guest Washington, DC figure. Updated ${escapeHtml(prettyDate(costs.sources["zola-index"].date))}.</p></article>
   </div>
   ${costBars(metro.knot, null, null, costs.national.knotAverage.value, metro.zola150)}
-  <p><a class="btn" href="/?loc=metro:47900">Price a Washington, DC wedding</a></p>
+  <p><a class="btn" href="/?loc=metro:47900">Price ${articleFor("Washington, DC")} Washington, DC wedding</a></p>
 </section>
 <p class="lede">The Knot and Zola do not publish a District of Columbia state average. They do publish Washington, DC city figures: ${knotText} in The Knot's 2026 study, and ${zolaText} for a 150-guest wedding in Zola's index.</p>
 <h2>Guest count</h2>
@@ -683,7 +683,7 @@ function cityBlocks(abbr, costs, geo) {
     } else if (wedding.zola150) bits.push(`Zola's 150-guest figure is ${money(wedding.zola150)}`);
     const subs = Object.values(costs.subs).filter((sub) => sub.parent === code);
     const subText = subs.map((sub) => `${escapeHtml(sub.label)}: Zola's 150-guest figure is ${money(sub.zola150)}`).join(". ");
-    blocks.push(`<p><strong>${escapeHtml(metro.short)}.</strong> ${bits.join(". ")}. A city figure is separate from the state average. <a href="/?loc=metro:${code}">Price a ${escapeHtml(metro.short)} wedding</a>.${subText ? ` ${subText}.` : ""}</p>`);
+    blocks.push(`<p><strong>${escapeHtml(metro.short)}.</strong> ${bits.join(". ")}. A city figure is separate from the state average. <a href="/?loc=metro:${code}">Price ${articleFor(metro.short)} ${escapeHtml(metro.short)} wedding</a>.${subText ? ` ${subText}.` : ""}</p>`);
   }
   if (!blocks.length) {
     return {

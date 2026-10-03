@@ -33,17 +33,20 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="brand" href="index.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">WeddingMath</span></a>
+    <input id="nav-toggle" class="nav-toggle" type="checkbox">
+    <label for="nav-toggle" class="nav-toggle-btn">Menu</label>
     <nav aria-label="Primary"><a href="venues/index.html">Venues</a><a href="budget/index.html">Budget</a><a href="wedding-cost/index.html">Cost by State</a><a href="honeymoon/index.html">Honeymoon</a></nav>
   </header>
   <main id="main" class="wrap-wide">
-    <section class="hero">
+    <section class="hero home-hero calc-grid">
   <div>
     <p class="kicker">WeddingMath</p>
     <h1>Wedding cost calculator</h1>
-    <p class="hero-sub">A place, a guest count, and a budget if you have one. The local number shows up immediately.</p>
-    <p class="inline-actions"><a class="btn" href="venues/index.html">Find venues</a></p>
+    <p class="hero-sub" id="hero-sub">A place, a guest count, and a budget if you have one. The US average is on screen until you pick a city.</p>
+    <div id="out" class="stack" aria-live="polite"></div>
   </div>
-  <form id="cost-form" class="card stack">
+  <form id="cost-form" class="card stack calc-inputs">
+    <div id="home-presets"></div>
     <div class="loc" data-location>
       <label for="where">Where's the wedding?</label>
       <input id="where" name="where" type="text" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="where-list" placeholder="ZIP code or city">
@@ -62,21 +65,33 @@
         <input type="range" min="10" max="400" value="117" aria-label="Guest count">
       </div>
       <p class="hint">117 is The Knot's average guest count.</p>
+      <p class="hint" id="guest-note" role="status"></p>
+    </div>
+    <div>
+      <label for="cut">Guests to cut</label>
+      <div class="stepper" data-stepper>
+        <div class="stepper-row">
+          <button type="button" class="step" data-step="-1" aria-label="Cut one fewer">−</button>
+          <input id="cut" name="cut" type="number" inputmode="numeric" min="1" max="200" value="10">
+          <button type="button" class="step" data-step="1" aria-label="Cut one more">+</button>
+        </div>
+        <input type="range" min="1" max="100" value="10" aria-label="Guests to cut">
+      </div>
     </div>
     <div>
       <label for="budget">Budget <span class="hint">Optional</span></label>
-      <input id="budget" name="budget" type="number" inputmode="decimal" min="0" placeholder="Leave blank to just see the cost">
+      <span class="money-field"><input id="budget" name="budget" data-money type="text" inputmode="numeric" placeholder="e.g. 30,000" autocomplete="off"></span>
     </div>
-    <button class="btn" type="submit">See my total</button>
+    <button class="btn mobile-scroll-btn" type="submit">See my total</button>
   </form>
 </section>
-<div id="out" class="stack" aria-live="polite"></div>
+<section class="card" id="math-band" hidden></section>
 <ul class="app-grid">
-  <li class="tool-card card"><a href="venues/index.html"><span class="icon-blob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20V10l8-6 8 6v10"/><path d="M10 20v-6h4v6"/></svg></span><h2>Find venues</h2><p>Guest count, budget, and vibe. Prices from each venue's own site.</p></a></li>
-  <li class="tool-card card"><a href="budget/index.html"><span class="icon-blob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9 12h6"/></svg></span><h2>Budget calculator</h2><p>Split a total into categories. Priorities move money, not the bill.</p></a></li>
-  <li class="tool-card card"><a href="budget/reverse/index.html"><span class="icon-blob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 16l4-8 3 5 3-3 4 6"/></svg></span><h2>What we can afford</h2><p>Savings and time, turned into a guest count.</p></a></li>
-  <li class="tool-card card"><a href="budget/per-guest/index.html"><span class="icon-blob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="9" r="3"/><circle cx="16" cy="10" r="2.5"/><path d="M4 19c1-3 3-4 5-4s4 1 5 4M14 19c.4-2 1.6-3 3-3 1 0 2 .4 2.6 1.5"/></svg></span><h2>Cost per guest</h2><p>What one person adds, and what cutting the list saves.</p></a></li>
-  <li class="tool-card card"><a href="budget/tracker/index.html"><span class="icon-blob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 6h12v14H6z"/><path d="M9 6V4h6v2M8 12h8M8 16h5"/></svg></span><h2>Budget tracker</h2><p>Budget, quote, and what's paid. It stays in this browser.</p></a></li>
+  <li class="tool-card card"><a href="venues/index.html" data-find-venues><span class="icon-blob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20V10l8-6 8 6v10"/><path d="M10 20v-6h4v6"/></svg></span><h2>Find venues</h2><p data-teaser="venues">Guest count, budget, and vibe. Prices from each venue's own site.</p></a></li>
+  <li class="tool-card card"><a href="budget/index.html"><span class="icon-blob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8"/><path d="M12 8v8M9 12h6"/></svg></span><h2>Budget calculator</h2><p data-teaser="budget">Split a total into categories. Priorities move money, not the bill.</p></a></li>
+  <li class="tool-card card"><a href="budget/reverse/index.html"><span class="icon-blob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M5 16l4-8 3 5 3-3 4 6"/></svg></span><h2>What we can afford</h2><p data-teaser="reverse">Savings and time, turned into a guest count.</p></a></li>
+  <li class="tool-card card"><a href="budget/per-guest/index.html"><span class="icon-blob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="9" r="3"/><circle cx="16" cy="10" r="2.5"/><path d="M4 19c1-3 3-4 5-4s4 1 5 4M14 19c.4-2 1.6-3 3-3 1 0 2 .4 2.6 1.5"/></svg></span><h2>Cost per guest</h2><p data-teaser="per-guest">What one person adds, and what cutting the list saves.</p></a></li>
+  <li class="tool-card card"><a href="budget/tracker/index.html"><span class="icon-blob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 6h12v14H6z"/><path d="M9 6V4h6v2M8 12h8M8 16h5"/></svg></span><h2>Budget tracker</h2><p data-teaser="tracker">Budget, quote, and what's paid. It stays in this browser.</p></a></li>
   <li class="tool-card card"><a href="wedding-cost/index.html"><span class="icon-blob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 18V6M4 18h16"/><path d="M8 14v4M12 10v8M16 7v11"/></svg></span><h2>Cost by state</h2><p>The Knot and Zola, side by side, for every state.</p></a></li>
   <li class="tool-card card"><a href="honeymoon/index.html"><span class="icon-blob" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 16c4-6 12-6 16 0"/><path d="M8 16v2M16 16v2M12 8V5"/></svg></span><h2>Honeymoon</h2><p>Both published averages, then a real trip on VacationMath.</p></a></li>
 </ul>
@@ -88,7 +103,8 @@
     <p>Estimates are not quotes. Your numbers stay in this browser unless you copy a link or download a file.</p>
   </footer>
   <div class="sticky" data-sticky hidden>
-    <div><p class="kicker">Planning estimate</p><p class="money-sm" data-sticky-money>—</p></div>
+    <div><p class="kicker" data-sticky-kicker>Planning estimate</p><p class="money-sm" data-sticky-money>—</p></div>
+    <button type="button" class="btn-ghost" data-sticky-copy>Copy</button>
     <a class="btn" href="#result">See my total</a>
   </div>
   <script type="module" src="js/home.js"></script>

@@ -33,6 +33,8 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="brand" href="../../../index.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">WeddingMath</span></a>
+    <input id="nav-toggle" class="nav-toggle" type="checkbox">
+    <label for="nav-toggle" class="nav-toggle-btn">Menu</label>
     <nav aria-label="Primary"><a href="../../../venues/index.html" aria-current="page">Venues</a><a href="../../../budget/index.html">Budget</a><a href="../../../wedding-cost/index.html">Cost by State</a><a href="../../../honeymoon/index.html">Honeymoon</a></nav>
   </header>
   <main id="main" class="wrap-wide">
@@ -56,19 +58,35 @@
       <div class="stepper" data-stepper>
         <div class="stepper-row">
           <button type="button" class="step" data-step="-10" aria-label="Ten fewer guests">−</button>
-          <input id="guests" type="number" inputmode="numeric" min="25" max="300" value="100">
+          <input id="guests" type="number" inputmode="numeric" min="10" max="400" value="100">
           <button type="button" class="step" data-step="10" aria-label="Ten more guests">+</button>
         </div>
-        <input type="range" min="25" max="300" value="100" aria-label="Guest count">
+        <input type="range" min="10" max="400" value="100" aria-label="Guest count">
       </div>
     </div>
     <div>
       <label for="venue-budget">All-in venue budget <span class="hint">Optional</span></label>
+      <p id="budget-readout" class="hint">Any budget</p>
       <div class="stepper">
-        <input id="venue-budget" type="number" inputmode="decimal" min="0" step="500" placeholder="Any budget">
-        <input id="venue-budget-range" type="range" min="0" max="80000" step="500" value="0" aria-label="Venue budget">
+        <input id="venue-budget" type="text" inputmode="numeric" placeholder="e.g. 20,000" autocomplete="off">
+        <input id="venue-budget-range" type="range" min="0" max="100" step="1" value="0" aria-label="Venue budget">
+      </div>
+      <div class="choices" id="budget-chips">
+        <button type="button" data-budget-chip="5000">$5k</button>
+        <button type="button" data-budget-chip="10000">$10k</button>
+        <button type="button" data-budget-chip="20000">$20k</button>
+        <button type="button" data-budget-chip="0">Any</button>
       </div>
     </div>
+  </div>
+  <div>
+    <label for="venue-sort">Sort</label>
+    <select id="venue-sort">
+      <option value="best">Best match for budget</option>
+      <option value="price">Lowest price</option>
+      <option value="capacity">Largest capacity</option>
+      <option value="name">A–Z</option>
+    </select>
   </div>
   <div>
     <p class="label" id="vibe-label">Vibe</p>
@@ -77,7 +95,7 @@
     </div>
   </div>
   <details class="more-filters">
-    <summary>More filters</summary>
+    <summary id="more-filters-label">More filters</summary>
     <div class="choices" id="more-filters">
       <button type="button" data-filter="indoor" aria-pressed="false">Indoor option</button>
       <button type="button" data-filter="outdoor" aria-pressed="false">Outdoor</button>
@@ -89,7 +107,14 @@
     </div>
   </details>
 </form>
-<div id="venue-results" class="venue-grid"><article class="venue-card card" data-venue-card data-id="leu-gardens" data-capacity="180" data-vibes="garden historic" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="1" data-offday="1">
+<div id="venue-results" class="results-head" tabindex="-1">
+  <h2 id="results-title">Venues</h2>
+  <p id="result-count" aria-live="polite"></p>
+  <div id="result-chips" class="chip-row"></div>
+  <p class="no-print"><button type="button" class="text-btn" data-share>Copy link</button></p>
+</div>
+<div id="saved-compare" hidden></div>
+<div id="venue-grid" class="venue-grid"><article class="venue-card card" data-venue-card data-id="leu-gardens" data-capacity="180" data-vibes="garden historic" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="1" data-offday="1">
   <a class="venue-card-link" href="../../../venues/florida/orlando/leu-gardens/index.html">
     <span class="swatch swatch-garden" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M24 40V18"/><path d="M24 28c-8 0-12-6-12-12 6 0 12 4 12 12zM24 24c8-2 14-8 14-14-8 2-14 8-14 14z"/></svg></span>
     <span class="venue-card-copy">
@@ -285,7 +310,11 @@
   <button type="button" class="heart" data-heart="debary-hall" aria-pressed="false" aria-label="Save DeBary Hall">♡</button>
   <a class="sr" href="../../../venues/florida/orlando/index.html">More in Orlando</a>
 </article></div>
-<p id="venue-none" class="empty-note" hidden>Nothing in this filter. Clear a vibe or raise the budget.</p>
+<p id="capacity-note" class="hint" hidden></p>
+<div id="venue-none" class="empty-note card" hidden>
+  <p data-none-copy>No venues match these filters.</p>
+  <button type="button" class="btn" id="loosen-filters">Loosen filters</button>
+</div>
 <script type="application/json" id="venue-data">[{"id":"leu-gardens","name":"Harry P. Leu Gardens","metro":"36740","city":"Orlando","capacity":180,"vibes":["garden","historic"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":true,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://www.leugardens.org/Events/Weddings","saturday":4500,"offday":2750,"note":"Standard wedding plus reception, up to 180 people, from the Gardens' own fee list. Friday, Saturday, and Sunday are $4,500. Monday–Thursday is $2,750. A ceremony alone is $2,000 on Friday–Sunday and $1,500 Monday–Thursday. Micro weddings (up to 50) are less. The fee does not include the damage deposit, event insurance, or catering. Tax is not listed on the fee table, so it is not added here."},"path":"/venues/florida/orlando/leu-gardens"},{"id":"casa-feliz","name":"Casa Feliz","metro":"36740","city":"Winter Park","capacity":120,"vibes":["historic","garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"http://www.casafelizvenue.com/casafelizwedding","saturday":4950,"offday":3900,"taxPct":6.5,"note":"October–April rental from Casa Feliz's own rate list. Saturday is $4,950, Friday or Sunday is $3,900, and Monday–Thursday is $2,800, plus the 6.5% tax they tell you to add. Summer Saturday is $3,100, Friday or Sunday $2,600, and Monday–Thursday $2,300, also plus tax. This number is the site rental and tax, not the catering."},"path":"/venues/florida/orlando/casa-feliz"},{"id":"paradise-cove","name":"Paradise Cove","metro":"36740","city":"Orlando","capacity":50,"vibes":["waterfront","all-inclusive"],"indoorOutdoor":"outdoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"published","kind":"package","verifiedOn":"2026-10-02","sourceUrl":"https://paradisecoveorlando.com/intimate-ceremonies/","saturday":null,"offday":13995,"includedGuests":25,"extraGuest":75,"includesFood":true,"dayNote":"Saturday and Sunday are not priced on the page.","note":"Bubbles & Brunch from Paradise Cove's own package page: $13,995 Monday–Thursday for 25 guests, then $75 a guest. It includes the lunch and a beer, wine, and champagne bar. A Moment in Paradise is $2,495 for up to 20 guests on Monday–Friday before 2pm, and food cannot be added to it. Saturday is not published."},"path":"/venues/florida/orlando/paradise-cove"},{"id":"maitland-art-center","name":"Maitland Art Center","metro":"36740","city":"Maitland","capacity":125,"vibes":["art","historic","garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"range","verifiedOn":"2026-10-02","sourceUrl":"https://artandhistory.org/wp-content/uploads/Weddings-at-the-AH-1.pdf","low":650,"high":3575,"note":"From the Art & History Museums wedding PDF on artandhistory.org. Saturday figures on that sheet run from $650 for a morning elopement (up to 15 guests, 9–11am) to $3,575. The PDF is set in columns, so this page shows the published Saturday span instead of pinning one column to the wrong package. Peak season is listed as October–May and off-season as June–September. Tax is extra."},"path":"/venues/florida/orlando/maitland-art-center"},{"id":"disney-world","name":"Walt Disney World Fairy Tale Weddings","metro":"36740","city":"Lake Buena Vista","capacity":250,"vibes":["resort","all-inclusive"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":true,"accessible":true,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"minimum","verifiedOn":"2026-10-02","sourceUrl":"https://www.disneyweddings.com/florida/pricing","floor":15000,"note":"Disney's own pricing page: event minimums start at $15,000. Some locations start higher, including $18,000–$20,000 at several World Showcase courtyards and $18,000–$35,000 at Disney's Wedding Pavilion (ceremony fee $8,000, up to 250 guests). Magic Kingdom ceremony fees go to $20,000. The formula is ceremony venue + day + time of day. This number is the published floor, not a guest-by-guest total."},"path":"/venues/florida/orlando/disney-world"},{"id":"cypress-grove","name":"Cypress Grove Estate House","metro":"36740","city":"Orlando","capacity":null,"vibes":["estate","garden","waterfront"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://rw-brands.com/cypress-grove-packages/","note":"Checked the venue's packages page on October 2, 2026. It describes Friday versus Saturday minimums and points to a calculator, and it does not publish a rental dollar amount. Pricing not published, ask the venue."},"path":"/venues/florida/orlando/cypress-grove"},{"id":"howey-mansion","name":"The Howey Mansion","metro":"36740","city":"Howey-in-the-Hills","capacity":null,"vibes":["historic","estate"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://thehoweymansion.com/","note":"The Howey Mansion's website was open on October 2, 2026. No wedding price was published on the homepage. Pricing not published, ask the venue."},"path":"/venues/florida/orlando/howey-mansion"},{"id":"dubsdread","name":"Events by Dubsdread","metro":"36740","city":"Orlando","capacity":null,"vibes":["historic","ballroom"],"indoorOutdoor":"indoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://eventsbydubsdread.com/","note":"Events by Dubsdread's site was open on October 2, 2026, at 549 West Par Street. It did not publish a wedding price. Pricing not published, ask the venue."},"path":"/venues/florida/orlando/dubsdread"},{"id":"bella-collina","name":"Bella Collina","metro":"36740","city":"Montverde","capacity":null,"vibes":["estate","waterfront","resort"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":true,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://www.bellacollina.com/","note":"Bella Collina's site was open on October 2, 2026. The homepage gives the Montverde address and does not publish a wedding price. Pricing not published, ask the venue."},"path":"/venues/florida/orlando/bella-collina"},{"id":"reunion-resort","name":"Reunion Resort","metro":"36740","city":"Kissimmee","capacity":null,"vibes":["resort"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":true,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://www.reunionresort.com/","note":"Reunion Resort's site was open on October 2, 2026, at 7593 Gathering Drive, Kissimmee. No wedding price was published on that page. Pricing not published, ask the venue."},"path":"/venues/florida/orlando/reunion-resort"},{"id":"mennello-museum","name":"Mennello Museum of American Art","metro":"36740","city":"Orlando","capacity":null,"vibes":["art","museum","garden"],"indoorOutdoor":"both","ceremonyOnsite":false,"accommodations":false,"accessible":true,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://www.mennellomuseum.com/","note":"The Mennello Museum homepage was open on October 2, 2026 and did not publish wedding pricing. Pricing not published, ask the venue. Confirm they are booking weddings before you tour."},"path":"/venues/florida/orlando/mennello-museum"},{"id":"alfond-inn","name":"The Alfond Inn","metro":"36740","city":"Winter Park","capacity":null,"vibes":["historic","ballroom"],"indoorOutdoor":"indoor","ceremonyOnsite":true,"accommodations":true,"accessible":true,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://www.thealfondinn.com/","note":"The Alfond Inn homepage was open on October 2, 2026. A dollar figure on that page is a room rate, not a wedding package, so it is not used. Wedding pricing not published, ask the venue."},"path":"/venues/florida/orlando/alfond-inn"},{"id":"sterling-event-venue","name":"Sterling Event Venue","metro":"36740","city":"Central Florida","capacity":null,"vibes":["estate"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://www.sterlingeventvenue.com/","note":"Sterling Event Venue's homepage was open on October 2, 2026. It calls itself a Tuscan wedding venue in Central Florida and does not publish a price. Pricing not published, ask the venue. The street address was not on that page."},"path":"/venues/florida/orlando/sterling-event-venue"},{"id":"celebration-golf","name":"Celebration Golf Club","metro":"36740","city":"Celebration","capacity":null,"vibes":["resort","garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://celebrationgolf.com/","note":"Celebration Golf Club's site was open on October 2, 2026. It mentions weddings and rentals and does not publish a price. Pricing not published, ask the venue."},"path":"/venues/florida/orlando/celebration-golf"},{"id":"debary-hall","name":"DeBary Hall","metro":"36740","city":"DeBary","capacity":null,"vibes":["historic","garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":true,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://debaryhall.com/","note":"DeBary Hall's site was open on October 2, 2026. It mentions weddings and rentals and does not publish a price. DeBary is in Volusia County, next to the Orlando metro, not inside it. Pricing not published, ask the venue."},"path":"/venues/florida/orlando/debary-hall"}]</script><details class="explainer-fold"><summary>About this page and common questions</summary><section class="explainer" aria-label="About this page"><h2>Venues in Orlando</h2><p>This list is a starter set for Orlando–Kissimmee–Sanford. A missing price means the venue's site did not publish one. It is not a guess.</p><h2>Common questions</h2><div class="faq"><details class="faq-item"><summary>How much does a wedding venue cost in Orlando?</summary><p>The cards below use each venue's own published price when one exists. 5 of 15 venues on this page had a public price when we checked.</p></details></div><p>Every figure is cited on the <a href="../../../sources/index.html">sources page</a>.</p></section></details>
   </main>
   <footer class="site-footer">

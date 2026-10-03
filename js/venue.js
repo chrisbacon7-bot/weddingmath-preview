@@ -1,5 +1,5 @@
 import { formatMoney } from "./format.js";
-import { quoteVenue } from "./venue-quote.js";
+import { fitsCapacity, quoteVenue } from "./venue-quote.js";
 import { bindGlobals, readShortlist, siteHref, toggleShortlist } from "./common.js";
 
 bindGlobals();
@@ -41,7 +41,9 @@ function render() {
   if (quote.tax) bits.push(`includes ${formatMoney(quote.tax, { exact: true })} tax`);
   if (quote.food) bits.push(`food from ${formatMoney(quote.food, { exact: true })}`);
   if (!quote.includesFood && quote.status === "priced" && quote.label !== "Published event minimum") bits.push("food is extra");
-  detailEl.textContent = `${bits.join(" · ")}. ${quote.note}`;
+  const over = venue.capacity && !fitsCapacity(venue, guests);
+  const warn = over ? `Over capacity: the venue lists ${venue.capacity} guests, and this count is ${guests}. ` : "";
+  detailEl.textContent = `${warn}${bits.join(" · ")}. ${quote.note}`;
   const params = new URLSearchParams({ loc: `metro:${venue.metro}`, g: String(guests), venueName: venue.name });
   if (quote.total != null) params.set("venueTotal", String(quote.total));
   budgetLink.href = siteHref(`/budget?${params.toString()}`);

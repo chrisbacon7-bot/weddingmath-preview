@@ -33,12 +33,15 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="brand" href="../../index.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">WeddingMath</span></a>
+    <input id="nav-toggle" class="nav-toggle" type="checkbox">
+    <label for="nav-toggle" class="nav-toggle-btn">Menu</label>
     <nav aria-label="Primary"><a href="../../venues/index.html">Venues</a><a href="../../budget/index.html" aria-current="page">Budget</a><a href="../../wedding-cost/index.html">Cost by State</a><a href="../../honeymoon/index.html">Honeymoon</a></nav>
   </header>
   <main id="main" class="wrap">
     <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../../tools/index.html">Tools</a></li><li><span aria-current="page">Cost per guest</span></li></ol></nav><h1>Wedding Cost Per Guest Calculator</h1>
 <p class="lede">What does each guest cost? The all-in cost per person, and the smaller amount you actually save by cutting the list. Some bills stay put when someone says no.</p>
-<form id="guest-form" class="stack">
+<div class="calc-grid">
+<form id="guest-form" class="stack calc-inputs">
   <div class="loc card" data-location>
     <label for="where">Where's the wedding?</label>
     <input id="where" type="text" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="where-list" placeholder="ZIP code or city">
@@ -48,46 +51,63 @@
   </div>
   <div class="card">
     <label for="guests">Guests</label>
-    <div class="inline-actions">
-      <button class="btn-ghost" id="minus" type="button">−10</button>
-      <input id="guests" type="number" inputmode="numeric" min="10" max="400" value="117" style="max-width:8rem">
-      <button class="btn-ghost" id="plus" type="button">+10</button>
+    <div class="stepper" data-stepper>
+      <div class="stepper-row">
+        <button type="button" class="step" data-step="-10" aria-label="Ten fewer guests">−</button>
+        <input id="guests" type="number" inputmode="numeric" min="10" max="400" value="117">
+        <button type="button" class="step" data-step="10" aria-label="Ten more guests">+</button>
+      </div>
+      <input type="range" min="10" max="400" value="117" aria-label="Guest count">
     </div>
+    <p class="hint" id="guest-note" data-guest-note></p>
     <label for="cut" style="margin-top:12px">If we cut this many guests</label>
-    <input id="cut" type="number" inputmode="numeric" min="1" max="200" value="10">
+    <div class="stepper" data-stepper>
+      <div class="stepper-row">
+        <button type="button" class="step" data-step="-1" aria-label="Cut one fewer">−</button>
+        <input id="cut" type="number" inputmode="numeric" min="1" max="200" value="10">
+        <button type="button" class="step" data-step="1" aria-label="Cut one more">+</button>
+      </div>
+      <input id="cut-range" type="range" min="1" max="100" value="10" aria-label="Guests to cut">
+    </div>
   </div>
   <button class="btn" type="submit">Update</button>
 </form>
-<div id="out" class="stack" style="margin-top:16px" aria-live="polite"></div>
+<div>
+<div id="out" class="stack" aria-live="polite"></div>
 <section class="card" style="margin-top:16px">
   <h2>Hidden costs on a quote</h2>
   <p>Type the number a venue gave you. Add the percents from the contract. We don't guess your tax rate.</p>
   <div class="form-grid two">
     <div>
       <label for="quote">Quote</label>
-      <input id="quote" form="guest-form" type="number" inputmode="decimal" min="0" placeholder="10000">
+      <span class="money-field"><input id="quote" form="guest-form" data-money type="text" inputmode="numeric" value="10,000" placeholder="e.g. 10,000"></span>
+      <label class="check-label" for="per-head"><input id="per-head" form="guest-form" type="checkbox"> This quote is per guest</label>
     </div>
     <div>
       <label for="service">Service charge %</label>
-      <input id="service" form="guest-form" type="number" inputmode="decimal" min="0" max="40" placeholder="Often 18–22">
+      <input id="service" form="guest-form" type="number" inputmode="decimal" min="0" max="40" value="20" placeholder="Often 18–22">
       <button class="text-btn" id="use-service" type="button">Use 20% as an example</button>
     </div>
     <div>
       <label for="tax">Sales tax %</label>
       <input id="tax" form="guest-form" type="number" inputmode="decimal" min="0" max="20" placeholder="Your local rate">
+      <label class="check-label" for="tax-service"><input id="tax-service" form="guest-form" type="checkbox" checked> Sales tax also applies to the service charge</label>
     </div>
     <div>
       <label for="tip">Gratuity %</label>
       <input id="tip" form="guest-form" type="number" inputmode="decimal" min="0" max="30" placeholder="If it isn't already included">
+      <label class="check-label" for="tip-inside"><input id="tip-inside" form="guest-form" type="checkbox"> Gratuity is already in the service charge</label>
     </div>
   </div>
   <details class="what">
     <summary>What's a service charge?</summary>
-    <p>A percent added to the bill, often for staffing. Zola says it commonly runs 18–22%, and its venue guide mentions 18–25%. In Zola's survey, 57% of couples faced a mandatory venue service fee. A service charge is not automatically a tip. Read the contract before you add gratuity on top. "Plus-plus" means the menu price still needs the service charge and the tax.</p>
+    <p>A percent added to the bill, often for staffing. Zola says it commonly runs 18–22%, and its venue guide mentions 18–25%. In Zola's survey, 57% of couples faced a mandatory venue service fee. A service charge is not automatically a tip. Read the contract before you add gratuity on top. "Plus-plus" means the menu price still needs the service charge and the tax. Where the service charge is mandatory, sales tax often applies to that charge too. The box above does that unless you turn it off.</p>
   </details>
   <p class="hint">Zola's spend survey put unexpected costs at $3,314 on average. That's a national survey figure, not a line on your quote.</p>
   <div id="hidden-out" aria-live="polite"></div>
 </section>
+</div>
+</div>
 <details class="explainer-fold"><summary>About this page and common questions</summary><section class="explainer" aria-label="About this page"><h2>What the wedding cost per guest includes</h2><p>The Knot's national average is $292 per guest, from the $34,200 average and 117 guests. A local all-in figure divides the whole wedding by the guest count. Cutting guests saves less than that all-in rate, because the venue, photographer, and similar costs stay.</p><p>On a quote, a service charge is often 18–22%. Zola's venue guide mentions a top end of 25%. In Zola's survey, 57% of couples faced a mandatory venue service fee, and unexpected costs averaged $3,314. Type the percents from your contract. This page does not guess a sales-tax rate.</p><h2>Common questions</h2><div class="faq"><details class="faq-item"><summary>What is the average wedding cost per guest?</summary><p>The Knot's 2026 national figure is $292 per guest. Local pages divide a state or city total by the guest count and label that division. They are not extra published rates.</p></details><details class="faq-item"><summary>How much do we save by cutting wedding guests?</summary><p>Less than the all-in cost per guest. Food, drinks, and a few other lines shrink. The venue, photographer, music, and similar costs stay. The calculator shows both numbers.</p></details><details class="faq-item"><summary>What is a wedding service charge?</summary><p>A percent added to the bill, often for staffing. Zola says it commonly runs 18–22%, and its venue guide mentions 18–25%. A service charge is not automatically a tip. Plus-plus means the menu price still needs the service charge and the tax.</p></details><details class="faq-item"><summary>What do hidden wedding costs average?</summary><p>Zola's spend survey put unexpected costs at $3,314 on average. That is a national survey figure, not a line on your quote. 57% of couples in that survey had a mandatory venue service fee.</p></details></div><p>Every figure is cited on the <a href="../../sources/index.html">sources page</a>.</p></section></details><nav class="related" aria-label="Related"><h2>Keep going</h2><div class="links"><a href="../../index.html"><span><strong>Wedding cost calculator</strong><br><small>ZIP or city, guests, and an instant local total.</small></span><span>Open</span></a><a href="../../budget/index.html"><span><strong>Wedding budget calculator</strong><br><small>Split a total into categories.</small></span><span>Open</span></a><a href="../../budget/reverse/index.html"><span><strong>How much can we afford</strong><br><small>Turn savings into a guest count.</small></span><span>Open</span></a><a href="../../budget/tracker/index.html"><span><strong>Wedding budget tracker</strong><br><small>Budget, quoted, and paid, in this browser.</small></span><span>Open</span></a><a href="../../wedding-cost/index.html"><span><strong>Wedding cost by state</strong><br><small>Published averages for every state.</small></span><span>Open</span></a><a href="../../guides/index.html"><span><strong>Wedding planning guides</strong><br><small>Cost, hidden fees, and the honeymoon.</small></span><span>Open</span></a></div></nav>
   </main>
   <footer class="site-footer">
@@ -96,7 +116,8 @@
     <p>Estimates are not quotes. Your numbers stay in this browser unless you copy a link or download a file.</p>
   </footer>
   <div class="sticky" data-sticky hidden>
-    <div><p class="kicker">Planning estimate</p><p class="money-sm" data-sticky-money>—</p></div>
+    <div><p class="kicker" data-sticky-kicker>Planning estimate</p><p class="money-sm" data-sticky-money>—</p></div>
+    <button type="button" class="btn-ghost" data-sticky-copy>Copy</button>
     <a class="btn" href="#result">See my total</a>
   </div>
   <script type="module" src="../../js/per-guest.js"></script>

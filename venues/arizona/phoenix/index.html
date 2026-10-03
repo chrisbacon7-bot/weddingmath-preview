@@ -27,12 +27,14 @@
   <link rel="preload" href="../../../fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../../../css/styles.css">
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://weddingmath.co/"},{"@type":"ListItem","position":2,"name":"Venues","item":"https://weddingmath.co/venues"},{"@type":"ListItem","position":3,"name":"Phoenix","item":"https://weddingmath.co/venues/arizona/phoenix"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does a wedding venue cost in Phoenix?","acceptedAnswer":{"@type":"Answer","text":"The cards below use each venue's own published price when one exists. 2 of 4 venues on this page had a public price when we checked."}}]},{"@type":"CollectionPage","name":"Wedding Venues in Phoenix","url":"https://weddingmath.co/venues/arizona/phoenix","description":"Wedding venues in Phoenix–Mesa–Chandler. Filter by guests, budget, and vibe. Published prices are cited to each venue's site.","isPartOf":{"@type":"WebSite","name":"WeddingMath","url":"https://weddingmath.co/","description":"See what a wedding costs where you're getting married. Local figures from published studies, with no account and no vendor emails."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://weddingmath.co/"},{"@type":"ListItem","position":2,"name":"Venues","item":"https://weddingmath.co/venues"},{"@type":"ListItem","position":3,"name":"Phoenix","item":"https://weddingmath.co/venues/arizona/phoenix"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does a wedding venue cost in Phoenix?","acceptedAnswer":{"@type":"Answer","text":"The cards below use each venue's own published price when one exists. 4 of 8 venues on this page had a public price when we checked."}}]},{"@type":"CollectionPage","name":"Wedding Venues in Phoenix","url":"https://weddingmath.co/venues/arizona/phoenix","description":"Wedding venues in Phoenix–Mesa–Chandler. Filter by guests, budget, and vibe. Published prices are cited to each venue's site.","isPartOf":{"@type":"WebSite","name":"WeddingMath","url":"https://weddingmath.co/","description":"See what a wedding costs where you're getting married. Local figures from published studies, with no account and no vendor emails."}}]}</script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="brand" href="../../../index.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">WeddingMath</span></a>
+    <input id="nav-toggle" class="nav-toggle" type="checkbox">
+    <label for="nav-toggle" class="nav-toggle-btn">Menu</label>
     <nav aria-label="Primary"><a href="../../../venues/index.html" aria-current="page">Venues</a><a href="../../../budget/index.html">Budget</a><a href="../../../wedding-cost/index.html">Cost by State</a><a href="../../../honeymoon/index.html">Honeymoon</a></nav>
   </header>
   <main id="main" class="wrap-wide">
@@ -40,7 +42,7 @@
   <div>
     <p class="kicker">Phoenix–Mesa–Chandler</p>
     <h1>Wedding venues in Phoenix</h1>
-    <p class="hero-sub">4 places. Filter by guests, budget, and vibe.</p>
+    <p class="hero-sub">8 places. Filter by guests, budget, and vibe.</p>
   </div>
 </section>
 <form class="finder card stack" data-venue-app data-metro="38060" id="venue-finder">
@@ -56,19 +58,35 @@
       <div class="stepper" data-stepper>
         <div class="stepper-row">
           <button type="button" class="step" data-step="-10" aria-label="Ten fewer guests">−</button>
-          <input id="guests" type="number" inputmode="numeric" min="25" max="300" value="100">
+          <input id="guests" type="number" inputmode="numeric" min="10" max="400" value="100">
           <button type="button" class="step" data-step="10" aria-label="Ten more guests">+</button>
         </div>
-        <input type="range" min="25" max="300" value="100" aria-label="Guest count">
+        <input type="range" min="10" max="400" value="100" aria-label="Guest count">
       </div>
     </div>
     <div>
       <label for="venue-budget">All-in venue budget <span class="hint">Optional</span></label>
+      <p id="budget-readout" class="hint">Any budget</p>
       <div class="stepper">
-        <input id="venue-budget" type="number" inputmode="decimal" min="0" step="500" placeholder="Any budget">
-        <input id="venue-budget-range" type="range" min="0" max="80000" step="500" value="0" aria-label="Venue budget">
+        <input id="venue-budget" type="text" inputmode="numeric" placeholder="e.g. 20,000" autocomplete="off">
+        <input id="venue-budget-range" type="range" min="0" max="100" step="1" value="0" aria-label="Venue budget">
+      </div>
+      <div class="choices" id="budget-chips">
+        <button type="button" data-budget-chip="5000">$5k</button>
+        <button type="button" data-budget-chip="10000">$10k</button>
+        <button type="button" data-budget-chip="20000">$20k</button>
+        <button type="button" data-budget-chip="0">Any</button>
       </div>
     </div>
+  </div>
+  <div>
+    <label for="venue-sort">Sort</label>
+    <select id="venue-sort">
+      <option value="best">Best match for budget</option>
+      <option value="price">Lowest price</option>
+      <option value="capacity">Largest capacity</option>
+      <option value="name">A–Z</option>
+    </select>
   </div>
   <div>
     <p class="label" id="vibe-label">Vibe</p>
@@ -77,7 +95,7 @@
     </div>
   </div>
   <details class="more-filters">
-    <summary>More filters</summary>
+    <summary id="more-filters-label">More filters</summary>
     <div class="choices" id="more-filters">
       <button type="button" data-filter="indoor" aria-pressed="false">Indoor option</button>
       <button type="button" data-filter="outdoor" aria-pressed="false">Outdoor</button>
@@ -89,7 +107,14 @@
     </div>
   </details>
 </form>
-<div id="venue-results" class="venue-grid"><article class="venue-card card" data-venue-card data-id="desert-botanical" data-capacity="250" data-vibes="garden" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="1" data-offday="1">
+<div id="venue-results" class="results-head" tabindex="-1">
+  <h2 id="results-title">Venues</h2>
+  <p id="result-count" aria-live="polite"></p>
+  <div id="result-chips" class="chip-row"></div>
+  <p class="no-print"><button type="button" class="text-btn" data-share>Copy link</button></p>
+</div>
+<div id="saved-compare" hidden></div>
+<div id="venue-grid" class="venue-grid"><article class="venue-card card" data-venue-card data-id="desert-botanical" data-capacity="250" data-vibes="garden" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="1" data-offday="1">
   <a class="venue-card-link" href="../../../venues/arizona/phoenix/desert-botanical/index.html">
     <span class="swatch swatch-garden" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M24 40V18"/><path d="M24 28c-8 0-12-6-12-12 6 0 12 4 12 12zM24 24c8-2 14-8 14-14-8 2-14 8-14 14z"/></svg></span>
     <span class="venue-card-copy">
@@ -141,9 +166,65 @@
   </a>
   <button type="button" class="heart" data-heart="phoenix-art-museum" aria-pressed="false" aria-label="Save Phoenix Art Museum">♡</button>
   <a class="sr" href="../../../venues/arizona/phoenix/index.html">More in Phoenix</a>
+</article><article class="venue-card card" data-venue-card data-id="el-chorro" data-capacity="250" data-vibes="estate garden" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="" data-access="" data-offday="">
+  <a class="venue-card-link" href="../../../venues/arizona/phoenix/el-chorro/index.html">
+    <span class="swatch swatch-estate" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 40V22L24 10l16 12v18"/><path d="M20 40V28h8v12"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Paradise Valley</span>
+      <h2>El Chorro</h2>
+      <span class="chip-row"><span class="chip">Estate</span><span class="chip">Garden</span></span>
+      <span class="venue-price" data-price>$50,000</span>
+      <span class="hint">Published event minimum · Up to 250 · Event minimum, not a guest total</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="el-chorro" aria-pressed="false" aria-label="Save El Chorro">♡</button>
+  <a class="sr" href="../../../venues/arizona/phoenix/index.html">More in Phoenix</a>
+</article><article class="venue-card card" data-venue-card data-id="royal-palms" data-capacity="180" data-vibes="resort garden" data-indoor="both" data-ceremony="1" data-rooms="1" data-rain="1" data-access="" data-offday="">
+  <a class="venue-card-link" href="../../../venues/arizona/phoenix/royal-palms/index.html">
+    <span class="swatch swatch-resort" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 34V18h32v16"/><path d="M8 26h32M16 18v-4h16v4"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Phoenix</span>
+      <h2>Royal Palms Resort and Spa</h2>
+      <span class="chip-row"><span class="chip">Resort</span><span class="chip">Garden</span></span>
+      <span class="venue-price" data-price>$255–$310</span>
+      <span class="hint">Published Saturday range · Up to 180 · Package includes food</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="royal-palms" aria-pressed="false" aria-label="Save Royal Palms Resort and Spa">♡</button>
+  <a class="sr" href="../../../venues/arizona/phoenix/index.html">More in Phoenix</a>
+</article><article class="venue-card card" data-venue-card data-id="arizona-biltmore" data-capacity="400" data-vibes="resort historic garden" data-indoor="both" data-ceremony="1" data-rooms="1" data-rain="1" data-access="" data-offday="">
+  <a class="venue-card-link" href="../../../venues/arizona/phoenix/arizona-biltmore/index.html">
+    <span class="swatch swatch-resort" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 34V18h32v16"/><path d="M8 26h32M16 18v-4h16v4"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Phoenix</span>
+      <h2>Arizona Biltmore</h2>
+      <span class="chip-row"><span class="chip">Resort</span><span class="chip">Historic</span></span>
+      <span class="venue-price" data-price>Pricing not published, ask the venue</span>
+      <span class="hint">Pricing not published · Up to 400 · Ask what's included</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="arizona-biltmore" aria-pressed="false" aria-label="Save Arizona Biltmore">♡</button>
+  <a class="sr" href="../../../venues/arizona/phoenix/index.html">More in Phoenix</a>
+</article><article class="venue-card card" data-venue-card data-id="the-phoenician" data-capacity="" data-vibes="resort garden" data-indoor="both" data-ceremony="1" data-rooms="1" data-rain="1" data-access="" data-offday="">
+  <a class="venue-card-link" href="../../../venues/arizona/phoenix/the-phoenician/index.html">
+    <span class="swatch swatch-resort" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 34V18h32v16"/><path d="M8 26h32M16 18v-4h16v4"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Scottsdale</span>
+      <h2>The Phoenician</h2>
+      <span class="chip-row"><span class="chip">Resort</span><span class="chip">Garden</span></span>
+      <span class="venue-price" data-price>Pricing not published, ask the venue</span>
+      <span class="hint">Pricing not published · Capacity not published · Ask what's included</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="the-phoenician" aria-pressed="false" aria-label="Save The Phoenician">♡</button>
+  <a class="sr" href="../../../venues/arizona/phoenix/index.html">More in Phoenix</a>
 </article></div>
-<p id="venue-none" class="empty-note" hidden>Nothing in this filter. Clear a vibe or raise the budget.</p>
-<script type="application/json" id="venue-data">[{"id":"desert-botanical","name":"Desert Botanical Garden","metro":"38060","city":"Phoenix","capacity":250,"vibes":["garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":true,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://dbg.org/explore/wedding/","saturday":4200,"offday":4200,"note":"From the Garden's wedding page. Dorrance Center (Dorrance Hall, Boppart Courtyard, and Kitchell Patio) is $4,200 for up to 5 hours between 8 a.m. and 11 p.m. Extra hours are $840. Boppart Courtyard seats 200. Dorrance Hall seats 250. Webster Center is $3,800 for an evening of up to 5 hours. Center for Desert Living is $2,600. Amphitheater and Binns Pavilion is $3,400. The page does not publish a Saturday versus weekday split, so both columns use $4,200. Food is not included."},"path":"/venues/arizona/phoenix/desert-botanical"},{"id":"heard-museum","name":"Heard Museum","metro":"38060","city":"Phoenix","capacity":300,"vibes":["museum","art"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://heard.org/wp-content/uploads/2026/02/Heard-Museum-2026-Private-Events-Brochure-2.26.pdf","saturday":7000,"offday":7000,"note":"Heard Museum 2026 private-events brochure: evening rental is $7,000 for any one listed space, up to 300 guests. Friday and Saturday run until 11 p.m.; Sunday–Thursday until 10 p.m. The dollar amount does not change by day, so both columns use $7,000. Each extra space is $1,500. Each extra 100 guests is $500. Food and furniture are not included. Exclusive use of the building is not priced in the brochure."},"path":"/venues/arizona/phoenix/heard-museum"},{"id":"phoenix-zoo","name":"Phoenix Zoo","metro":"38060","city":"Phoenix","capacity":null,"vibes":["garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://www.phoenixzoo.org/visit/venues-private-events/host-an-event/","note":"The Phoenix Zoo host-an-event page was open on October 2, 2026. It says the zoo hosts weddings and mentions a 6% transaction fee, and it does not publish a rental amount. Pricing not published, ask the venue."},"path":"/venues/arizona/phoenix/phoenix-zoo"},{"id":"phoenix-art-museum","name":"Phoenix Art Museum","metro":"38060","city":"Phoenix","capacity":null,"vibes":["art","museum"],"indoorOutdoor":"indoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://phxart.org/events/host-an-event/","note":"Phoenix Art Museum's host-an-event page was open on October 2, 2026. It offers weddings and does not publish a fee. Pricing not published, ask the venue."},"path":"/venues/arizona/phoenix/phoenix-art-museum"}]</script><details class="explainer-fold"><summary>About this page and common questions</summary><section class="explainer" aria-label="About this page"><h2>Venues in Phoenix</h2><p>This list is a starter set for Phoenix–Mesa–Chandler. A missing price means the venue's site did not publish one. It is not a guess.</p><h2>Common questions</h2><div class="faq"><details class="faq-item"><summary>How much does a wedding venue cost in Phoenix?</summary><p>The cards below use each venue's own published price when one exists. 2 of 4 venues on this page had a public price when we checked.</p></details></div><p>Every figure is cited on the <a href="../../../sources/index.html">sources page</a>.</p></section></details>
+<p id="capacity-note" class="hint" hidden></p>
+<div id="venue-none" class="empty-note card" hidden>
+  <p data-none-copy>No venues match these filters.</p>
+  <button type="button" class="btn" id="loosen-filters">Loosen filters</button>
+</div>
+<script type="application/json" id="venue-data">[{"id":"desert-botanical","name":"Desert Botanical Garden","metro":"38060","city":"Phoenix","capacity":250,"vibes":["garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":true,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://dbg.org/explore/wedding/","saturday":4200,"offday":4200,"note":"From the Garden's wedding page. Dorrance Center (Dorrance Hall, Boppart Courtyard, and Kitchell Patio) is $4,200 for up to 5 hours between 8 a.m. and 11 p.m. Extra hours are $840. Boppart Courtyard seats 200. Dorrance Hall seats 250. Webster Center is $3,800 for an evening of up to 5 hours. Center for Desert Living is $2,600. Amphitheater and Binns Pavilion is $3,400. The page does not publish a Saturday versus weekday split, so both columns use $4,200. Food is not included."},"path":"/venues/arizona/phoenix/desert-botanical"},{"id":"heard-museum","name":"Heard Museum","metro":"38060","city":"Phoenix","capacity":300,"vibes":["museum","art"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://heard.org/wp-content/uploads/2026/02/Heard-Museum-2026-Private-Events-Brochure-2.26.pdf","saturday":7000,"offday":7000,"note":"Heard Museum 2026 private-events brochure: evening rental is $7,000 for any one listed space, up to 300 guests. Friday and Saturday run until 11 p.m.; Sunday–Thursday until 10 p.m. The dollar amount does not change by day, so both columns use $7,000. Each extra space is $1,500. Each extra 100 guests is $500. Food and furniture are not included. Exclusive use of the building is not priced in the brochure."},"path":"/venues/arizona/phoenix/heard-museum"},{"id":"phoenix-zoo","name":"Phoenix Zoo","metro":"38060","city":"Phoenix","capacity":null,"vibes":["garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://www.phoenixzoo.org/visit/venues-private-events/host-an-event/","note":"The Phoenix Zoo host-an-event page was open on October 2, 2026. It says the zoo hosts weddings and mentions a 6% transaction fee, and it does not publish a rental amount. Pricing not published, ask the venue."},"path":"/venues/arizona/phoenix/phoenix-zoo"},{"id":"phoenix-art-museum","name":"Phoenix Art Museum","metro":"38060","city":"Phoenix","capacity":null,"vibes":["art","museum"],"indoorOutdoor":"indoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://phxart.org/events/host-an-event/","note":"Phoenix Art Museum's host-an-event page was open on October 2, 2026. It offers weddings and does not publish a fee. Pricing not published, ask the venue."},"path":"/venues/arizona/phoenix/phoenix-art-museum"},{"id":"el-chorro","name":"El Chorro","metro":"38060","city":"Paradise Valley","capacity":250,"vibes":["estate","garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"published","kind":"minimum","verifiedOn":"2026-10-03","sourceUrl":"https://elchorro.com/wp-content/uploads/2025/10/Wedding-Venues-26.pdf","floor":50000,"note":"El Chorro 2026 wedding-venues PDF. Casa Paloma or the Event Lawn has a Saturday food-and-beverage minimum of $50,000. Friday is $40,000. Sunday–Thursday is $30,000. The evening per-person minimum is $175, and the higher of the two applies. Tax and the service charge are extra. The PDF states the service charge as 28% in one place and 27% in another, so it is not added. The Event Lawn ceremony fee is $7,000 on Saturday and is not inside the $50,000."},"path":"/venues/arizona/phoenix/el-chorro"},{"id":"royal-palms","name":"Royal Palms Resort and Spa","metro":"38060","city":"Phoenix","capacity":180,"vibes":["resort","garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":true,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"range","verifiedOn":"2026-10-03","sourceUrl":"https://royalpalmshotel.com/documents/143/2026-2027_ROYAL_PALMS_WEDDING_PACKAGES.pub.pdf","low":255,"high":310,"includesFood":true,"note":"Royal Palms 2026–2027 wedding-package PDF. The three hosted packages are $255, $275, and $310 per person. They include dinner and a hosted bar. The PDF does not print a flat Saturday total, so this range is per person, not a guest-count total. A ceremony figure of $8,000 appears beside unlabeled drink columns and is not used."},"path":"/venues/arizona/phoenix/royal-palms"},{"id":"arizona-biltmore","name":"Arizona Biltmore","metro":"38060","city":"Phoenix","capacity":400,"vibes":["resort","historic","garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":true,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://www.arizonabiltmore.com/weddings/","note":"The Arizona Biltmore wedding page was open on October 3, 2026. It lists rooms and capacities and does not publish a wedding fee. Pricing not published, ask the venue."},"path":"/venues/arizona/phoenix/arizona-biltmore"},{"id":"the-phoenician","name":"The Phoenician","metro":"38060","city":"Scottsdale","capacity":null,"vibes":["resort","garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":true,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://www.thephoenician.com/weddings/","note":"The Phoenician wedding page was open on October 3, 2026. It describes packages and does not publish a dollar amount. Pricing not published, ask the venue."},"path":"/venues/arizona/phoenix/the-phoenician"}]</script><details class="explainer-fold"><summary>About this page and common questions</summary><section class="explainer" aria-label="About this page"><h2>Venues in Phoenix</h2><p>This list is a starter set for Phoenix–Mesa–Chandler. A missing price means the venue's site did not publish one. It is not a guess.</p><h2>Common questions</h2><div class="faq"><details class="faq-item"><summary>How much does a wedding venue cost in Phoenix?</summary><p>The cards below use each venue's own published price when one exists. 4 of 8 venues on this page had a public price when we checked.</p></details></div><p>Every figure is cited on the <a href="../../../sources/index.html">sources page</a>.</p></section></details>
   </main>
   <footer class="site-footer">
     

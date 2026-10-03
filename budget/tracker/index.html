@@ -33,21 +33,43 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="brand" href="../../index.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">WeddingMath</span></a>
+    <input id="nav-toggle" class="nav-toggle" type="checkbox">
+    <label for="nav-toggle" class="nav-toggle-btn">Menu</label>
     <nav aria-label="Primary"><a href="../../venues/index.html">Venues</a><a href="../../budget/index.html" aria-current="page">Budget</a><a href="../../wedding-cost/index.html">Cost by State</a><a href="../../honeymoon/index.html">Honeymoon</a></nav>
   </header>
   <main id="main" class="wrap-wide">
     <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../../index.html">Home</a></li><li><a href="../../tools/index.html">Tools</a></li><li><span aria-current="page">Wedding budget tracker</span></li></ol></nav><h1>Wedding Budget Tracker</h1>
 <p class="lede">A simple tracker for the wedding you're actually booking. It stays in this browser. Export a spreadsheet when you want a copy.</p>
 <p class="hint" id="tracker-note">Nothing is uploaded. Clearing this browser's data clears the tracker.</p>
+<div class="choices" id="tracker-presets">
+  <button type="button" id="sample-austin">Sample: 150 guests in Austin, half booked</button>
+  <button type="button" id="sample-blank">Start blank</button>
+  <button type="button" class="btn-ghost" id="use-plan">Fill from my budget split</button>
+</div>
+<div class="card form-grid two" style="margin-top:12px">
+  <div>
+    <label for="tracker-guests">Guests <span class="hint">Optional</span></label>
+    <input id="tracker-guests" type="number" inputmode="numeric" min="1" value="150">
+  </div>
+  <div>
+    <label for="buffer">Contingency buffer %</label>
+    <input id="buffer" type="number" inputmode="decimal" min="0" max="50" value="10">
+    <p class="hint">The ceiling is the budget plus this percent. It is your cushion, not a study.</p>
+  </div>
+</div>
 <div class="totals" id="summary"></div>
+<div id="schedule" class="card" style="margin-top:12px"></div>
+<div id="bars" class="card" style="margin-top:12px"></div>
 <div class="inline-actions no-print" style="margin:14px 0">
   <button class="btn" id="add-line" type="button">Add a line</button>
-  <button class="btn-ghost" id="use-plan" type="button">Use my budget split</button>
   <button class="btn-ghost" id="export-csv" type="button">Download CSV</button>
+  <label class="btn-ghost" for="import-csv">Import CSV<input id="import-csv" type="file" accept=".csv,text/csv" hidden></label>
+  <button class="btn-ghost" id="export-ics" type="button">Add to calendar (.ics)</button>
   <button class="text-btn" id="share-tracker" type="button">Copy share link</button>
-  <button class="text-btn" type="button" data-print>Print</button>
+  <button class="text-btn" id="copy-summary" type="button">Copy summary</button>
+  <button class="text-btn" type="button" data-print>Print / Save PDF</button>
 </div>
-<div id="lines" class="stack"></div>
+<div id="lines" class="stack" role="table"></div>
 <p class="hint">Due dates turn amber inside 30 days and dark red after they pass, if that line still isn't fully paid.</p>
 <details class="explainer-fold"><summary>About this page and common questions</summary><section class="explainer" aria-label="About this page"><h2>How the wedding budget tracker stores numbers</h2><p>The wedding budget tracker is for the quotes you actually have. Each line has a budget, a quote, what you have paid, a due date, and a vendor. Due dates turn amber inside 30 days and dark red after they pass, when that line is still open.</p><p>The tracker stays in this browser. A share link puts the lines in the address after a hash, when the link is short enough. Otherwise download the CSV. Clearing the browser's saved data clears the tracker.</p><h2>Common questions</h2><div class="faq"><details class="faq-item"><summary>What is a wedding budget tracker?</summary><p>A list of wedding categories with a budget, a quote, an amount paid, and a due date. It shows what is still to pay. It is for your contracts, not for the national average.</p></details><details class="faq-item"><summary>Is the wedding budget tracker saved online?</summary><p>No. It is saved in this browser only. Download a CSV if you want a copy, or copy a share link when the tracker is short enough to fit in one.</p></details><details class="faq-item"><summary>Can I fill the tracker from the wedding budget calculator?</summary><p>Yes. Open the budget calculator first. Then use “Use my budget split” here. Quotes and payments stay blank until you type them.</p></details></div><p>Every figure is cited on the <a href="../../sources/index.html">sources page</a>.</p></section></details><nav class="related" aria-label="Related"><h2>Keep going</h2><div class="links"><a href="../../index.html"><span><strong>Wedding cost calculator</strong><br><small>ZIP or city, guests, and an instant local total.</small></span><span>Open</span></a><a href="../../budget/index.html"><span><strong>Wedding budget calculator</strong><br><small>Split a total into categories.</small></span><span>Open</span></a><a href="../../budget/reverse/index.html"><span><strong>How much can we afford</strong><br><small>Turn savings into a guest count.</small></span><span>Open</span></a><a href="../../budget/per-guest/index.html"><span><strong>Wedding cost per guest calculator</strong><br><small>What one guest adds, and what cutting the list saves.</small></span><span>Open</span></a><a href="../../wedding-cost/index.html"><span><strong>Wedding cost by state</strong><br><small>Published averages for every state.</small></span><span>Open</span></a><a href="../../guides/index.html"><span><strong>Wedding planning guides</strong><br><small>Cost, hidden fees, and the honeymoon.</small></span><span>Open</span></a></div></nav>
   </main>

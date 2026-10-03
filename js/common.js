@@ -1,16 +1,40 @@
 import { SITE } from "./site-config.js";
-import { describe, describeZip, normalizeQuery, searchPlaces } from "./describe.js";
+import { describe, describeZip, normalizeQuery, prepareAliases, searchPlaces } from "./describe.js";
+import { guestCountNote } from "./estimate.js";
+import { venueAppPath } from "./place-nav.js";
 import { formatAbout, formatMoney, formatPlan, formatRange } from "./format.js";
 
 const prefix = SITE.storagePrefix;
 
 export async function loadData() {
-  const [costs, geo, aliases] = await Promise.all([
+  const [costs, geo, aliases, extra, venueIndex] = await Promise.all([
     fetch(dataUrl("costs.json")).then(readJson),
     fetch(dataUrl("geo.json")).then(readJson),
     fetch(dataUrl("aliases.json")).then(readJson),
+    fetch(dataUrl("extra-aliases.json")).then(readJson).catch(() => []),
+    fetch(dataUrl("venue-index.json")).then(readJson).catch(() => ({ metros: [] })),
   ]);
-  return { costs, geo, aliases, ctx: { costs, geo } };
+  return {
+    costs,
+    geo,
+    aliases: prepareAliases(mergeAliases(aliases, extra), geo),
+    venueIndex,
+    ctx: { costs, geo },
+  };
+}
+
+function mergeAliases(base, extra) {
+  const extras = Array.isArray(extra) ? extra : [];
+  const seen = new Set();
+  const out = [];
+  for (const alias of [...extras, ...(Array.isArray(base) ? base : [])]) {
+    if (!alias || !alias.q || !alias.id) continue;
+    const key = `${alias.q}\0${alias.id}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(alias);
+  }
+  return out;
 }
 
 function dataUrl(name) {
@@ -22,12 +46,19 @@ async function readJson(response) {
   return response.json();
 }
 
-let zipPromise = null;
-export function loadZips() {
-  if (!zipPromise) {
-    zipPromise = fetch(dataUrl("zips.json")).then(readJson);
+const zipShards = new Map();
+export function loadZipShard(prefix) {
+  const key = String(prefix || "").slice(0, 3);
+  if (key.length < 3) return Promise.resolve({});
+  if (!zipShards.has(key)) {
+    zipShards.set(key, fetch(dataUrl(`zips/${key}.json`)).then(readJson).catch(() => ({})));
   }
-  return zipPromise;
+  return zipShards.get(key);
+}
+
+export function warmZips(value = "") {
+  const digits = String(value).replace(/\D/g, "");
+  if (digits.length >= 3) loadZipShard(digits.slice(0, 3));
 }
 
 export function storageGet(key, fallback = null) {
@@ -96,7 +127,7 @@ export function clear(node) {
   while (node.firstChild) node.removeChild(node.firstChild);
 }
 
-export function setSticky(money, { label = "See my total", href = "#result" } = {}) {
+export function setSticky(money, { label = "See my total", href = "#result", kicker = "" } = {}) {
   const bar = document.querySelector("[data-sticky]");
   if (!bar) return;
   const show = Boolean(money);
@@ -104,11 +135,19 @@ export function setSticky(money, { label = "See my total", href = "#result" } = 
   document.body.classList.toggle("has-bar", show);
   const amount = bar.querySelector("[data-sticky-money]");
   if (amount) amount.textContent = money || "—";
+  const kick = bar.querySelector("[data-sticky-kicker]");
+  if (kick && kicker) kick.textContent = kicker;
   const link = bar.querySelector("a");
   if (link) {
     link.href = href;
     link.textContent = label;
   }
+}
+
+export function parseMoney(value) {
+  if (value == null || String(value).trim() === "") return null;
+  const n = Number(String(value).replace(/[$,\s]/g, ""));
+  return Number.isFinite(n) ? n : null;
 }
 
 export function track(name, params = {}) {
@@ -152,6 +191,27 @@ export function bindSteppers(scope = document) {
       if (range) range.value = input.value;
     };
     input.addEventListener("input", syncRange);
+    input.addEventListener("blur", () => {
+      const min = Number(input.min || 10);
+      const max = Number(input.max || 400);
+      const typed = Number(input.value);
+      const note = input.closest("[data-stepper]")?.parentElement?.querySelector("[data-guest-note], #guest-note");
+      if (!input.value.trim()) {
+        delete input.dataset.clampedNote;
+        return;
+      }
+      if (!Number.isFinite(typed) || typed < min || typed > max) {
+        const used = Math.min(max, Math.max(min, Number.isFinite(typed) ? Math.round(typed) : min));
+        input.dataset.clampedNote = `We model ${min}–${max} guests. Showing ${used}.`;
+        input.value = String(used);
+        input.setAttribute("aria-invalid", "true");
+        if (note) note.textContent = input.dataset.clampedNote;
+        input.dispatchEvent(new Event("input", { bubbles: true }));
+      } else {
+        input.removeAttribute("aria-invalid");
+        delete input.dataset.clampedNote;
+      }
+    });
     if (range) {
       range.addEventListener("input", () => {
         input.value = range.value;
@@ -171,9 +231,57 @@ export function bindSteppers(scope = document) {
   });
 }
 
+let summaryGetter = () => "";
+export function registerSummary(getter) {
+  summaryGetter = getter;
+}
+
+export function setPrintSummary(text) {
+  let node = document.querySelector("[data-print-summary]");
+  if (!node) {
+    node = document.createElement("p");
+    node.className = "print-summary";
+    node.dataset.printSummary = "1";
+    document.body.prepend(node);
+  }
+  node.textContent = text;
+}
+
+export function bindMoneyFields(root = document) {
+  root.querySelectorAll("[data-money]").forEach((input) => {
+    if (input.dataset.moneyBound === "1") return;
+    input.dataset.moneyBound = "1";
+    const paint = () => {
+      const parsed = parseMoney(input.value);
+      if (parsed == null) return;
+      input.value = Math.round(parsed).toLocaleString("en-US");
+    };
+    input.addEventListener("blur", () => {
+      const parsed = parseMoney(input.value);
+      if (input.value.trim() && (parsed == null || parsed <= 0)) {
+        input.setAttribute("aria-invalid", "true");
+        const note = input.parentElement.querySelector("[data-money-note]") || input.nextElementSibling;
+        if (note && note.classList.contains("hint")) note.textContent = "Enter an amount above $0.";
+        return;
+      }
+      input.removeAttribute("aria-invalid");
+      paint();
+    });
+    if (input.value) paint();
+  });
+}
+
 export function bindGlobals() {
   bindSteppers();
+  bindMoneyFields();
   document.addEventListener("click", async (event) => {
+    const stickyCopy = event.target.closest("[data-sticky-copy]");
+    if (stickyCopy) {
+      event.preventDefault();
+      const text = summaryGetter();
+      try { await navigator.clipboard.writeText(text); } catch { /* the page button still copies */ }
+      return;
+    }
     const share = event.target.closest("[data-share]");
     if (share) {
       event.preventDefault();
@@ -198,13 +306,15 @@ export function bindGlobals() {
   });
 }
 
-export function mountLocation(container, { data, onChange, initialId = "" }) {
+export function mountLocation(container, { data, onChange, onCommit, initialId = "", commitOnZip = false, commitOnEnter = false } = {}) {
   const input = container.querySelector("input");
   const list = container.querySelector("[role=listbox]");
   const status = container.querySelector("[data-status]");
   const nationalBtn = container.querySelector("[data-national]");
   let active = -1;
   let request = 0;
+  let current = null;
+  let matchesCache = [];
 
   function setStatus(text) {
     if (status) status.textContent = text || "";
@@ -214,51 +324,69 @@ export function mountLocation(container, { data, onChange, initialId = "" }) {
     list.hidden = true;
     list.replaceChildren();
     input.setAttribute("aria-expanded", "false");
+    input.removeAttribute("aria-activedescendant");
     active = -1;
   }
 
-  function choose(id, label) {
+  function choose(id, label, { commit = false } = {}) {
     input.value = label;
     closeList();
     const place = id === "national" ? describe("national", data.ctx) : describe(id, data.ctx);
     if (!place) {
       setStatus("We couldn't match that place.");
+      current = null;
       onChange(null);
-      return;
+      return null;
     }
+    current = place;
     setStatus(statusLine(place));
     storageSet("loc", place.id);
     onChange(place);
+    if (commit) onCommit?.(place);
+    return place;
   }
 
-  async function chooseZip(zip) {
+  async function chooseZip(zip, { commit = false } = {}) {
     const token = ++request;
     setStatus("Checking that ZIP…");
-    const zips = await loadZips();
-    if (token !== request) return;
+    const zips = await loadZipShard(zip);
+    if (token !== request) return null;
     const found = describeZip(zip, zips, data.ctx);
     if (found.error) {
       setStatus("That ZIP isn't in the Census table we use. Try the city, or pick a state.");
+      current = null;
       onChange(null);
-      return;
+      return null;
     }
+    const place = { ...found.place, zip };
+    current = place;
     input.value = `${zip} · ${found.place.shortLabel}`;
     setStatus(statusLine(found.place, zip));
     storageSet("loc", found.place.id);
     storageSet("zip", zip);
-    onChange({ ...found.place, zip });
+    onChange(place);
+    if (commit) onCommit?.(place);
+    return place;
   }
 
   function showSuggestions(query) {
-    const matches = searchPlaces(query, data.aliases);
+    const matches = searchPlaces(query, data.aliases, data.geo);
+    matchesCache = matches;
     list.replaceChildren();
     if (!matches.length) {
       closeList();
+      setStatus("No match. Try a city name or a 5-digit ZIP.");
+      if (current && !remember(current)) {
+        current = null;
+        onChange(null);
+      }
       return;
     }
+    setStatus("");
     matches.forEach((match, index) => {
       const button = el("button", { type: "button", role: "option", id: `${input.id}-opt-${index}`, text: match.label });
-      button.addEventListener("click", () => choose(match.id, match.label));
+      button.addEventListener("mousedown", (event) => event.preventDefault());
+      button.addEventListener("click", () => choose(match.id, match.label, { commit: false }));
       list.append(el("li", {}, button));
     });
     list.hidden = false;
@@ -266,11 +394,42 @@ export function mountLocation(container, { data, onChange, initialId = "" }) {
     active = -1;
   }
 
+  function remember(place) {
+    if (!place) return false;
+    const raw = normalizeQuery(input.value);
+    if (!raw) return true;
+    if (place.zip && input.value.trim().startsWith(place.zip)) return true;
+    return raw === normalizeQuery(place.label) || raw === normalizeQuery(place.shortLabel);
+  }
+
+  async function commit({ go = false } = {}) {
+    const raw = input.value.trim();
+    if (/^\d{5}$/.test(raw)) return chooseZip(raw, { commit: go });
+    const options = list.hidden ? [] : [...list.querySelectorAll("[role=option]")];
+    if (options.length && matchesCache.length) {
+      const index = active >= 0 ? active : 0;
+      const match = matchesCache[index] || matchesCache[0];
+      return choose(match.id, match.label, { commit: go });
+    }
+    const matches = searchPlaces(raw, data.aliases, data.geo);
+    if (matches[0]) return choose(matches[0].id, matches[0].label, { commit: go });
+    if (!raw || remember(current)) {
+      if (go) onCommit?.(current);
+      return current;
+    }
+    setStatus("No match. Try a city name or a 5-digit ZIP.");
+    current = null;
+    onChange(null);
+    return null;
+  }
+
+  input.addEventListener("focus", () => warmZips(input.value));
+  input.addEventListener("keydown", () => warmZips(input.value));
   input.addEventListener("input", () => {
     const raw = input.value.trim();
     if (/^\d{5}$/.test(raw)) {
       closeList();
-      chooseZip(raw);
+      chooseZip(raw, { commit: commitOnZip });
       return;
     }
     if (/^\d+$/.test(raw)) {
@@ -296,9 +455,9 @@ export function mountLocation(container, { data, onChange, initialId = "" }) {
       event.preventDefault();
       active = Math.max(0, active - 1);
       mark(options);
-    } else if (event.key === "Enter" && active >= 0 && options[active]) {
+    } else if (event.key === "Enter") {
       event.preventDefault();
-      options[active].click();
+      commit({ go: commitOnEnter });
     } else if (event.key === "Escape") {
       closeList();
     }
@@ -324,13 +483,21 @@ export function mountLocation(container, { data, onChange, initialId = "" }) {
     const zip = storageGet("zip", "");
     const place = describe(initialId, data.ctx);
     if (place) {
+      current = place;
       input.value = place.id === "national" ? "Not sure yet" : place.label;
       setStatus(statusLine(place, place.id.startsWith("metro:") ? zip : ""));
       onChange(place);
     }
+  } else {
+    const place = describe("national", data.ctx);
+    current = place;
+    setStatus("Showing the US average. Add a ZIP or city for your local number.");
+    onChange(place);
   }
 
-  return { choose, input };
+  return { choose, commit, input, venuePath(place, guests, budget) {
+    return siteHref(venueAppPath(place, guests, budget, data.venueIndex && data.venueIndex.metros));
+  } };
 }
 
 function statusLine(place, zip) {
@@ -381,4 +548,4 @@ export function savePlan(planRecord) {
   storageSet("plan", { ...planRecord, savedAt: new Date().toISOString() });
 }
 
-export { formatAbout, formatMoney, formatPlan, formatRange, SITE };
+export { formatAbout, formatMoney, formatPlan, formatRange, guestCountNote, SITE };

@@ -17,27 +17,50 @@ export function quoteVenue(venue, guests = 100, day = "sat") {
   }
 
   if (price.kind === "range") {
+    const offLow = price.offLow ?? price.offdayLow;
+    const offHigh = price.offHigh ?? price.offdayHigh;
+    if (day === "off" && offLow == null && offHigh == null) {
+      if (price.offday != null) {
+        return {
+          ...base,
+          status: "priced",
+          total: price.offday,
+          rental: price.offday,
+          extra: 0,
+          food: 0,
+          tax: 0,
+          includesFood: false,
+          label: "Published off-day price",
+        };
+      }
+      return { ...base, status: "ask-day", total: null, label: "Off-day price not published" };
+    }
     return {
       ...base,
       status: "range",
       total: null,
-      low: price.low,
-      high: price.high,
-      label: "Published Saturday range",
+      low: day === "off" ? offLow : price.low,
+      high: day === "off" ? offHigh : price.high,
+      label: day === "off" ? "Published off-day range" : "Published Saturday range",
     };
   }
 
   if (price.kind === "minimum") {
+    const offFloor = price.offFloor ?? (day === "off" ? price.offday : null);
+    if (day === "off" && offFloor == null) {
+      return { ...base, status: "ask-day", total: null, label: "Off-day price not published" };
+    }
+    const floor = day === "off" ? offFloor : price.floor;
     return {
       ...base,
       status: "priced",
-      total: price.floor,
-      rental: price.floor,
+      total: floor,
+      rental: floor,
       extra: 0,
       food: 0,
       tax: 0,
       includesFood: false,
-      label: "Published event minimum",
+      label: day === "off" ? "Published off-day minimum" : "Published event minimum",
     };
   }
 

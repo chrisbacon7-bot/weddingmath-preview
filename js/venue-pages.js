@@ -48,10 +48,13 @@ function hubPage() {
 </section>
 ${finderShell("")}
 <div class="app-grid">${cards}</div>
-<section class="card" id="venue-gap" hidden>
-  <h2>No curated list here yet</h2>
+<section class="card" id="venue-gap" hidden tabindex="-1">
+  <p class="kicker">This city</p>
+  <h2 data-gap-title>Cost results</h2>
+  <p class="money-sm" data-gap-total></p>
   <p data-gap-copy>We don't have curated venues for this place yet.</p>
   <p data-gap-range></p>
+  <div data-gap-near></div>
   <p><a class="btn" href="/list-your-venue">Know a venue? Suggest it</a></p>
 </section>`,
   };
@@ -104,19 +107,35 @@ function finderShell(metroId) {
       <div class="stepper" data-stepper>
         <div class="stepper-row">
           <button type="button" class="step" data-step="-10" aria-label="Ten fewer guests">−</button>
-          <input id="guests" type="number" inputmode="numeric" min="25" max="300" value="100">
+          <input id="guests" type="number" inputmode="numeric" min="10" max="400" value="100">
           <button type="button" class="step" data-step="10" aria-label="Ten more guests">+</button>
         </div>
-        <input type="range" min="25" max="300" value="100" aria-label="Guest count">
+        <input type="range" min="10" max="400" value="100" aria-label="Guest count">
       </div>
     </div>
     <div>
       <label for="venue-budget">All-in venue budget <span class="hint">Optional</span></label>
+      <p id="budget-readout" class="hint">Any budget</p>
       <div class="stepper">
-        <input id="venue-budget" type="number" inputmode="decimal" min="0" step="500" placeholder="Any budget">
-        <input id="venue-budget-range" type="range" min="0" max="80000" step="500" value="0" aria-label="Venue budget">
+        <input id="venue-budget" type="text" inputmode="numeric" placeholder="e.g. 20,000" autocomplete="off">
+        <input id="venue-budget-range" type="range" min="0" max="100" step="1" value="0" aria-label="Venue budget">
+      </div>
+      <div class="choices" id="budget-chips">
+        <button type="button" data-budget-chip="5000">$5k</button>
+        <button type="button" data-budget-chip="10000">$10k</button>
+        <button type="button" data-budget-chip="20000">$20k</button>
+        <button type="button" data-budget-chip="0">Any</button>
       </div>
     </div>
+  </div>
+  <div>
+    <label for="venue-sort">Sort</label>
+    <select id="venue-sort">
+      <option value="best">Best match for budget</option>
+      <option value="price">Lowest price</option>
+      <option value="capacity">Largest capacity</option>
+      <option value="name">A–Z</option>
+    </select>
   </div>
   <div>
     <p class="label" id="vibe-label">Vibe</p>
@@ -125,7 +144,7 @@ function finderShell(metroId) {
     </div>
   </div>
   <details class="more-filters">
-    <summary>More filters</summary>
+    <summary id="more-filters-label">More filters</summary>
     <div class="choices" id="more-filters">
       <button type="button" data-filter="indoor" aria-pressed="false">Indoor option</button>
       <button type="button" data-filter="outdoor" aria-pressed="false">Outdoor</button>
@@ -137,8 +156,19 @@ function finderShell(metroId) {
     </div>
   </details>
 </form>
-<div id="venue-results" class="venue-grid">${list.map((venue) => venueCard(venue)).join("")}</div>
-<p id="venue-none" class="empty-note" hidden>Nothing in this filter. Clear a vibe or raise the budget.</p>
+<div id="venue-results" class="results-head" tabindex="-1">
+  <h2 id="results-title">Venues</h2>
+  <p id="result-count" aria-live="polite"></p>
+  <div id="result-chips" class="chip-row"></div>
+  <p class="no-print"><button type="button" class="text-btn" data-share>Copy link</button></p>
+</div>
+<div id="saved-compare" hidden></div>
+<div id="venue-grid" class="venue-grid">${list.map((venue) => venueCard(venue)).join("")}</div>
+<p id="capacity-note" class="hint" hidden></p>
+<div id="venue-none" class="empty-note card" hidden>
+  <p data-none-copy>No venues match these filters.</p>
+  <button type="button" class="btn" id="loosen-filters">Loosen filters</button>
+</div>
 <script type="application/json" id="venue-data">${data}</script>`;
 }
 
@@ -199,10 +229,10 @@ function venuePage(venue) {
         <div class="stepper" data-stepper>
           <div class="stepper-row">
             <button type="button" class="step" data-step="-10" aria-label="Ten fewer guests">−</button>
-            <input id="guests" type="number" min="25" max="300" value="100">
+            <input id="guests" type="number" min="10" max="400" value="100">
             <button type="button" class="step" data-step="10" aria-label="Ten more guests">+</button>
           </div>
-          <input type="range" min="25" max="300" value="100" aria-label="Guest count">
+          <input type="range" min="10" max="400" value="100" aria-label="Guest count">
         </div>
       </div>
       <div>

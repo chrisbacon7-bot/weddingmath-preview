@@ -33,6 +33,8 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="brand" href="../../../../index.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">WeddingMath</span></a>
+    <input id="nav-toggle" class="nav-toggle" type="checkbox">
+    <label for="nav-toggle" class="nav-toggle-btn">Menu</label>
     <nav aria-label="Primary"><a href="../../../../venues/index.html" aria-current="page">Venues</a><a href="../../../../budget/index.html">Budget</a><a href="../../../../wedding-cost/index.html">Cost by State</a><a href="../../../../honeymoon/index.html">Honeymoon</a></nav>
   </header>
   <main id="main" class="wrap-wide">
@@ -64,10 +66,10 @@
         <div class="stepper" data-stepper>
           <div class="stepper-row">
             <button type="button" class="step" data-step="-10" aria-label="Ten fewer guests">−</button>
-            <input id="guests" type="number" min="25" max="300" value="100">
+            <input id="guests" type="number" min="10" max="400" value="100">
             <button type="button" class="step" data-step="10" aria-label="Ten more guests">+</button>
           </div>
-          <input type="range" min="25" max="300" value="100" aria-label="Guest count">
+          <input type="range" min="10" max="400" value="100" aria-label="Guest count">
         </div>
       </div>
       <div>
@@ -80,7 +82,7 @@
     </div>
     <div class="compare-bars" data-day-bars>
       <div class="bar-row"><span>Saturday</span><span class="bar-track" aria-hidden="true"><span style="--w:100%"></span></span><strong>$650–$3,575</strong></div>
-      <div class="bar-row"><span>Off day</span><span class="bar-track" aria-hidden="true"><span style="--w:100%"></span></span><strong>$650–$3,575</strong></div>
+      <div class="bar-row"><span>Off day</span><span class="bar-track" aria-hidden="true"><span style="--w:0%"></span></span><strong>Ask the venue</strong></div>
     </div>
     <p class="hint">Verified 2026-10-02 · published · <a href="https://artandhistory.org/wp-content/uploads/Weddings-at-the-AH-1.pdf">Source</a></p>
   </section>

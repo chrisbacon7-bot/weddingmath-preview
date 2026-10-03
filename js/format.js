@@ -14,6 +14,11 @@ export function formatMoney(value, { exact = false } = {}) {
   });
 }
 
+export function lowerFirst(value) {
+  const text = String(value || "");
+  return text ? text.charAt(0).toLowerCase() + text.slice(1) : text;
+}
+
 export function formatAbout(value, exact = false) {
   const money = formatMoney(value, { exact });
   return exact ? money : `About ${money}`;

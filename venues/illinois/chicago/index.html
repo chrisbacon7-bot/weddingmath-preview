@@ -27,12 +27,14 @@
   <link rel="preload" href="../../../fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../../../css/styles.css">
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://weddingmath.co/"},{"@type":"ListItem","position":2,"name":"Venues","item":"https://weddingmath.co/venues"},{"@type":"ListItem","position":3,"name":"Chicago","item":"https://weddingmath.co/venues/illinois/chicago"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does a wedding venue cost in Chicago?","acceptedAnswer":{"@type":"Answer","text":"The cards below use each venue's own published price when one exists. 3 of 5 venues on this page had a public price when we checked."}}]},{"@type":"CollectionPage","name":"Wedding Venues in Chicago","url":"https://weddingmath.co/venues/illinois/chicago","description":"Wedding venues in Chicago–Naperville–Elgin. Filter by guests, budget, and vibe. Published prices are cited to each venue's site.","isPartOf":{"@type":"WebSite","name":"WeddingMath","url":"https://weddingmath.co/","description":"See what a wedding costs where you're getting married. Local figures from published studies, with no account and no vendor emails."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://weddingmath.co/"},{"@type":"ListItem","position":2,"name":"Venues","item":"https://weddingmath.co/venues"},{"@type":"ListItem","position":3,"name":"Chicago","item":"https://weddingmath.co/venues/illinois/chicago"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does a wedding venue cost in Chicago?","acceptedAnswer":{"@type":"Answer","text":"The cards below use each venue's own published price when one exists. 5 of 10 venues on this page had a public price when we checked."}}]},{"@type":"CollectionPage","name":"Wedding Venues in Chicago","url":"https://weddingmath.co/venues/illinois/chicago","description":"Wedding venues in Chicago–Naperville–Elgin. Filter by guests, budget, and vibe. Published prices are cited to each venue's site.","isPartOf":{"@type":"WebSite","name":"WeddingMath","url":"https://weddingmath.co/","description":"See what a wedding costs where you're getting married. Local figures from published studies, with no account and no vendor emails."}}]}</script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="brand" href="../../../index.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">WeddingMath</span></a>
+    <input id="nav-toggle" class="nav-toggle" type="checkbox">
+    <label for="nav-toggle" class="nav-toggle-btn">Menu</label>
     <nav aria-label="Primary"><a href="../../../venues/index.html" aria-current="page">Venues</a><a href="../../../budget/index.html">Budget</a><a href="../../../wedding-cost/index.html">Cost by State</a><a href="../../../honeymoon/index.html">Honeymoon</a></nav>
   </header>
   <main id="main" class="wrap-wide">
@@ -40,7 +42,7 @@
   <div>
     <p class="kicker">Chicago–Naperville–Elgin</p>
     <h1>Wedding venues in Chicago</h1>
-    <p class="hero-sub">5 places. Filter by guests, budget, and vibe.</p>
+    <p class="hero-sub">10 places. Filter by guests, budget, and vibe.</p>
   </div>
 </section>
 <form class="finder card stack" data-venue-app data-metro="16980" id="venue-finder">
@@ -56,19 +58,35 @@
       <div class="stepper" data-stepper>
         <div class="stepper-row">
           <button type="button" class="step" data-step="-10" aria-label="Ten fewer guests">−</button>
-          <input id="guests" type="number" inputmode="numeric" min="25" max="300" value="100">
+          <input id="guests" type="number" inputmode="numeric" min="10" max="400" value="100">
           <button type="button" class="step" data-step="10" aria-label="Ten more guests">+</button>
         </div>
-        <input type="range" min="25" max="300" value="100" aria-label="Guest count">
+        <input type="range" min="10" max="400" value="100" aria-label="Guest count">
       </div>
     </div>
     <div>
       <label for="venue-budget">All-in venue budget <span class="hint">Optional</span></label>
+      <p id="budget-readout" class="hint">Any budget</p>
       <div class="stepper">
-        <input id="venue-budget" type="number" inputmode="decimal" min="0" step="500" placeholder="Any budget">
-        <input id="venue-budget-range" type="range" min="0" max="80000" step="500" value="0" aria-label="Venue budget">
+        <input id="venue-budget" type="text" inputmode="numeric" placeholder="e.g. 20,000" autocomplete="off">
+        <input id="venue-budget-range" type="range" min="0" max="100" step="1" value="0" aria-label="Venue budget">
+      </div>
+      <div class="choices" id="budget-chips">
+        <button type="button" data-budget-chip="5000">$5k</button>
+        <button type="button" data-budget-chip="10000">$10k</button>
+        <button type="button" data-budget-chip="20000">$20k</button>
+        <button type="button" data-budget-chip="0">Any</button>
       </div>
     </div>
+  </div>
+  <div>
+    <label for="venue-sort">Sort</label>
+    <select id="venue-sort">
+      <option value="best">Best match for budget</option>
+      <option value="price">Lowest price</option>
+      <option value="capacity">Largest capacity</option>
+      <option value="name">A–Z</option>
+    </select>
   </div>
   <div>
     <p class="label" id="vibe-label">Vibe</p>
@@ -77,7 +95,7 @@
     </div>
   </div>
   <details class="more-filters">
-    <summary>More filters</summary>
+    <summary id="more-filters-label">More filters</summary>
     <div class="choices" id="more-filters">
       <button type="button" data-filter="indoor" aria-pressed="false">Indoor option</button>
       <button type="button" data-filter="outdoor" aria-pressed="false">Outdoor</button>
@@ -89,7 +107,14 @@
     </div>
   </details>
 </form>
-<div id="venue-results" class="venue-grid"><article class="venue-card card" data-venue-card data-id="chicago-botanic" data-capacity="" data-vibes="garden" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="" data-access="1" data-offday="1">
+<div id="venue-results" class="results-head" tabindex="-1">
+  <h2 id="results-title">Venues</h2>
+  <p id="result-count" aria-live="polite"></p>
+  <div id="result-chips" class="chip-row"></div>
+  <p class="no-print"><button type="button" class="text-btn" data-share>Copy link</button></p>
+</div>
+<div id="saved-compare" hidden></div>
+<div id="venue-grid" class="venue-grid"><article class="venue-card card" data-venue-card data-id="chicago-botanic" data-capacity="" data-vibes="garden" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="" data-access="1" data-offday="1">
   <a class="venue-card-link" href="../../../venues/illinois/chicago/chicago-botanic/index.html">
     <span class="swatch swatch-garden" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M24 40V18"/><path d="M24 28c-8 0-12-6-12-12 6 0 12 4 12 12zM24 24c8-2 14-8 14-14-8 2-14 8-14 14z"/></svg></span>
     <span class="venue-card-copy">
@@ -154,9 +179,78 @@
   </a>
   <button type="button" class="heart" data-heart="cafe-brauer" aria-pressed="false" aria-label="Save Café Brauer at Lincoln Park Zoo">♡</button>
   <a class="sr" href="../../../venues/illinois/chicago/index.html">More in Chicago</a>
+</article><article class="venue-card card" data-venue-card data-id="cantigny-park" data-capacity="250" data-vibes="garden historic" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="" data-offday="">
+  <a class="venue-card-link" href="../../../venues/illinois/chicago/cantigny-park/index.html">
+    <span class="swatch swatch-garden" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M24 40V18"/><path d="M24 28c-8 0-12-6-12-12 6 0 12 4 12 12zM24 24c8-2 14-8 14-14-8 2-14 8-14 14z"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Wheaton</span>
+      <h2>Cantigny Park</h2>
+      <span class="chip-row"><span class="chip">Garden</span><span class="chip">Historic</span></span>
+      <span class="venue-price" data-price>$3,000–$6,000</span>
+      <span class="hint">Published Saturday range · Up to 250 · Several packages on their PDF</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="cantigny-park" aria-pressed="false" aria-label="Save Cantigny Park">♡</button>
+  <a class="sr" href="../../../venues/illinois/chicago/index.html">More in Chicago</a>
+</article><article class="venue-card card" data-venue-card data-id="morton-arboretum" data-capacity="250" data-vibes="garden" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="" data-offday="1">
+  <a class="venue-card-link" href="../../../venues/illinois/chicago/morton-arboretum/index.html">
+    <span class="swatch swatch-garden" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M24 40V18"/><path d="M24 28c-8 0-12-6-12-12 6 0 12 4 12 12zM24 24c8-2 14-8 14-14-8 2-14 8-14 14z"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Lisle</span>
+      <h2>The Morton Arboretum</h2>
+      <span class="chip-row"><span class="chip">Garden</span></span>
+      <span class="venue-price" data-price>$5,000–$9,000</span>
+      <span class="hint">Published Saturday range · Up to 250 · Several packages on their PDF</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="morton-arboretum" aria-pressed="false" aria-label="Save The Morton Arboretum">♡</button>
+  <a class="sr" href="../../../venues/illinois/chicago/index.html">More in Chicago</a>
+</article><article class="venue-card card" data-venue-card data-id="art-institute-chicago" data-capacity="" data-vibes="art museum" data-indoor="indoor" data-ceremony="1" data-rooms="" data-rain="1" data-access="1" data-offday="">
+  <a class="venue-card-link" href="../../../venues/illinois/chicago/art-institute-chicago/index.html">
+    <span class="swatch swatch-art" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="10" y="14" width="28" height="20" rx="2"/><path d="M10 20h28M18 14v-4h12v4"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Chicago</span>
+      <h2>The Art Institute of Chicago</h2>
+      <span class="chip-row"><span class="chip">Art</span><span class="chip">Museum</span></span>
+      <span class="venue-price" data-price>Pricing not published, ask the venue</span>
+      <span class="hint">Pricing not published · Capacity not published · Ask what's included</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="art-institute-chicago" aria-pressed="false" aria-label="Save The Art Institute of Chicago">♡</button>
+  <a class="sr" href="../../../venues/illinois/chicago/index.html">More in Chicago</a>
+</article><article class="venue-card card" data-venue-card data-id="peggy-notebaert" data-capacity="" data-vibes="museum garden" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="" data-offday="">
+  <a class="venue-card-link" href="../../../venues/illinois/chicago/peggy-notebaert/index.html">
+    <span class="swatch swatch-museum" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="10" y="14" width="28" height="20" rx="2"/><path d="M10 20h28M18 14v-4h12v4"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Chicago</span>
+      <h2>Peggy Notebaert Nature Museum</h2>
+      <span class="chip-row"><span class="chip">Museum</span><span class="chip">Garden</span></span>
+      <span class="venue-price" data-price>Pricing not published, ask the venue</span>
+      <span class="hint">Pricing not published · Capacity not published · Ask what's included</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="peggy-notebaert" aria-pressed="false" aria-label="Save Peggy Notebaert Nature Museum">♡</button>
+  <a class="sr" href="../../../venues/illinois/chicago/index.html">More in Chicago</a>
+</article><article class="venue-card card" data-venue-card data-id="adler-planetarium" data-capacity="" data-vibes="museum waterfront" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="" data-offday="">
+  <a class="venue-card-link" href="../../../venues/illinois/chicago/adler-planetarium/index.html">
+    <span class="swatch swatch-museum" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="10" y="14" width="28" height="20" rx="2"/><path d="M10 20h28M18 14v-4h12v4"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Chicago</span>
+      <h2>Adler Planetarium</h2>
+      <span class="chip-row"><span class="chip">Museum</span><span class="chip">Waterfront</span></span>
+      <span class="venue-price" data-price>Pricing not published, ask the venue</span>
+      <span class="hint">Pricing not published · Capacity not published · Ask what's included</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="adler-planetarium" aria-pressed="false" aria-label="Save Adler Planetarium">♡</button>
+  <a class="sr" href="../../../venues/illinois/chicago/index.html">More in Chicago</a>
 </article></div>
-<p id="venue-none" class="empty-note" hidden>Nothing in this filter. Clear a vibe or raise the budget.</p>
-<script type="application/json" id="venue-data">[{"id":"chicago-botanic","name":"Chicago Botanic Garden","metro":"16980","city":"Glencoe","capacity":null,"vibes":["garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":true,"rainPlan":false,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://www.chicagobotanic.org/sites/default/files/pdf/events/wedding-venue-pricing.pdf","saturday":8500,"offday":4500,"note":"From the Garden's wedding-venue pricing PDF. McGinley Pavilion is $8,500 on Saturday and $4,500 Friday or Sunday. Rose Terrace and the English Walled Garden are $4,000 Saturday and $2,000 Friday or Sunday. The Rose Garden is $12,000. The Esplanade is $30,000. The PDF does not say what those fees include."},"path":"/venues/illinois/chicago/chicago-botanic"},{"id":"garfield-conservatory","name":"Garfield Park Conservatory","metro":"16980","city":"Chicago","capacity":null,"vibes":["garden"],"indoorOutdoor":"indoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://garfieldconservatory.org/visit/room-rentals-information/","saturday":6750,"offday":6000,"note":"The Conservatory's rental page lists the entire building, the option it names for weddings, at the individual or non-profit rate: $6,750 on Friday and Saturday, and $6,000 on Sunday, Monday, Tuesday, and Thursday. Corporate rates are higher and are not used here. Food is extra. A guest cap is not printed on that page."},"path":"/venues/illinois/chicago/garfield-conservatory"},{"id":"chicago-history-museum","name":"Chicago History Museum","metro":"16980","city":"Chicago","capacity":350,"vibes":["historic","museum"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"range","verifiedOn":"2026-10-02","sourceUrl":"https://www.chicagohistory.org/weddings","low":8000,"high":12000,"note":"The museum's wedding page shows a 2028 rate card. Saturday evening repeats as $11,000, $11,000, and $12,000 for June–September, with lower Saturday seasons down to $8,000 in January–March. Because the columns are not labeled room-by-room in the text, this card shows that published Saturday span instead of one cell. Friday evening is $8,000. Sunday evening is $7,500. Food is not included."},"path":"/venues/illinois/chicago/chicago-history-museum"},{"id":"field-museum","name":"Field Museum","metro":"16980","city":"Chicago","capacity":null,"vibes":["museum"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://www.fieldmuseum.org/page/weddings","note":"The Field Museum's weddings page was open on October 2, 2026. It describes the spaces and photo packages, and it does not publish a wedding rental fee. Pricing not published, ask the venue."},"path":"/venues/illinois/chicago/field-museum"},{"id":"cafe-brauer","name":"Café Brauer at Lincoln Park Zoo","metro":"16980","city":"Chicago","capacity":null,"vibes":["historic","waterfront"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://www.lpzoo.org/private-events/","note":"Lincoln Park Zoo's private-events page was open on October 2, 2026. Café Brauer is listed, and no rental dollar amount is published. Pricing not published, ask the venue."},"path":"/venues/illinois/chicago/cafe-brauer"}]</script><details class="explainer-fold"><summary>About this page and common questions</summary><section class="explainer" aria-label="About this page"><h2>Venues in Chicago</h2><p>This list is a starter set for Chicago–Naperville–Elgin. A missing price means the venue's site did not publish one. It is not a guess.</p><h2>Common questions</h2><div class="faq"><details class="faq-item"><summary>How much does a wedding venue cost in Chicago?</summary><p>The cards below use each venue's own published price when one exists. 3 of 5 venues on this page had a public price when we checked.</p></details></div><p>Every figure is cited on the <a href="../../../sources/index.html">sources page</a>.</p></section></details>
+<p id="capacity-note" class="hint" hidden></p>
+<div id="venue-none" class="empty-note card" hidden>
+  <p data-none-copy>No venues match these filters.</p>
+  <button type="button" class="btn" id="loosen-filters">Loosen filters</button>
+</div>
+<script type="application/json" id="venue-data">[{"id":"chicago-botanic","name":"Chicago Botanic Garden","metro":"16980","city":"Glencoe","capacity":null,"vibes":["garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":true,"rainPlan":false,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://www.chicagobotanic.org/sites/default/files/pdf/events/wedding-venue-pricing.pdf","saturday":8500,"offday":4500,"note":"From the Garden's wedding-venue pricing PDF. McGinley Pavilion is $8,500 on Saturday and $4,500 Friday or Sunday. Rose Terrace and the English Walled Garden are $4,000 Saturday and $2,000 Friday or Sunday. The Rose Garden is $12,000. The Esplanade is $30,000. The PDF does not say what those fees include."},"path":"/venues/illinois/chicago/chicago-botanic"},{"id":"garfield-conservatory","name":"Garfield Park Conservatory","metro":"16980","city":"Chicago","capacity":null,"vibes":["garden"],"indoorOutdoor":"indoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://garfieldconservatory.org/visit/room-rentals-information/","saturday":6750,"offday":6000,"note":"The Conservatory's rental page lists the entire building, the option it names for weddings, at the individual or non-profit rate: $6,750 on Friday and Saturday, and $6,000 on Sunday, Monday, Tuesday, and Thursday. Corporate rates are higher and are not used here. Food is extra. A guest cap is not printed on that page."},"path":"/venues/illinois/chicago/garfield-conservatory"},{"id":"chicago-history-museum","name":"Chicago History Museum","metro":"16980","city":"Chicago","capacity":350,"vibes":["historic","museum"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"range","verifiedOn":"2026-10-02","sourceUrl":"https://www.chicagohistory.org/weddings","low":8000,"high":12000,"note":"The museum's wedding page shows a 2028 rate card. Saturday evening repeats as $11,000, $11,000, and $12,000 for June–September, with lower Saturday seasons down to $8,000 in January–March. Because the columns are not labeled room-by-room in the text, this card shows that published Saturday span instead of one cell. Friday evening is $8,000. Sunday evening is $7,500. Food is not included."},"path":"/venues/illinois/chicago/chicago-history-museum"},{"id":"field-museum","name":"Field Museum","metro":"16980","city":"Chicago","capacity":null,"vibes":["museum"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://www.fieldmuseum.org/page/weddings","note":"The Field Museum's weddings page was open on October 2, 2026. It describes the spaces and photo packages, and it does not publish a wedding rental fee. Pricing not published, ask the venue."},"path":"/venues/illinois/chicago/field-museum"},{"id":"cafe-brauer","name":"Café Brauer at Lincoln Park Zoo","metro":"16980","city":"Chicago","capacity":null,"vibes":["historic","waterfront"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://www.lpzoo.org/private-events/","note":"Lincoln Park Zoo's private-events page was open on October 2, 2026. Café Brauer is listed, and no rental dollar amount is published. Pricing not published, ask the venue."},"path":"/venues/illinois/chicago/cafe-brauer"},{"id":"cantigny-park","name":"Cantigny Park","metro":"16980","city":"Wheaton","capacity":250,"vibes":["garden","historic"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"range","verifiedOn":"2026-10-03","sourceUrl":"https://cantigny.wpenginepowered.com/wp-content/uploads/2026/08/2027_Wedding-Guide_Aug26.pdf","low":3000,"high":6000,"note":"Cantigny 2027 wedding guide, linked from cantigny.org and read October 3, 2026. Saturday venue fees are $3,000 at Le Jardin and $6,000 at Tribune Hall and the Woodside Pavilion. Friday and Sunday venue fees are lower ($2,000–$4,000) and are not this range. The Saturday food-and-beverage minimum is $18,000 at all three rooms and is not included. Tax 7.25% and a 23% service charge apply to food and beverage, not as a tax on this venue-fee range. Le Jardin holds 200. Tribune Hall and Woodside hold 250. Woodside is May 1–October 31 and family-style only."},"path":"/venues/illinois/chicago/cantigny-park"},{"id":"morton-arboretum","name":"The Morton Arboretum","metro":"16980","city":"Lisle","capacity":250,"vibes":["garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"range","verifiedOn":"2026-10-03","sourceUrl":"https://mortonarb.org/app/uploads/2026/09/2026_Signature-Events_Room-Rental-Rates.pdf","low":5000,"high":9000,"offday":5000,"note":"Morton Arboretum room-rental sheet updated August 2026, plus the wedding page's January–April package. Ginkgo Room Saturday evening is $9,000. Sunday evening is $5,000. Friday evening is $6,000. The wedding page lists a January–April Ginkgo package at a $5,000 rental. Saturday on this card is that $5,000–$9,000 span. Food is extra. The rate sheet says the fee includes parking and admission."},"path":"/venues/illinois/chicago/morton-arboretum"},{"id":"art-institute-chicago","name":"The Art Institute of Chicago","metro":"16980","city":"Chicago","capacity":null,"vibes":["art","museum"],"indoorOutdoor":"indoor","ceremonyOnsite":true,"accommodations":false,"accessible":true,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://www.artic.edu/venue-rental/weddings-and-social-events-2","note":"The Art Institute wedding page was open on October 3, 2026. It describes the spaces and does not publish a fee. Pricing not published, ask the venue."},"path":"/venues/illinois/chicago/art-institute-chicago"},{"id":"peggy-notebaert","name":"Peggy Notebaert Nature Museum","metro":"16980","city":"Chicago","capacity":null,"vibes":["museum","garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://naturemuseum.org/host-an-event","note":"The Nature Museum host-an-event page was open on October 3, 2026. The wedding section does not print a fee. A $150 photo permit and a $975 children's birthday package are different products and are not used. Pricing not published, ask the venue."},"path":"/venues/illinois/chicago/peggy-notebaert"},{"id":"adler-planetarium","name":"Adler Planetarium","metro":"16980","city":"Chicago","capacity":null,"vibes":["museum","waterfront"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://www.adlerplanetarium.org/venue-rentals/","note":"The Adler Planetarium venue-rental page was open on October 3, 2026. It offers weddings and says pricing comes from an inquiry. It does not print a fee. Pricing not published, ask the venue."},"path":"/venues/illinois/chicago/adler-planetarium"}]</script><details class="explainer-fold"><summary>About this page and common questions</summary><section class="explainer" aria-label="About this page"><h2>Venues in Chicago</h2><p>This list is a starter set for Chicago–Naperville–Elgin. A missing price means the venue's site did not publish one. It is not a guess.</p><h2>Common questions</h2><div class="faq"><details class="faq-item"><summary>How much does a wedding venue cost in Chicago?</summary><p>The cards below use each venue's own published price when one exists. 5 of 10 venues on this page had a public price when we checked.</p></details></div><p>Every figure is cited on the <a href="../../../sources/index.html">sources page</a>.</p></section></details>
   </main>
   <footer class="site-footer">
     

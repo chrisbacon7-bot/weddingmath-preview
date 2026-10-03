@@ -33,12 +33,16 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="brand" href="../index.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">WeddingMath</span></a>
+    <input id="nav-toggle" class="nav-toggle" type="checkbox">
+    <label for="nav-toggle" class="nav-toggle-btn">Menu</label>
     <nav aria-label="Primary"><a href="../venues/index.html">Venues</a><a href="../budget/index.html" aria-current="page">Budget</a><a href="../wedding-cost/index.html">Cost by State</a><a href="../honeymoon/index.html">Honeymoon</a></nav>
   </header>
   <main id="main" class="wrap-wide">
     <nav class="crumbs" aria-label="Breadcrumb"><ol><li><a href="../index.html">Home</a></li><li><a href="../tools/index.html">Tools</a></li><li><span aria-current="page">Wedding budget calculator</span></li></ol></nav><h1>Wedding Budget Calculator</h1>
 <p class="lede">Where the money goes. Your place, your guest count, and a total. The lines add up to that total. Priorities move money around. They leave the bill the same.</p>
-<form id="budget-form" class="stack">
+<div class="calc-grid">
+<form id="budget-form" class="stack calc-inputs">
+  <div id="budget-presets"></div>
   <div class="loc card" data-location="main">
     <label for="where">Where's the wedding?</label>
     <input id="where" name="where" type="text" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="where-list" placeholder="ZIP code or city">
@@ -60,7 +64,7 @@
     </div>
     <div>
       <label for="budget">Total to split</label>
-      <input id="budget" type="number" inputmode="decimal" min="0" placeholder="Blank uses the local estimate">
+      <span class="money-field"><input id="budget" data-money type="text" inputmode="numeric" placeholder="e.g. 30,000" autocomplete="off"></span>
       <p class="hint">Leave this blank to split the local planning figure.</p>
     </div>
   </div>
@@ -85,19 +89,23 @@
       </div>
       <label><input id="offpeak" type="checkbox" style="width:auto;min-height:auto"> Show a 20–30% off-peak discount range</label>
       <p class="hint">Zola says many vendors discount weekday or winter dates by about that much. The main total does not change unless you edit it.</p>
-      <div class="loc" data-location="compare">
-        <label for="where-2">Compare with another place</label>
-        <input id="where-2" type="text" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="where-list-2" placeholder="Another ZIP or city">
-        <ul id="where-list-2" class="suggestions" role="listbox" hidden></ul>
-        <button type="button" class="text-btn" data-national>Compare with the US average</button>
-        <p class="loc-status" data-status role="status"></p>
-      </div>
     </div>
   </details>
-  <button class="btn" type="submit">Update the split</button>
+  <div class="loc card" data-location="compare">
+    <label for="where-2">Compare with another place</label>
+    <input id="where-2" type="text" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="where-list-2" placeholder="Another ZIP or city">
+    <ul id="where-list-2" class="suggestions" role="listbox" hidden></ul>
+    <button type="button" class="text-btn" data-national>Compare with the US average</button>
+    <p class="loc-status" data-status role="status"></p>
+  </div>
+  <button class="btn mobile-scroll-btn" type="submit">See the split ↓</button>
+  <p class="hint" id="tune-summary"></p>
 </form>
-<div id="out" class="stack" style="margin-top:16px" aria-live="polite"></div>
+<div>
+<div id="out" class="stack" aria-live="polite"></div>
 <div id="compare-out" class="stack" style="margin-top:12px"></div>
+</div>
+</div>
 <p class="hint">Rehearsal dinner, rings, and the honeymoon are usually extra. The Knot's averages for those are on the <a href="../sources/index.html">sources page</a>.</p>
 <details class="what">
   <summary>What's plus-plus?</summary>
@@ -111,7 +119,8 @@
     <p>Estimates are not quotes. Your numbers stay in this browser unless you copy a link or download a file.</p>
   </footer>
   <div class="sticky" data-sticky hidden>
-    <div><p class="kicker">Planning estimate</p><p class="money-sm" data-sticky-money>—</p></div>
+    <div><p class="kicker" data-sticky-kicker>Planning estimate</p><p class="money-sm" data-sticky-money>—</p></div>
+    <button type="button" class="btn-ghost" data-sticky-copy>Copy</button>
     <a class="btn" href="#result">See my total</a>
   </div>
   <script type="module" src="../js/budget.js"></script>

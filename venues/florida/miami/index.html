@@ -27,12 +27,14 @@
   <link rel="preload" href="../../../fonts/inter-400.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../../../css/styles.css">
   
-  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://weddingmath.co/"},{"@type":"ListItem","position":2,"name":"Venues","item":"https://weddingmath.co/venues"},{"@type":"ListItem","position":3,"name":"Miami","item":"https://weddingmath.co/venues/florida/miami"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does a wedding venue cost in Miami?","acceptedAnswer":{"@type":"Answer","text":"The cards below use each venue's own published price when one exists. 4 of 5 venues on this page had a public price when we checked."}}]},{"@type":"CollectionPage","name":"Wedding Venues in Miami","url":"https://weddingmath.co/venues/florida/miami","description":"Wedding venues in Miami–Fort Lauderdale–West Palm Beach. Filter by guests, budget, and vibe. Published prices are cited to each venue's site.","isPartOf":{"@type":"WebSite","name":"WeddingMath","url":"https://weddingmath.co/","description":"See what a wedding costs where you're getting married. Local figures from published studies, with no account and no vendor emails."}}]}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://weddingmath.co/"},{"@type":"ListItem","position":2,"name":"Venues","item":"https://weddingmath.co/venues"},{"@type":"ListItem","position":3,"name":"Miami","item":"https://weddingmath.co/venues/florida/miami"}]},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"How much does a wedding venue cost in Miami?","acceptedAnswer":{"@type":"Answer","text":"The cards below use each venue's own published price when one exists. 5 of 9 venues on this page had a public price when we checked."}}]},{"@type":"CollectionPage","name":"Wedding Venues in Miami","url":"https://weddingmath.co/venues/florida/miami","description":"Wedding venues in Miami–Fort Lauderdale–West Palm Beach. Filter by guests, budget, and vibe. Published prices are cited to each venue's site.","isPartOf":{"@type":"WebSite","name":"WeddingMath","url":"https://weddingmath.co/","description":"See what a wedding costs where you're getting married. Local figures from published studies, with no account and no vendor emails."}}]}</script>
 </head>
 <body>
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-header">
     <a class="brand" href="../../../index.html"><span class="mark" aria-hidden="true"></span><span class="brand-name">WeddingMath</span></a>
+    <input id="nav-toggle" class="nav-toggle" type="checkbox">
+    <label for="nav-toggle" class="nav-toggle-btn">Menu</label>
     <nav aria-label="Primary"><a href="../../../venues/index.html" aria-current="page">Venues</a><a href="../../../budget/index.html">Budget</a><a href="../../../wedding-cost/index.html">Cost by State</a><a href="../../../honeymoon/index.html">Honeymoon</a></nav>
   </header>
   <main id="main" class="wrap-wide">
@@ -40,7 +42,7 @@
   <div>
     <p class="kicker">Miami–Fort Lauderdale–West Palm Beach</p>
     <h1>Wedding venues in Miami</h1>
-    <p class="hero-sub">5 places. Filter by guests, budget, and vibe.</p>
+    <p class="hero-sub">9 places. Filter by guests, budget, and vibe.</p>
   </div>
 </section>
 <form class="finder card stack" data-venue-app data-metro="33100" id="venue-finder">
@@ -56,19 +58,35 @@
       <div class="stepper" data-stepper>
         <div class="stepper-row">
           <button type="button" class="step" data-step="-10" aria-label="Ten fewer guests">−</button>
-          <input id="guests" type="number" inputmode="numeric" min="25" max="300" value="100">
+          <input id="guests" type="number" inputmode="numeric" min="10" max="400" value="100">
           <button type="button" class="step" data-step="10" aria-label="Ten more guests">+</button>
         </div>
-        <input type="range" min="25" max="300" value="100" aria-label="Guest count">
+        <input type="range" min="10" max="400" value="100" aria-label="Guest count">
       </div>
     </div>
     <div>
       <label for="venue-budget">All-in venue budget <span class="hint">Optional</span></label>
+      <p id="budget-readout" class="hint">Any budget</p>
       <div class="stepper">
-        <input id="venue-budget" type="number" inputmode="decimal" min="0" step="500" placeholder="Any budget">
-        <input id="venue-budget-range" type="range" min="0" max="80000" step="500" value="0" aria-label="Venue budget">
+        <input id="venue-budget" type="text" inputmode="numeric" placeholder="e.g. 20,000" autocomplete="off">
+        <input id="venue-budget-range" type="range" min="0" max="100" step="1" value="0" aria-label="Venue budget">
+      </div>
+      <div class="choices" id="budget-chips">
+        <button type="button" data-budget-chip="5000">$5k</button>
+        <button type="button" data-budget-chip="10000">$10k</button>
+        <button type="button" data-budget-chip="20000">$20k</button>
+        <button type="button" data-budget-chip="0">Any</button>
       </div>
     </div>
+  </div>
+  <div>
+    <label for="venue-sort">Sort</label>
+    <select id="venue-sort">
+      <option value="best">Best match for budget</option>
+      <option value="price">Lowest price</option>
+      <option value="capacity">Largest capacity</option>
+      <option value="name">A–Z</option>
+    </select>
   </div>
   <div>
     <p class="label" id="vibe-label">Vibe</p>
@@ -77,7 +95,7 @@
     </div>
   </div>
   <details class="more-filters">
-    <summary>More filters</summary>
+    <summary id="more-filters-label">More filters</summary>
     <div class="choices" id="more-filters">
       <button type="button" data-filter="indoor" aria-pressed="false">Indoor option</button>
       <button type="button" data-filter="outdoor" aria-pressed="false">Outdoor</button>
@@ -89,7 +107,14 @@
     </div>
   </details>
 </form>
-<div id="venue-results" class="venue-grid"><article class="venue-card card" data-venue-card data-id="fairchild" data-capacity="300" data-vibes="garden" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="1" data-offday="1">
+<div id="venue-results" class="results-head" tabindex="-1">
+  <h2 id="results-title">Venues</h2>
+  <p id="result-count" aria-live="polite"></p>
+  <div id="result-chips" class="chip-row"></div>
+  <p class="no-print"><button type="button" class="text-btn" data-share>Copy link</button></p>
+</div>
+<div id="saved-compare" hidden></div>
+<div id="venue-grid" class="venue-grid"><article class="venue-card card" data-venue-card data-id="fairchild" data-capacity="300" data-vibes="garden" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="1" data-offday="1">
   <a class="venue-card-link" href="../../../venues/florida/miami/fairchild/index.html">
     <span class="swatch swatch-garden" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M24 40V18"/><path d="M24 28c-8 0-12-6-12-12 6 0 12 4 12 12zM24 24c8-2 14-8 14-14-8 2-14 8-14 14z"/></svg></span>
     <span class="venue-card-copy">
@@ -154,9 +179,65 @@
   </a>
   <button type="button" class="heart" data-heart="miami-beach-botanical" aria-pressed="false" aria-label="Save Miami Beach Botanical Garden">♡</button>
   <a class="sr" href="../../../venues/florida/miami/index.html">More in Miami</a>
+</article><article class="venue-card card" data-venue-card data-id="bonnet-house" data-capacity="250" data-vibes="historic garden estate waterfront" data-indoor="both" data-ceremony="1" data-rooms="1" data-rain="1" data-access="" data-offday="">
+  <a class="venue-card-link" href="../../../venues/florida/miami/bonnet-house/index.html">
+    <span class="swatch swatch-historic" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 40V22L24 10l16 12v18"/><path d="M20 40V28h8v12"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Fort Lauderdale</span>
+      <h2>Bonnet House Museum &amp; Gardens</h2>
+      <span class="chip-row"><span class="chip">Historic</span><span class="chip">Garden</span></span>
+      <span class="venue-price" data-price>$3,000–$12,000</span>
+      <span class="hint">Published Saturday range · Up to 250 · Several packages on their PDF</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="bonnet-house" aria-pressed="false" aria-label="Save Bonnet House Museum &amp; Gardens">♡</button>
+  <a class="sr" href="../../../venues/florida/miami/index.html">More in Miami</a>
+</article><article class="venue-card card" data-venue-card data-id="the-bass" data-capacity="600" data-vibes="art museum" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="" data-offday="">
+  <a class="venue-card-link" href="../../../venues/florida/miami/the-bass/index.html">
+    <span class="swatch swatch-art" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="10" y="14" width="28" height="20" rx="2"/><path d="M10 20h28M18 14v-4h12v4"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Miami Beach</span>
+      <h2>The Bass</h2>
+      <span class="chip-row"><span class="chip">Art</span><span class="chip">Museum</span></span>
+      <span class="venue-price" data-price>Pricing not published, ask the venue</span>
+      <span class="hint">Pricing not published · Up to 600 · Ask what's included</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="the-bass" aria-pressed="false" aria-label="Save The Bass">♡</button>
+  <a class="sr" href="../../../venues/florida/miami/index.html">More in Miami</a>
+</article><article class="venue-card card" data-venue-card data-id="frost-science" data-capacity="3000" data-vibes="museum waterfront" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="1" data-access="" data-offday="">
+  <a class="venue-card-link" href="../../../venues/florida/miami/frost-science/index.html">
+    <span class="swatch swatch-museum" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="10" y="14" width="28" height="20" rx="2"/><path d="M10 20h28M18 14v-4h12v4"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Miami</span>
+      <h2>Phillip and Patricia Frost Museum of Science</h2>
+      <span class="chip-row"><span class="chip">Museum</span><span class="chip">Waterfront</span></span>
+      <span class="venue-price" data-price>Pricing not published, ask the venue</span>
+      <span class="hint">Pricing not published · Up to 3000 · Ask what's included</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="frost-science" aria-pressed="false" aria-label="Save Phillip and Patricia Frost Museum of Science">♡</button>
+  <a class="sr" href="../../../venues/florida/miami/index.html">More in Miami</a>
+</article><article class="venue-card card" data-venue-card data-id="villa-woodbine" data-capacity="" data-vibes="historic estate garden" data-indoor="both" data-ceremony="1" data-rooms="" data-rain="" data-access="" data-offday="">
+  <a class="venue-card-link" href="../../../venues/florida/miami/villa-woodbine/index.html">
+    <span class="swatch swatch-historic" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 40V22L24 10l16 12v18"/><path d="M20 40V28h8v12"/></svg></span>
+    <span class="venue-card-copy">
+      <span class="kicker">Miami</span>
+      <h2>Villa Woodbine</h2>
+      <span class="chip-row"><span class="chip">Historic</span><span class="chip">Estate</span></span>
+      <span class="venue-price" data-price>Pricing not published, ask the venue</span>
+      <span class="hint">Pricing not published · Capacity not published · Ask what's included</span>
+    </span>
+  </a>
+  <button type="button" class="heart" data-heart="villa-woodbine" aria-pressed="false" aria-label="Save Villa Woodbine">♡</button>
+  <a class="sr" href="../../../venues/florida/miami/index.html">More in Miami</a>
 </article></div>
-<p id="venue-none" class="empty-note" hidden>Nothing in this filter. Clear a vibe or raise the budget.</p>
-<script type="application/json" id="venue-data">[{"id":"fairchild","name":"Fairchild Tropical Botanic Garden","metro":"33100","city":"Coral Gables","capacity":300,"vibes":["garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":true,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://fairchildgarden.org/wp-content/uploads/2026/02/Fairchild-Wedding-Booklet-2026.pdf","saturday":10250,"offday":8700,"includedGuests":100,"extraGuest":30,"note":"Garden House package from Fairchild's 2026 wedding booklet. Saturday evenings start at $10,250++. Friday or Sunday evenings start at $8,700++. Monday–Thursday starts at $6,660++. The base covers 1–100 guests, then $30 a guest. Ceremony-only starts at $2,500++ for 1–25 guests, then $30 a guest. Arts Center Saturday evenings start at $13,000++ (base 150 guests). Lakeside Marquee Saturday evenings start at $20,500++ (base 250). The ++ and sales tax are not given as percents, so they are not added. Garden House capacity on the booklet is 300."},"path":"/venues/florida/miami/fairchild"},{"id":"vizcaya","name":"Vizcaya Museum and Gardens","metro":"33100","city":"Miami","capacity":300,"vibes":["historic","waterfront","garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://vizcaya.org/visit-2/wedding-events/","saturday":23000,"offday":23000,"includedGuests":100,"extraGuest":25,"taxPct":7,"note":"Vizcaya's own wedding page: evening base rental is $23,000 for 100 guests, 6:30–11 p.m., any day. Each guest over 100 is $25. A 7% sales tax applies to the fees, and this number includes that tax. It does not include a tent ($8,500 or $12,000), extra hours ($2,400), or catering. Capacity is 300. The daytime garden ceremony is $2,000 for up to 25 guests."},"path":"/venues/florida/miami/vizcaya"},{"id":"deering-estate","name":"Deering Estate","metro":"33100","city":"Palmetto Bay","capacity":null,"vibes":["historic","waterfront","garden"],"indoorOutdoor":"outdoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://deeringestate.org/wp-content/uploads/2025/09/Facility-Rental-Rules-and-Regulations-v-September-2025.pdf","saturday":9750,"offday":null,"includedGuests":150,"extraGuest":18,"taxPct":7,"note":"September 2025 facility rules PDF: Historic Grounds base rental is $9,750, plus $18 a guest over 150, plus 7% Florida sales tax. This number is that rental and tax. It does not include the published staff fee ($1,287.68 up to 150 guests) or the $5-per-person catering permit. Monday–Thursday year-round, and any day in June–August, is 25% off the base rental. That discount is not applied here, because Saturday outside summer is the full base."},"path":"/venues/florida/miami/deering-estate"},{"id":"spanish-monastery","name":"The Ancient Spanish Monastery","metro":"33100","city":"North Miami Beach","capacity":250,"vibes":["historic","garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://www.spanishmonastery.com/_files/ugd/d5333c_f4b37b53c71b4ae4ac129f7ec606ab47.pdf","saturday":12000,"offday":11000,"note":"From the monastery's wedding PDF, the Saturday wedding-with-reception package in the Loggia is $12,000 for up to 250 people. Friday or Sunday in the Loggia is $11,000. Monday–Thursday in the Loggia is $9,000. Other rooms are less, down to $6,000 on a weekday in the Chapter House. The PDF does not add sales tax, so tax is not added here. Food is not included. A second PDF on the same site shows different ceremony-only figures; confirm which sheet the venue is using."},"path":"/venues/florida/miami/spanish-monastery"},{"id":"miami-beach-botanical","name":"Miami Beach Botanical Garden","metro":"33100","city":"Miami Beach","capacity":null,"vibes":["garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://www.mbgarden.org/rentthegarden","note":"The Garden's rental and private-event pages were open on October 2, 2026. They describe weddings and do not publish a wedding fee. A $150-an-hour personal photo shoot is a different product and is not used here. Pricing not published, ask the venue."},"path":"/venues/florida/miami/miami-beach-botanical"}]</script><details class="explainer-fold"><summary>About this page and common questions</summary><section class="explainer" aria-label="About this page"><h2>Venues in Miami</h2><p>This list is a starter set for Miami–Fort Lauderdale–West Palm Beach. A missing price means the venue's site did not publish one. It is not a guess.</p><h2>Common questions</h2><div class="faq"><details class="faq-item"><summary>How much does a wedding venue cost in Miami?</summary><p>The cards below use each venue's own published price when one exists. 4 of 5 venues on this page had a public price when we checked.</p></details></div><p>Every figure is cited on the <a href="../../../sources/index.html">sources page</a>.</p></section></details>
+<p id="capacity-note" class="hint" hidden></p>
+<div id="venue-none" class="empty-note card" hidden>
+  <p data-none-copy>No venues match these filters.</p>
+  <button type="button" class="btn" id="loosen-filters">Loosen filters</button>
+</div>
+<script type="application/json" id="venue-data">[{"id":"fairchild","name":"Fairchild Tropical Botanic Garden","metro":"33100","city":"Coral Gables","capacity":300,"vibes":["garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":true,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://fairchildgarden.org/wp-content/uploads/2026/02/Fairchild-Wedding-Booklet-2026.pdf","saturday":10250,"offday":8700,"includedGuests":100,"extraGuest":30,"note":"Garden House package from Fairchild's 2026 wedding booklet. Saturday evenings start at $10,250++. Friday or Sunday evenings start at $8,700++. Monday–Thursday starts at $6,660++. The base covers 1–100 guests, then $30 a guest. Ceremony-only starts at $2,500++ for 1–25 guests, then $30 a guest. Arts Center Saturday evenings start at $13,000++ (base 150 guests). Lakeside Marquee Saturday evenings start at $20,500++ (base 250). The ++ and sales tax are not given as percents, so they are not added. Garden House capacity on the booklet is 300."},"path":"/venues/florida/miami/fairchild"},{"id":"vizcaya","name":"Vizcaya Museum and Gardens","metro":"33100","city":"Miami","capacity":300,"vibes":["historic","waterfront","garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://vizcaya.org/visit-2/wedding-events/","saturday":23000,"offday":23000,"includedGuests":100,"extraGuest":25,"taxPct":7,"note":"Vizcaya's own wedding page: evening base rental is $23,000 for 100 guests, 6:30–11 p.m., any day. Each guest over 100 is $25. A 7% sales tax applies to the fees, and this number includes that tax. It does not include a tent ($8,500 or $12,000), extra hours ($2,400), or catering. Capacity is 300. The daytime garden ceremony is $2,000 for up to 25 guests."},"path":"/venues/florida/miami/vizcaya"},{"id":"deering-estate","name":"Deering Estate","metro":"33100","city":"Palmetto Bay","capacity":null,"vibes":["historic","waterfront","garden"],"indoorOutdoor":"outdoor","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://deeringestate.org/wp-content/uploads/2025/09/Facility-Rental-Rules-and-Regulations-v-September-2025.pdf","saturday":9750,"offday":null,"includedGuests":150,"extraGuest":18,"taxPct":7,"note":"September 2025 facility rules PDF: Historic Grounds base rental is $9,750, plus $18 a guest over 150, plus 7% Florida sales tax. This number is that rental and tax. It does not include the published staff fee ($1,287.68 up to 150 guests) or the $5-per-person catering permit. Monday–Thursday year-round, and any day in June–August, is 25% off the base rental. That discount is not applied here, because Saturday outside summer is the full base."},"path":"/venues/florida/miami/deering-estate"},{"id":"spanish-monastery","name":"The Ancient Spanish Monastery","metro":"33100","city":"North Miami Beach","capacity":250,"vibes":["historic","garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"rental","verifiedOn":"2026-10-02","sourceUrl":"https://www.spanishmonastery.com/_files/ugd/d5333c_f4b37b53c71b4ae4ac129f7ec606ab47.pdf","saturday":12000,"offday":11000,"note":"From the monastery's wedding PDF, the Saturday wedding-with-reception package in the Loggia is $12,000 for up to 250 people. Friday or Sunday in the Loggia is $11,000. Monday–Thursday in the Loggia is $9,000. Other rooms are less, down to $6,000 on a weekday in the Chapter House. The PDF does not add sales tax, so tax is not added here. Food is not included. A second PDF on the same site shows different ceremony-only figures; confirm which sheet the venue is using."},"path":"/venues/florida/miami/spanish-monastery"},{"id":"miami-beach-botanical","name":"Miami Beach Botanical Garden","metro":"33100","city":"Miami Beach","capacity":null,"vibes":["garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-02","sourceUrl":"https://www.mbgarden.org/rentthegarden","note":"The Garden's rental and private-event pages were open on October 2, 2026. They describe weddings and do not publish a wedding fee. A $150-an-hour personal photo shoot is a different product and is not used here. Pricing not published, ask the venue."},"path":"/venues/florida/miami/miami-beach-botanical"},{"id":"bonnet-house","name":"Bonnet House Museum & Gardens","metro":"33100","city":"Fort Lauderdale","capacity":250,"vibes":["historic","garden","estate","waterfront"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":true,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"published","kind":"range","verifiedOn":"2026-10-03","sourceUrl":"https://www.bonnethouse.org/weddings/property-rental-rates/","low":3000,"high":12000,"note":"Bonnet House property-rental table. Saturday is the November–April column or the May–October column, depending on season. Printed Saturday cells run from $3,000 (up to 25 guests, May–October) to $12,000 (226–250 guests, November–April). A 76–100 guest Saturday is $7,000 in season and $4,200 from May through October. Friday and Sunday in season are the middle column, about 15% less. The page also requires a $5,000 minimum on Saturday nights from October through May. Food, the $2,200 seasonal tent, and the police detail are not in the range."},"path":"/venues/florida/miami/bonnet-house"},{"id":"the-bass","name":"The Bass","metro":"33100","city":"Miami Beach","capacity":600,"vibes":["art","museum"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://thebass.org/event-space/","note":"The Bass event-space page was open on October 3, 2026. It offers weddings and does not publish a fee. Pricing not published, ask the venue."},"path":"/venues/florida/miami/the-bass"},{"id":"frost-science","name":"Phillip and Patricia Frost Museum of Science","metro":"33100","city":"Miami","capacity":3000,"vibes":["museum","waterfront"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":true,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://www.frostscience.org/meetings-and-event-rentals/","note":"The Frost Science meetings-and-events page was open on October 3, 2026. It describes weddings and does not publish a rental fee. Pricing not published, ask the venue."},"path":"/venues/florida/miami/frost-science"},{"id":"villa-woodbine","name":"Villa Woodbine","metro":"33100","city":"Miami","capacity":null,"vibes":["historic","estate","garden"],"indoorOutdoor":"both","ceremonyOnsite":true,"accommodations":false,"accessible":false,"rainPlan":false,"nearby":false,"price":{"confidence":"unpublished","kind":"unpublished","verifiedOn":"2026-10-03","sourceUrl":"https://www.villa-woodbine.com/","note":"Villa Woodbine's site was open on October 3, 2026. It offers weddings and says a packet covers general pricing. No wedding dollar amount is published on the page. Pricing not published, ask the venue."},"path":"/venues/florida/miami/villa-woodbine"}]</script><details class="explainer-fold"><summary>About this page and common questions</summary><section class="explainer" aria-label="About this page"><h2>Venues in Miami</h2><p>This list is a starter set for Miami–Fort Lauderdale–West Palm Beach. A missing price means the venue's site did not publish one. It is not a guess.</p><h2>Common questions</h2><div class="faq"><details class="faq-item"><summary>How much does a wedding venue cost in Miami?</summary><p>The cards below use each venue's own published price when one exists. 5 of 9 venues on this page had a public price when we checked.</p></details></div><p>Every figure is cited on the <a href="../../../sources/index.html">sources page</a>.</p></section></details>
   </main>
   <footer class="site-footer">
     

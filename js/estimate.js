@@ -19,6 +19,8 @@
  * planning estimate. Elsewhere a Zola-only city is anchored at 150 guests.
  */
 
+import { formatMoney } from "./format.js";
+
 export const MIN_GUESTS = 10;
 export const MAX_GUESTS = 400;
 
@@ -26,6 +28,13 @@ export function clampGuests(value) {
   const n = Math.round(Number(value));
   if (!Number.isFinite(n)) return 117;
   return Math.min(MAX_GUESTS, Math.max(MIN_GUESTS, n));
+}
+
+export function guestCountNote(typed, used) {
+  if (!Number.isFinite(typed)) return "The guest box was empty, so this uses 117, The Knot's average guest count.";
+  if (typed < MIN_GUESTS) return `${typed} is below the ${MIN_GUESTS}-guest floor on this calculator, so this uses ${used}.`;
+  if (typed > MAX_GUESTS) return `${typed} is above the ${MAX_GUESTS}-guest ceiling on this calculator, so this uses ${used}.`;
+  return "";
 }
 
 export function modelCategories(costs) {
@@ -554,15 +563,28 @@ export function guestsForBudget(place, budget, costs, options = {}) {
 
 export function compareBudget(plan, budget) {
   const money = Number(budget);
-  if (!Number.isFinite(money) || money <= 0) return null;
-  if (plan.kind === "range") {
-    if (money >= plan.high) return { tone: "fits", text: "Your budget covers the top of the estimated range." };
-    if (money >= plan.low) return { tone: "stretch", text: "Your budget sits inside the estimated range." };
-    return { tone: "over", text: "Your budget is below the estimated range." };
+  if (!plan || !Number.isFinite(money) || money <= 0) return null;
+  const target = plan.kind === "range" ? plan.high : plan.value;
+  const low = plan.kind === "range" ? plan.low : plan.value;
+  if (!Number.isFinite(target) || target <= 0) return null;
+  const short = Math.round(target - money);
+  const pct = Math.round((Math.abs(short) / target) * 100);
+  const tightFloor = plan.kind === "range" ? low * 0.9 : target * 0.9;
+  let word = "Over";
+  let tone = "over";
+  if (money >= target) {
+    word = "Fits";
+    tone = "fits";
+  } else if (money >= tightFloor) {
+    word = "Tight";
+    tone = "tight";
   }
-  if (money >= plan.value) return { tone: "fits", text: "Your budget covers this estimate." };
-  if (money >= plan.value * 0.85) return { tone: "stretch", text: "Your budget is a little under this estimate." };
-  return { tone: "over", text: "Your budget is below this estimate." };
+  const budgetText = formatMoney(money, { exact: true });
+  const targetText = formatMoney(Math.round(target), { exact: true });
+  const text = word === "Fits"
+    ? `Fits — ${formatMoney(Math.round(money - target), { exact: true })} under ${budgetText}.`
+    : `${word} — ${formatMoney(short, { exact: true })} short of the ${targetText} figure (${pct}%).`;
+  return { tone, word, gap: short, pct, text, target, budget: money };
 }
 
 export function venueBenchmarks(place, guests, costs) {
@@ -622,20 +644,22 @@ export function offPeakRange(total) {
   return { low: total * 0.7, high: total * 0.8 };
 }
 
-export function hiddenCostBreakdown({ quote, servicePct, taxPct, gratuityPct }) {
+export function hiddenCostBreakdown({ quote, servicePct, taxPct, gratuityPct, taxOnService = false }) {
   const base = Number(quote);
   if (!Number.isFinite(base) || base < 0) return null;
   const service = Number(servicePct);
   const tax = Number(taxPct);
   const tip = Number(gratuityPct);
   const serviceAmount = Number.isFinite(service) ? base * (service / 100) : 0;
-  const taxAmount = Number.isFinite(tax) ? base * (tax / 100) : 0;
+  const taxable = base + (taxOnService ? serviceAmount : 0);
+  const taxAmount = Number.isFinite(tax) ? taxable * (tax / 100) : 0;
   const tipAmount = Number.isFinite(tip) ? base * (tip / 100) : 0;
   return {
     base,
     serviceAmount,
     taxAmount,
     tipAmount,
+    taxOnService: Boolean(taxOnService),
     total: base + serviceAmount + taxAmount + tipAmount,
   };
 }
